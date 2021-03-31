@@ -6,6 +6,8 @@ import imstrument.globals.ImagePanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /*
     TODO temporary Jpanel to test card layout
@@ -51,6 +53,12 @@ public class Imagepage extends JPanel {
         buttonConstraints.fill = GridBagConstraints.HORIZONTAL;
         buttonConstraints.insets = new Insets(100, 200, 50, 200);
         startButton = new JButton("Start");
+        startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
         this.add(startButton, buttonConstraints);
 
         /* credits label definition */
@@ -62,7 +70,7 @@ public class Imagepage extends JPanel {
         creditsConstraints.gridwidth = 3;
         credits = new Label("imagepage created by Villani Luca and Mezzogori Alessandro");
         this.add(credits, creditsConstraints);
-
-
     }
+
+
 }

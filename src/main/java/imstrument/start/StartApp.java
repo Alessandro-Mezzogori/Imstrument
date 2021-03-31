@@ -1,6 +1,9 @@
 package imstrument.start;
 
-import javax.swing.SwingUtilities;
+import imstrument.homepage.Homepage;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class StartApp {
     public static void main(String[] args){

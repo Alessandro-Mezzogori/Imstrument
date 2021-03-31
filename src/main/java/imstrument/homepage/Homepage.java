@@ -2,6 +2,8 @@ package imstrument.homepage;
 
 /* imstrument packages */
 import imstrument.globals.*;
+import imstrument.imagepage.Imagepage;
+import imstrument.start.StartingGUI;
 
 /* general packages*/
 import javax.imageio.ImageIO;
@@ -14,13 +16,16 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 
 public class Homepage extends JPanel {
+    /* Logic attributes */
+    String name;
+
+    /* GUI components */
     Label credits; // used to display creators and maybe copyright
     ImagePanel imstrumentLogo;
     JButton startButton;
     public Homepage(){
         /* set jframe params */
         this.setLayout(new GridBagLayout());
-
         /* create components*/
         /*
         * bottom component
@@ -43,17 +48,28 @@ public class Homepage extends JPanel {
 
         /* button definition */
         GridBagConstraints buttonConstraints = new GridBagConstraints();
-        buttonConstraints.gridx = 1;
-        buttonConstraints.gridy = 1;
-        buttonConstraints.gridwidth = 1;
-        buttonConstraints.gridheight = 1;
-        buttonConstraints.weighty = 0.25;
-        buttonConstraints.weightx = 0.5;
         buttonConstraints.anchor = GridBagConstraints.CENTER;
         buttonConstraints.fill = GridBagConstraints.HORIZONTAL;
-        buttonConstraints.insets = new Insets(100, 200, 50, 200);
+
+        JPanel buttonPanel = new JPanel(new GridBagLayout());
         startButton = new JButton("Start");
-        this.add(startButton, buttonConstraints);
+        startButton.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // TODO better method to open new jframe
+                    StartingGUI startingGUI = (StartingGUI) SwingUtilities.getWindowAncestor(getParent());
+                    startingGUI.showCard(GlobalSetting.CardId.IMAGEPAGE);
+                }
+            }
+        );
+        buttonPanel.add(startButton, buttonConstraints);
+
+        buttonConstraints.gridx = 1;
+        buttonConstraints.gridy = 1;
+        buttonConstraints.weightx = 1.0;
+        buttonConstraints.weighty = 0.33;
+        this.add(buttonPanel, buttonConstraints);
 
         /* credits label definition */
         GridBagConstraints creditsConstraints = new GridBagConstraints();
@@ -64,7 +80,5 @@ public class Homepage extends JPanel {
         creditsConstraints.gridwidth = 3;
         credits = new Label("created by Villani Luca and Mezzogori Alessandro");
         this.add(credits, creditsConstraints);
-
-
     }
 }
