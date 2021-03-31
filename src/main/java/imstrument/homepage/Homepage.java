@@ -9,16 +9,18 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Homepage extends JPanel {
-    /* Logic attributes */
-    private final WrapperCardLayout containerLayout;
-    /* GUI components */
+/**
+ * specialized JPanel to show the homepage of the application Imstrument
+ */
+public class Homepage extends JPanel { /* Logic attributes */
+     /* GUI components */
     Label credits; // used to display creators and maybe copyright
     ImagePanel imstrumentLogo;
     JButton startButton;
-    public Homepage(final WrapperCardLayout containerLayout){
+    public Homepage(){
+        super();
         /* initialize components */
-        this.containerLayout = containerLayout;
+
         /* set jframe params */
         this.setLayout(new GridBagLayout());
         /* create components*/
@@ -53,7 +55,11 @@ public class Homepage extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     // TODO better method to open new jframe
-                    containerLayout.show(getParent(), WrapperCardLayout.CardId.IMAGEPAGE);
+                    if(!(getParent().getLayout() instanceof WrappedCardLayout)){
+                        throw new IllegalCallerException("The parent container layout isn't of type WrappedCardLayout");
+                    }
+                    WrappedCardLayout containerLayout = (WrappedCardLayout) getParent().getLayout();
+                    containerLayout.show(getParent(), WrappedCardLayout.CardNames.IMAGEPAGE);
                 }
             }
         );

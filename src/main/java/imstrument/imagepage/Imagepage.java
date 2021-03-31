@@ -3,23 +3,19 @@ package imstrument.imagepage;
 /* imstrument packages */
 
 import imstrument.globals.ImagePanel;
-import imstrument.globals.WrapperCardLayout;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
+/**
+ * specialized JPanel to show the imagepage of the application Imstrument
+ */
 public class Imagepage extends JPanel {
-    /* Logic attributes */
-    private final WrapperCardLayout containerLayout;
     /* GUI components */
     Label credits; // used to display creators and maybe copyright
     ImagePanel imstrumentLogo;
-    public Imagepage(final WrapperCardLayout containerLayout){
+    public Imagepage(){
         /* initialize components */
-        this.containerLayout = containerLayout;
-
         /* set jframe params */
         this.setLayout(new GridBagLayout());
         /* create components*/
@@ -27,7 +23,6 @@ public class Imagepage extends JPanel {
         * bottom component
         * contains the credits of the creators and TODO copyright of software application
         * */
-
 
         /* logo definition */
         GridBagConstraints imageConstraints = new GridBagConstraints();

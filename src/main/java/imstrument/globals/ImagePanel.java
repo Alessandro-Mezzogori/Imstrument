@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.Buffer;
 
+/**
+ * JPanel specialized to show images
+ */
 public class ImagePanel extends JPanel {
     private BufferedImage image;
     private int x, y;
@@ -28,12 +31,21 @@ public class ImagePanel extends JPanel {
         }
     }
 
+    /**
+     * returns the image of the ImagePanel
+     * @return
+     */
     public BufferedImage getImage() {
         return image;
     }
 
+    /**
+     * sets new image of ImagePanel and updates the current shown image
+     * @param image image to be shown in the ImagePanel
+     */
     public void setImage(BufferedImage image) {
         this.image = image;
+        this.repaint();
     }
 
     @Override
@@ -52,4 +64,6 @@ public class ImagePanel extends JPanel {
     public Dimension getMinimumSize() {
         return getPreferredSize();
     }
+
+    //TODO add on click listeners and boolean field to activate the generation of sound
 }
