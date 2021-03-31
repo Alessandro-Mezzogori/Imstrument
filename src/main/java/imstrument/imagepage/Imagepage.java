@@ -3,24 +3,25 @@ package imstrument.imagepage;
 /* imstrument packages */
 
 import imstrument.globals.ImagePanel;
+import imstrument.globals.WrapperCardLayout;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/*
-    TODO temporary Jpanel to test card layout
- */
-
 public class Imagepage extends JPanel {
+    /* Logic attributes */
+    private final WrapperCardLayout containerLayout;
+    /* GUI components */
     Label credits; // used to display creators and maybe copyright
     ImagePanel imstrumentLogo;
-    JButton startButton;
-    public Imagepage(){
+    public Imagepage(final WrapperCardLayout containerLayout){
+        /* initialize components */
+        this.containerLayout = containerLayout;
+
         /* set jframe params */
         this.setLayout(new GridBagLayout());
-
         /* create components*/
         /*
         * bottom component
@@ -41,36 +42,16 @@ public class Imagepage extends JPanel {
         imstrumentLogo = new ImagePanel(this.getClass().getResource("/imstrument/globals/imstrument_logo.png"));
         this.add(imstrumentLogo, imageConstraints);
 
-        /* button definition */
-        GridBagConstraints buttonConstraints = new GridBagConstraints();
-        buttonConstraints.gridx = 1;
-        buttonConstraints.gridy = 1;
-        buttonConstraints.gridwidth = 1;
-        buttonConstraints.gridheight = 1;
-        buttonConstraints.weighty = 0.25;
-        buttonConstraints.weightx = 0.5;
-        buttonConstraints.anchor = GridBagConstraints.CENTER;
-        buttonConstraints.fill = GridBagConstraints.HORIZONTAL;
-        buttonConstraints.insets = new Insets(100, 200, 50, 200);
-        startButton = new JButton("Start");
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
 
-            }
-        });
-        this.add(startButton, buttonConstraints);
 
         /* credits label definition */
         GridBagConstraints creditsConstraints = new GridBagConstraints();
         creditsConstraints.gridx = 0;
-        creditsConstraints.gridy = buttonConstraints.gridy + 1; // always after last button
+        creditsConstraints.gridy = 1; // always after last button
         creditsConstraints.weightx = 1.0;
         creditsConstraints.weighty = 0.2;
         creditsConstraints.gridwidth = 3;
-        credits = new Label("imagepage created by Villani Luca and Mezzogori Alessandro");
+        credits = new Label("created by Villani Luca and Mezzogori Alessandro");
         this.add(credits, creditsConstraints);
     }
-
-
 }

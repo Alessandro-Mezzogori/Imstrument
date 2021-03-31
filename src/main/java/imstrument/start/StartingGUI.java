@@ -1,7 +1,7 @@
 package imstrument.start;
 
-import imstrument.globals.CardsPanel;
 import imstrument.globals.GlobalSetting;
+import imstrument.globals.WrapperCardLayout;
 import imstrument.homepage.Homepage;
 import imstrument.imagepage.Imagepage;
 
@@ -12,18 +12,17 @@ import java.awt.event.WindowListener;
 
 public class StartingGUI extends JFrame {
     JPanel cards;
-    private GlobalSetting.CardId currentCardId;
 
     public StartingGUI(){
         this.setTitle("Imstrument");
 
-        JPanel homepage = new Homepage();
-        JPanel imagepage = new Imagepage();
+        WrapperCardLayout cardsLayout = new WrapperCardLayout();
+        cards = new JPanel(cardsLayout);
+        JPanel homepage = new Homepage(cardsLayout);
+        JPanel imagepage = new Imagepage(cardsLayout);
 
-        cards = new JPanel(new CardLayout());
-        cards.add(homepage, GlobalSetting.CardId.HOMEPAGE.toString());
-        cards.add(imagepage, GlobalSetting.CardId.IMAGEPAGE.toString());
-        showCard(GlobalSetting.CardId.HOMEPAGE);
+        cards.add(homepage, WrapperCardLayout.CardId.HOMEPAGE);
+        cards.add(imagepage, WrapperCardLayout.CardId.IMAGEPAGE);
 
         Container container = this.getContentPane();
         container.setLayout(new BorderLayout());
@@ -37,12 +36,6 @@ public class StartingGUI extends JFrame {
         requestFocus(); // requestes focus for event dispatching
     }
 
-    public void showCard(GlobalSetting.CardId cardId){
-        this.currentCardId = cardId;
-        CardLayout cardLayout = (CardLayout) cards.getLayout();
-        cardLayout.show(cards, this.currentCardId.toString());
-    }
-
     private class NavigationRules implements WindowListener{
 
         @Override
@@ -52,9 +45,10 @@ public class StartingGUI extends JFrame {
 
         @Override
         public void windowClosing(WindowEvent e) {
-            switch (currentCardId){
+            WrapperCardLayout cardLayout = (WrapperCardLayout) cards.getLayout();
+            switch (cardLayout.getCurrentCardId()){
                 case HOMEPAGE -> dispose();
-                case IMAGEPAGE -> showCard(GlobalSetting.CardId.HOMEPAGE);
+                case IMAGEPAGE -> cardLayout.show(cards, WrapperCardLayout.CardId.HOMEPAGE);
             }
         }
 

@@ -1,18 +1,17 @@
-imstrument/globals/ImagePanel.java
- imstrument.globals.ImagePanel
-imstrument/globals/GlobalSetting.java
- imstrument.globals.GlobalSetting
- imstrument.globals.GlobalSetting$CardId
 imstrument/start/StartApp.java
  imstrument.start.StartApp
-imstrument/globals/CardsPanel.java
- imstrument.globals.CardsPanel
-imstrument/imagepage/Imagepage.java
- imstrument.imagepage.Imagepage
- imstrument.imagepage.Imagepage$1
+imstrument/globals/GlobalSetting.java
+ imstrument.globals.GlobalSetting
+imstrument/globals/ImagePanel.java
+ imstrument.globals.ImagePanel
+imstrument/globals/WrapperCardLayout.java
+ imstrument.globals.WrapperCardLayout
+ imstrument.globals.WrapperCardLayout$CardId
 imstrument/homepage/Homepage.java
  imstrument.homepage.Homepage
  imstrument.homepage.Homepage$1
+imstrument/imagepage/Imagepage.java
+ imstrument.imagepage.Imagepage
 imstrument/start/StartingGUI.java
  imstrument.start.StartingGUI
  imstrument.start.StartingGUI$1

@@ -2,28 +2,23 @@ package imstrument.homepage;
 
 /* imstrument packages */
 import imstrument.globals.*;
-import imstrument.imagepage.Imagepage;
-import imstrument.start.StartingGUI;
 
 /* general packages*/
-import javax.imageio.ImageIO;
-import javax.sound.midi.SysexMessage;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.net.URL;
 
 public class Homepage extends JPanel {
     /* Logic attributes */
-    String name;
-
+    private final WrapperCardLayout containerLayout;
     /* GUI components */
     Label credits; // used to display creators and maybe copyright
     ImagePanel imstrumentLogo;
     JButton startButton;
-    public Homepage(){
+    public Homepage(final WrapperCardLayout containerLayout){
+        /* initialize components */
+        this.containerLayout = containerLayout;
         /* set jframe params */
         this.setLayout(new GridBagLayout());
         /* create components*/
@@ -58,8 +53,7 @@ public class Homepage extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     // TODO better method to open new jframe
-                    StartingGUI startingGUI = (StartingGUI) SwingUtilities.getWindowAncestor(getParent());
-                    startingGUI.showCard(GlobalSetting.CardId.IMAGEPAGE);
+                    containerLayout.show(getParent(), WrapperCardLayout.CardId.IMAGEPAGE);
                 }
             }
         );
