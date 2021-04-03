@@ -1,17 +1,12 @@
-imstrument/globals/WrappedCardLayout.java
- imstrument.globals.WrappedCardLayout
- imstrument.globals.WrappedCardLayout$CardNames
 imstrument/globals/GlobalSetting.java
  imstrument.globals.GlobalSetting
+imstrument/start/StartApp.java
+ imstrument.start.StartApp
 imstrument/homepage/Homepage.java
  imstrument.homepage.Homepage
  imstrument.homepage.Homepage$1
 imstrument/globals/ImagePanel.java
  imstrument.globals.ImagePanel
-imstrument/start/StartApp.java
- imstrument.start.StartApp
 imstrument/imagepage/Imagepage.java
  imstrument.imagepage.Imagepage
-imstrument/start/StartingGUI.java
- imstrument.start.StartingGUI
- imstrument.start.StartingGUI$NavigationRules
+ imstrument.imagepage.Imagepage$1

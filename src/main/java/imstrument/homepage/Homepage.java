@@ -2,6 +2,7 @@ package imstrument.homepage;
 
 /* imstrument packages */
 import imstrument.globals.*;
+import imstrument.imagepage.Imagepage;
 
 /* general packages*/
 import javax.swing.*;
@@ -12,7 +13,7 @@ import java.awt.event.ActionListener;
 /**
  * specialized JPanel to show the homepage of the application Imstrument
  */
-public class Homepage extends JPanel { /* Logic attributes */
+public class Homepage extends JFrame { /* Logic attributes */
      /* GUI components */
     Label credits; // used to display creators and maybe copyright
     ImagePanel imstrumentLogo;
@@ -28,8 +29,6 @@ public class Homepage extends JPanel { /* Logic attributes */
         * bottom component
         * contains the credits of the creators and TODO copyright of software application
         * */
-
-
         /* logo definition */
         GridBagConstraints imageConstraints = new GridBagConstraints();
         imageConstraints.gridx = 0;
@@ -40,7 +39,7 @@ public class Homepage extends JPanel { /* Logic attributes */
         imageConstraints.weighty = 0.33;
         imageConstraints.anchor = GridBagConstraints.CENTER;
         imageConstraints.fill = GridBagConstraints.BOTH;
-        imstrumentLogo = new ImagePanel(this.getClass().getResource("/imstrument/globals/imstrument_logo.png"));
+        imstrumentLogo = new ImagePanel(this.getClass().getResource("/imstrument/globals/imstrument_image.png"));
         this.add(imstrumentLogo, imageConstraints);
 
         /* button definition */
@@ -55,11 +54,8 @@ public class Homepage extends JPanel { /* Logic attributes */
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     // TODO better method to open new jframe
-                    if(!(getParent().getLayout() instanceof WrappedCardLayout)){
-                        throw new IllegalCallerException("The parent container layout isn't of type WrappedCardLayout");
-                    }
-                    WrappedCardLayout containerLayout = (WrappedCardLayout) getParent().getLayout();
-                    containerLayout.show(getParent(), WrappedCardLayout.CardNames.IMAGEPAGE);
+                    SwingUtilities.invokeLater(Imagepage::new);
+                    dispose();
                 }
             }
         );
@@ -80,5 +76,10 @@ public class Homepage extends JPanel { /* Logic attributes */
         creditsConstraints.gridwidth = 3;
         credits = new Label("created by Villani Luca and Mezzogori Alessandro");
         this.add(credits, creditsConstraints);
+
+        pack();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true); // shows jframe
+        requestFocus(); // requestes focus for event dispatching
     }
 }

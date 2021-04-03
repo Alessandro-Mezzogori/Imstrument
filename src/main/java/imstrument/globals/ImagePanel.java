@@ -17,18 +17,22 @@ public class ImagePanel extends JPanel {
     private BufferedImage image;
     private int x, y;
 
-    public ImagePanel(URL url){
+    public ImagePanel(URL url) {
         /* set default coordinates of image in panel*/
         x = 0;
         y = 0;
         /* attempt to retrieve image from path */
-        try{
+        try {
             image = ImageIO.read(url);
-        } catch (IOException e){
+        } catch (IOException e) {
             // TODO imlement error catching
             e.printStackTrace();
             System.out.println("Image not found at path: " + url.toString());
         }
+    }
+
+    public ImagePanel(){
+        image = null;
     }
 
     /**
@@ -51,8 +55,14 @@ public class ImagePanel extends JPanel {
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        Dimension size = this.getSize();
-        g.drawImage(image.getScaledInstance(size.width, size.height, BufferedImage.TYPE_INT_RGB),0, 0, this);
+        if(image != null) {
+            Dimension parentSize = this.getSize();
+            Dimension imageSize = this.getPreferredSize();
+            Dimension marginSize = new Dimension(20, 20);
+            this.x = (parentSize.width - imageSize.width - marginSize.width)/2;
+            this.y = (parentSize.height - imageSize.height - marginSize.height)/2;
+            g.drawImage(image, this.x, this.y, this);
+        }
     }
     
     @Override
