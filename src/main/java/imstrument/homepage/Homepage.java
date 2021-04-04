@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * specialized JPanel to show the homepage of the application Imstrument
@@ -82,5 +84,15 @@ public class Homepage extends JFrame { /* Logic attributes */
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true); // shows jframe
         requestFocus(); // requestes focus for event dispatching
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                imstrumentLogo.closeAudioThread();
+                super.windowClosing(e);
+            }
+
+
+        });
     }
 }

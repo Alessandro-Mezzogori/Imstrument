@@ -1,6 +1,9 @@
 package imstrument.globals;
 
-import imstrument.sound.algorithm.AudioThread;
+import imstrument.sound.openal.AudioThread;
+import imstrument.sound.waves.SawToothWave;
+import imstrument.sound.waves.SineWave;
+import imstrument.sound.waves.Wave;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -23,21 +26,17 @@ public class ImagePanel extends JPanel {
     /* audio thread params */
     AudioThread audioThread;
     private boolean shouldGenerate;
-    private int wavePos;
-
+    private final Wave wave;
     public ImagePanel(URL url, Dimension margins, Point startingPoint, boolean centerimage) {
         /* initialize audio thread*/
+        //wave = new SineWave(Short.MAX_VALUE, 440);
+        wave = new SawToothWave(Short.MAX_VALUE, 440);
         audioThread = new AudioThread(()->
             {
                 if(!shouldGenerate){
                     return null;
                 }
-                short[] s = new short[AudioThread.BUFFER_SIZE];
-                for(int i = 0; i < AudioThread.BUFFER_SIZE; i++)
-                {
-                    s[i] = (short)((Short.MAX_VALUE*Math.sin((2*Math.PI * 440) / AudioThread.SAMPLE_RATE * wavePos++)));
-                }
-                return s;
+                return wave.generate(AudioThread.BUFFER_SIZE,AudioThread.SAMPLE_RATE);
             }
         );
 
@@ -159,14 +158,12 @@ public class ImagePanel extends JPanel {
         @Override
         public void mousePressed(MouseEvent e) {
             if(image != null) {
-                Point p = e.getPoint();
-                p.x -= currentStartCorner.x;
-                p.y -= currentStartCorner.y;
-                Color pixelColor = new Color(image.getRGB(p.x, p.y));
+                //Point p = e.getPoint();
+                //p.x -= currentStartCorner.x;
+                //p.y -= currentStartCorner.y;
+                //Color pixelColor = new Color(image.getRGB(p.x, p.y));
 
-                int luminance = (int) (0.2126 * pixelColor.getRed() + 0.7152 * pixelColor.getGreen() + 0.0722 * pixelColor.getBlue());
                 if(!audioThread.isRunning()) {
-                    System.out.println("running audio");
                     shouldGenerate = true;
                     audioThread.triggerPlayback();
                 }

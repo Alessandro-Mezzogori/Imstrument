@@ -1,10 +1,8 @@
 package imstrument.start;
 
 import imstrument.homepage.Homepage;
-import imstrument.sound.algorithm.AudioThread;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class StartApp {
     public static void main(String[] args){

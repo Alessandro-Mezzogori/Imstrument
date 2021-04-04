@@ -1,24 +1,31 @@
 imstrument/start/StartApp.java
  imstrument.start.StartApp
-imstrument/globals/DimensionComparator.java
- imstrument.globals.DimensionComparator
-imstrument/sound/algorithm/OpenAlException.java
- imstrument.sound.algorithm.OpenAlException
-imstrument/sound/algorithm/SoundAlgorithm.java
- imstrument.sound.algorithm.SoundAlgorithm
-imstrument/globals/GlobalSetting.java
- imstrument.globals.GlobalSetting
-imstrument/sound/algorithm/AudioThread.java
- imstrument.sound.algorithm.AudioThread
+imstrument/sound/waves/SineWave.java
+ imstrument.sound.waves.SineWave
+imstrument/sound/utils/Waves.java
+ imstrument.sound.utils.Waves
+imstrument/sound/waves/Wave.java
+ imstrument.sound.waves.Wave
+imstrument/sound/openal/OpenAlException.java
+ imstrument.sound.openal.OpenAlException
 imstrument/globals/ImageSynthetizer.java
  imstrument.globals.ImageSynthetizer
+imstrument/globals/GlobalSetting.java
+ imstrument.globals.GlobalSetting
+imstrument/sound/openal/AudioThread.java
+ imstrument.sound.openal.AudioThread
+imstrument/globals/DimensionComparator.java
+ imstrument.globals.DimensionComparator
 imstrument/homepage/Homepage.java
  imstrument.homepage.Homepage
  imstrument.homepage.Homepage$1
-imstrument/globals/ImagePanel.java
- imstrument.globals.ImagePanel
- imstrument.globals.ImagePanel$ImageMouseListener
+ imstrument.homepage.Homepage$2
 imstrument/imagepage/Imagepage.java
  imstrument.imagepage.Imagepage
  imstrument.imagepage.Imagepage$1
  imstrument.imagepage.Imagepage$2
+imstrument/globals/ImagePanel.java
+ imstrument.globals.ImagePanel
+ imstrument.globals.ImagePanel$ImageMouseListener
+imstrument/sound/waves/SawToothWave.java
+ imstrument.sound.waves.SawToothWave

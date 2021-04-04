@@ -1,4 +1,4 @@
-package imstrument.sound.algorithm;
+package imstrument.sound.openal;
 
 import static org.lwjgl.openal.AL10.*;
 

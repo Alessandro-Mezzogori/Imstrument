@@ -1,4 +1,4 @@
-package imstrument.sound.algorithm;
+package imstrument.sound.openal;
 
 import org.lwjgl.openal.AL;
 import org.lwjgl.openal.ALC;
@@ -85,6 +85,8 @@ public class AudioThread extends Thread {
 
     public void close(){
         closed = true;
+        // to exit loop
+        triggerPlayback();
     }
 
     private void bufferSamples(short[] samples){
