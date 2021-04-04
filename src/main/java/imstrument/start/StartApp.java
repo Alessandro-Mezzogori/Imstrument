@@ -1,6 +1,7 @@
 package imstrument.start;
 
 import imstrument.homepage.Homepage;
+import imstrument.sound.algorithm.AudioThread;
 
 import javax.swing.*;
 import java.awt.*;

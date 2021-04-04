@@ -77,6 +77,7 @@ public class Homepage extends JFrame { /* Logic attributes */
         credits = new Label("created by Villani Luca and Mezzogori Alessandro");
         this.add(credits, creditsConstraints);
 
+        setMinimumSize(GlobalSetting.MINIMUM_WINDOW_SIZE);
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true); // shows jframe

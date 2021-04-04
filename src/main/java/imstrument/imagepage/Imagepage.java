@@ -2,19 +2,16 @@ package imstrument.imagepage;
 
 /* imstrument packages */
 
+import imstrument.globals.GlobalSetting;
 import imstrument.globals.ImagePanel;
 import imstrument.homepage.Homepage;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 /**
@@ -24,6 +21,10 @@ public class Imagepage extends JFrame {
     /* GUI components */
     JMenuBar menuBar;
     ImagePanel imagePanel;
+
+    //temp
+    private boolean shouldGenerate;
+    private int wavePos;
     public Imagepage(){
         /* initialize components */
         /* create menubar */
@@ -89,7 +90,16 @@ public class Imagepage extends JFrame {
         this.add(menuBar, BorderLayout.NORTH);
         this.add(imagePanel, BorderLayout.CENTER);
 
-        setPreferredSize(new Dimension(800, 500));
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                imagePanel.closeAudioThread();
+                super.windowClosing(e);
+            }
+        });
+
+
+        setMinimumSize(GlobalSetting.MINIMUM_WINDOW_SIZE);
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true); // shows jframe
@@ -98,6 +108,7 @@ public class Imagepage extends JFrame {
 
     private void importImage(){
         //TODO compatibilità gif
+        System.out.println(imagePanel.getBounds());
         JFileChooser imageChooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "JPG & PNG", "jpg", "png"
@@ -111,7 +122,7 @@ public class Imagepage extends JFrame {
                 //TODO notifica utente in caso di errore e sopprimi chiusura
                 e.printStackTrace();
             }
-            System.out.println(imageChooser.getSelectedFile().getName());
+            //System.out.println(imageChooser.getSelectedFile().getName());
         }
     }
 }
