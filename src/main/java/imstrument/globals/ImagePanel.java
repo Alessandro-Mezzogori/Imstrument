@@ -1,9 +1,9 @@
 package imstrument.globals;
 
 import imstrument.sound.openal.AudioThread;
-import imstrument.sound.waves.SawToothWave;
-import imstrument.sound.waves.SineWave;
 import imstrument.sound.waves.Wave;
+import imstrument.sound.waves.WaveSummer;
+import imstrument.sound.waves.WaveType;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -25,18 +25,37 @@ public class ImagePanel extends JPanel {
 
     /* audio thread params */
     AudioThread audioThread;
-    private boolean shouldGenerate;
-    private final Wave wave;
+    private final WaveSummer waveSummer;
+
     public ImagePanel(URL url, Dimension margins, Point startingPoint, boolean centerimage) {
-        /* initialize audio thread*/
-        //wave = new SineWave(Short.MAX_VALUE, 440);
-        wave = new SawToothWave(Short.MAX_VALUE, 440);
-        audioThread = new AudioThread(()->
-            {
-                if(!shouldGenerate){
-                    return null;
+        /*
+            roba temporanea per i test sulla generazione del suono
+            verrano sostituiti dalle manipolazioni create dettate
+            dall'algoritmo scelto
+         */
+        Wave[] waves = new Wave[3];
+        waves[0] = new Wave(Short.MAX_VALUE, 261.6, 0, 1);
+        waves[0].setWaveform(WaveType.SINE);
+
+        waves[1] = new Wave(Short.MAX_VALUE, 440, 1, 0.5);
+        waves[1].setWaveform(WaveType.SAW);
+
+        waves[2] = new Wave(Short.MAX_VALUE, 200, 0.75, 0.2);
+        waves[2].setWaveform(WaveType.SAW);
+
+        /* initialize audio thread and WaveSummer*/
+
+        waveSummer = new WaveSummer(waves);
+        audioThread = new AudioThread(() -> {
+                if(waveSummer.isShouldGenerate()) {
+                    short[] samples = new short[AudioThread.BUFFER_SIZE];
+                    for (int i = 0; i < AudioThread.BUFFER_SIZE; i++) {
+                        samples[i] += waveSummer.generateSample();
+
+                    }
+                    return samples;
                 }
-                return wave.generate(AudioThread.BUFFER_SIZE,AudioThread.SAMPLE_RATE);
+                return null;
             }
         );
 
@@ -56,7 +75,7 @@ public class ImagePanel extends JPanel {
             System.out.println("Image not found at path: " + url.toString());
 
             this.image = null;
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             //TODO temporary stack trace and system print
             //e.printStackTrace();
             this.image = null;
@@ -67,18 +86,18 @@ public class ImagePanel extends JPanel {
         /* initialize synth */
     }
 
-    public ImagePanel(){
+    public ImagePanel() {
         this(null, new Dimension(0, 0), new Point(0, 0), true);
     }
 
-    public ImagePanel(URL url){
+    public ImagePanel(URL url) {
         this(url, new Dimension(0, 0), new Point(0, 0), true);
     }
 
     @Override
-    public void paintComponent(Graphics g){
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if(image != null) {
+        if (image != null) {
             Dimension parentSize = this.getSize();
             Dimension imageSize = this.getPreferredSize();
             this.currentStartCorner.x = this.startingPoint.x;
@@ -87,21 +106,21 @@ public class ImagePanel extends JPanel {
             System.out.println(parentSize);
             System.out.println(imageSize);
 
-            if(dimensionComparator.isBigger(imageSize, parentSize)) {
+            if (dimensionComparator.isBigger(imageSize, parentSize)) {
 
                 imageSize = this.getScaledSize(true);
                 System.out.println(imageSize);
             }
 
             if (this.centerImage) {
-                this.currentStartCorner.x = (parentSize.width - imageSize.width)/2 - this.margins.width;
-                this.currentStartCorner.y = (parentSize.height - imageSize.height)/2 - this.margins.height;
+                this.currentStartCorner.x = (parentSize.width - imageSize.width) / 2 - this.margins.width;
+                this.currentStartCorner.y = (parentSize.height - imageSize.height) / 2 - this.margins.height;
             }
             //TODO rimpiazzare con OPENCV per migliore qualità e velocità
             g.drawImage(image, this.currentStartCorner.x, this.currentStartCorner.y, imageSize.width, imageSize.height, this);
         }
     }
-    
+
     @Override
     public Dimension getPreferredSize() {
         return image != null ? new Dimension(image.getWidth(), image.getHeight()) : super.getPreferredSize();
@@ -116,10 +135,11 @@ public class ImagePanel extends JPanel {
      * Returns the Dimension of the image scaled to the Dimension of the JPanel
      * if respectRatio is true it chooses the side with the biggest difference
      * from the parent to resize correctly.
+     *
      * @param respectRatio if true it returns with the same ratio of the image
      * @return scaled dimension of the image
      */
-    public Dimension getScaledSize(boolean respectRatio){
+    public Dimension getScaledSize(boolean respectRatio) {
         Dimension scaledDimension = new Dimension();
         Dimension panelDimension = this.getSize();
         Dimension imageDimension = this.getPreferredSize();
@@ -127,18 +147,16 @@ public class ImagePanel extends JPanel {
         int widthDifference = imageDimension.width - panelDimension.width;
         int heightDifference = imageDimension.height - panelDimension.height;
 
-        if(respectRatio){
-            double aspectRatio = ((double) imageDimension.width)/imageDimension.height;
-            if(widthDifference <= heightDifference){
+        if (respectRatio) {
+            double aspectRatio = ((double) imageDimension.width) / imageDimension.height;
+            if (widthDifference <= heightDifference) {
                 scaledDimension.height = imageDimension.height - heightDifference;
-                scaledDimension.width = (int) (aspectRatio*scaledDimension.height);
-            }
-            else{
+                scaledDimension.width = (int) (aspectRatio * scaledDimension.height);
+            } else {
                 scaledDimension.width = imageDimension.width - widthDifference;
                 scaledDimension.height = (int) (scaledDimension.width / aspectRatio);
             }
-        }
-        else{
+        } else {
             scaledDimension.height = imageDimension.height - heightDifference;
             scaledDimension.width = imageDimension.width - widthDifference;
         }
@@ -147,6 +165,7 @@ public class ImagePanel extends JPanel {
 
     /**
      * sets new image of ImagePanel and updates the current shown image
+     *
      * @param image image to be shown in the ImagePanel
      */
     public void setImage(BufferedImage image) {
@@ -157,22 +176,22 @@ public class ImagePanel extends JPanel {
     private class ImageMouseListener extends MouseAdapter {
         @Override
         public void mousePressed(MouseEvent e) {
-            if(image != null) {
+            if (image != null) {
                 //Point p = e.getPoint();
                 //p.x -= currentStartCorner.x;
                 //p.y -= currentStartCorner.y;
                 //Color pixelColor = new Color(image.getRGB(p.x, p.y));
-
-                if(!audioThread.isRunning()) {
-                    shouldGenerate = true;
+                if (!audioThread.isRunning()) {
+                    waveSummer.start();
                     audioThread.triggerPlayback();
                 }
+
             }
         }
 
         @Override
-        public void mouseReleased(MouseEvent e){
-            shouldGenerate = false;
+        public void mouseReleased(MouseEvent e) {
+            waveSummer.stop();
         }
     }
 

@@ -1,27 +1,97 @@
 package imstrument.sound.waves;
 
-public abstract class Wave {
-    protected short amplitude;
-    protected int frequency;
-    protected int time;
+import java.util.Random;
 
-    public Wave(short amplitude, int frequency) {
-        this.amplitude = amplitude;
+public class Wave {
+    public static final int DEFAULT_SAMPLE_RATE = 44100;
+
+    protected short maxAmplitude;
+    private double attack;
+    private double decay;
+
+    private boolean decaying;
+    protected boolean decayed;
+    private double startDecayTime;
+
+    private double time;
+    private double frequency;
+
+    private double attackAmplitudeSlice;
+    private double decayAmplitudeSlice;
+
+    private WaveType waveform;
+
+    public Wave(short maxAmplitude, double frequency, double attack, double decay){
+        this.maxAmplitude = maxAmplitude;
         this.frequency = frequency;
-        this.time = 0;
+
+        this.attack = attack;
+        this.attackAmplitudeSlice = maxAmplitude / attack;
+
+        this.decay = decay;
+        this.decayAmplitudeSlice = maxAmplitude / decay;
+
+        this.waveform = WaveType.SINE;
+        reset();
+    }
+
+    /**
+     * returns the next sample of the wave
+     * containing the wave values
+     * @return returns short with the value of the next sample
+     */
+    public short generateSample(int sampleIndex, int sampleRate){
+        time = ((double) (sampleIndex)) / sampleRate;
+        short amplitude = (short) Math.min(attackAmplitudeSlice * time, maxAmplitude);
+
+        if(this.decaying){
+            amplitude = (short) Math.max(0.0, amplitude - decayAmplitudeSlice*(time - startDecayTime));
+            if(amplitude <= 0) {
+                this.decayed = true;
+            }
+        }
+
+        return (short) (amplitude * waveFunction());
+    }
+
+    public double waveFunction(){
+        return switch (waveform) {
+            case SINE -> Math.sin(2 * Math.PI * frequency * time);
+            case SAW -> 2 * (time * frequency - Math.floor(0.5 + time * frequency));
+            case SQUARE -> Math.signum(Math.sin(2 * Math.PI * frequency * time));
+            case TRIANGLE -> Math.abs(2 * (time * frequency - Math.floor(0.5 + time * frequency)));
+            case NOISE -> 2 * Math.random() - 1.0;
+        };
+    }
+
+    /**
+     * starts the decay of the sound
+     */
+    public void startDecaying(){
+        decaying = true;
+        startDecayTime = time;
     }
 
     /**
      * reset the generation of the wave
      */
     public void reset(){
-        time = 0;
+        this.decaying = false;
+        this.decayed = false;
     }
-    /**
-     * returns a short array of bufferSize size
-     * containing the wave values
-     * @param bufferSize the length the of the return array
-     * @return returns the arrays containing the wave values
-     */
-    public abstract short[] generate(int bufferSize, int sampleRate);
+
+    /* setters */
+    public void setAttack(double attack) {
+        this.attack = attack;
+        this.attackAmplitudeSlice = maxAmplitude / attack;
+    }
+
+    public void setDecay(double decay) {
+        this.decay = decay;
+        this.decayAmplitudeSlice = decayAmplitudeSlice / decay;
+    }
+
+    public void setWaveform(WaveType waveform) {
+        this.waveform = waveform;
+    }
 }
