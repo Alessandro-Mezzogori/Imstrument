@@ -1,6 +1,7 @@
 package imstrument.globals;
 
 import imstrument.sound.openal.AudioThread;
+import imstrument.sound.waves.Envelope;
 import imstrument.sound.waves.Wave;
 import imstrument.sound.waves.WaveSummer;
 import imstrument.sound.waves.WaveType;
@@ -12,6 +13,7 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * JPanel specialized to show images
@@ -33,25 +35,23 @@ public class ImagePanel extends JPanel {
             verrano sostituiti dalle manipolazioni create dettate
             dall'algoritmo scelto
          */
-        Wave[] waves = new Wave[3];
-        waves[0] = new Wave(Short.MAX_VALUE, 261.6, 0, 1);
-        waves[0].setWaveform(WaveType.SINE);
+        ArrayList<Wave> waves = new ArrayList<Wave>();
+        Wave wave1 = new Wave(Short.MAX_VALUE, 440, new Envelope(0.5, 0.1, 0.2, 1));
+        wave1.setWaveform(WaveType.SINE);
 
-        waves[1] = new Wave(Short.MAX_VALUE, 440, 1, 0.5);
-        waves[1].setWaveform(WaveType.SAW);
+        //TODO check for attack time not being registered in the modulating wave
+        Wave modulating = new Wave((short)1, 80, new Envelope( 1, 0, 0.2, 1));
+        modulating.setWaveform(WaveType.SINE);
 
-        waves[2] = new Wave(Short.MAX_VALUE, 200, 0.75, 0.2);
-        waves[2].setWaveform(WaveType.SAW);
-
+        wave1.setModulatingWave(modulating, 2);
         /* initialize audio thread and WaveSummer*/
-
+        waves.add(wave1);
         waveSummer = new WaveSummer(waves);
         audioThread = new AudioThread(() -> {
                 if(waveSummer.isShouldGenerate()) {
                     short[] samples = new short[AudioThread.BUFFER_SIZE];
                     for (int i = 0; i < AudioThread.BUFFER_SIZE; i++) {
-                        samples[i] += waveSummer.generateSample();
-
+                        samples[i] = waveSummer.generateSample();
                     }
                     return samples;
                 }

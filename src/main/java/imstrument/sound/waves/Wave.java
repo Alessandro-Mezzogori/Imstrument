@@ -1,62 +1,68 @@
 package imstrument.sound.waves;
 
-import java.util.Random;
-
 public class Wave {
+    /**
+     * default sample rate of all Wave instances, standard of WAV
+     */
     public static final int DEFAULT_SAMPLE_RATE = 44100;
 
+    /**
+     * max amplitude of the Wave istance
+     */
     protected short maxAmplitude;
-    private double attack;
-    private double decay;
-
-    private boolean decaying;
-    protected boolean decayed;
-    private double startDecayTime;
-
-    private double time;
+    /**
+     * frequency of the current instance of Wave
+     */
     private double frequency;
 
-    private double attackAmplitudeSlice;
-    private double decayAmplitudeSlice;
 
+
+    /* managing and generation attributes*/
+    /**
+     * classifier of which type of waveform is the current istance
+     */
     private WaveType waveform;
 
-    public Wave(short maxAmplitude, double frequency, double attack, double decay){
+
+
+    /* fm modulation */
+    Wave modulatingWave;
+    double indexOfModulation;
+    Envelope envelope;
+
+    public Wave(short maxAmplitude, double frequency, Envelope envelope){
         this.maxAmplitude = maxAmplitude;
         this.frequency = frequency;
 
-        this.attack = attack;
-        this.attackAmplitudeSlice = maxAmplitude / attack;
-
-        this.decay = decay;
-        this.decayAmplitudeSlice = maxAmplitude / decay;
-
+        this.envelope = envelope;
         this.waveform = WaveType.SINE;
+
         reset();
     }
 
     /**
      * returns the next sample of the wave
-     * containing the wave values
      * @return returns short with the value of the next sample
      */
-    public short generateSample(int sampleIndex, int sampleRate){
-        time = ((double) (sampleIndex)) / sampleRate;
-        short amplitude = (short) Math.min(attackAmplitudeSlice * time, maxAmplitude);
-
-        if(this.decaying){
-            amplitude = (short) Math.max(0.0, amplitude - decayAmplitudeSlice*(time - startDecayTime));
-            if(amplitude <= 0) {
-                this.decayed = true;
-            }
-        }
-
-        return (short) (amplitude * waveFunction());
+    public double generateSample(double time){
+        double amplitude = envelope.getAmplitudeAmplifier(time)*maxAmplitude;
+        return amplitude * waveFunction(time);
     }
 
-    public double waveFunction(){
+
+    /**
+     * retrieves the function of the wave object corrisponding to the current waveForm attribute value
+     * @return a value between -1 and 1
+     */
+    protected double waveFunction(double time){
+        double modulatingFrequency = 0.0;
+        if(modulatingWave != null) {
+            System.out.println(modulatingWave.generateSample(time));
+            modulatingFrequency = indexOfModulation * modulatingWave.generateSample(time);
+        }
+        //System.out.println(modulatingFrequency);
         return switch (waveform) {
-            case SINE -> Math.sin(2 * Math.PI * frequency * time);
+            case SINE -> Math.sin(2 * Math.PI * frequency * time + modulatingFrequency);
             case SAW -> 2 * (time * frequency - Math.floor(0.5 + time * frequency));
             case SQUARE -> Math.signum(Math.sin(2 * Math.PI * frequency * time));
             case TRIANGLE -> Math.abs(2 * (time * frequency - Math.floor(0.5 + time * frequency)));
@@ -67,31 +73,41 @@ public class Wave {
     /**
      * starts the decay of the sound
      */
-    public void startDecaying(){
-        decaying = true;
-        startDecayTime = time;
+    public void startRelease(){
+        envelope.startRelease();
+
+        if(modulatingWave != null)
+            modulatingWave.startRelease();
     }
 
     /**
      * reset the generation of the wave
      */
-    public void reset(){
-        this.decaying = false;
-        this.decayed = false;
+    public void reset() {
+        envelope.reset();
+
+        if(modulatingWave != null)
+            modulatingWave.reset();
     }
+
+    /* methods for envelope profile */
+
+    public boolean isReleased(){return envelope.state == EnvelopeState.RELEASED;}
 
     /* setters */
-    public void setAttack(double attack) {
-        this.attack = attack;
-        this.attackAmplitudeSlice = maxAmplitude / attack;
-    }
-
-    public void setDecay(double decay) {
-        this.decay = decay;
-        this.decayAmplitudeSlice = decayAmplitudeSlice / decay;
+    public void setAttack(double attack, double attackVelocity) {
+        envelope.setAttack(attack, attackVelocity);
     }
 
     public void setWaveform(WaveType waveform) {
         this.waveform = waveform;
+    }
+
+    /* modulating wave methods */
+
+    public void setModulatingWave(Wave modulatingWave, double indexOfModulation) {
+        this.modulatingWave = modulatingWave;
+        this.modulatingWave.maxAmplitude = 1;
+        this.indexOfModulation = indexOfModulation;
     }
 }

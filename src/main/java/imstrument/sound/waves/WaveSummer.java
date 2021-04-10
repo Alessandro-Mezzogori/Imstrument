@@ -13,7 +13,7 @@ public class WaveSummer {
     public static final int DEFAULT_SAMPLE_RATE = 44100;
 
     private int sampleIndex;
-    private boolean decaying;
+    private boolean release;
 
     public WaveSummer(ArrayList<Wave> waves){
         this.waves = waves;
@@ -33,25 +33,28 @@ public class WaveSummer {
 
     /* generate sample methods */
     public short generateSample(){
-        double sample = 0;
+
         /* handle wave decay */
-        boolean wavesDecayed = true;
-        if(decaying){
+        boolean wavesReleased = true;
+        if(release){
             for(Wave wave : this.waves) {
-                wavesDecayed = wavesDecayed && wave.decayed;
+                wavesReleased = wavesReleased && wave.isReleased();
             }
 
-            if(wavesDecayed){
+            if(wavesReleased){
                 forceWaveReset();
                 return 0;
             }
         }
 
         /* generate sample */
+        double time = (double)(this.sampleIndex++)/this.sampleRate;
+        double sample = 0.0;
         for(Wave wave: this.waves){
-            sample += (wave.generateSample(this.sampleIndex++, this.sampleRate) / amplitudeSum);
+            sample += ((double)wave.generateSample(time))/this.amplitudeSum;
         }
-        return (short) (Short.MAX_VALUE*sample);
+        System.out.println(sample);
+        return (short) (sample*this.amplitudeSum);
     }
 
     /* wave generation controls */
@@ -60,19 +63,19 @@ public class WaveSummer {
     }
 
     public void stop() {
-        startWavesDecay();
+        startWavesRelease();
     }
 
-    private void startWavesDecay(){
-        this.decaying = true;
+    private void startWavesRelease(){
+        this.release = true;
         for(Wave wave : waves)
-            wave.startDecaying();
+            wave.startRelease();
     }
 
     private void reset(){
         sampleIndex = 0;
         shouldGenerate = false;
-        decaying = false;
+        release = false;
     }
 
     private void forceWaveReset(){

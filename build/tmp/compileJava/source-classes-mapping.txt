@@ -1,22 +1,27 @@
 imstrument/start/StartApp.java
  imstrument.start.StartApp
-imstrument/globals/DimensionComparator.java
- imstrument.globals.DimensionComparator
-imstrument/sound/openal/AudioThread.java
- imstrument.sound.openal.AudioThread
-imstrument/sound/waves/Wave.java
- imstrument.sound.waves.Wave
- imstrument.sound.waves.Wave$1
-imstrument/globals/GlobalSetting.java
- imstrument.globals.GlobalSetting
+imstrument/sound/waves/EnvelopeState.java
+ imstrument.sound.waves.EnvelopeState
+imstrument/sound/waves/Envelope.java
+ imstrument.sound.waves.Envelope
+ imstrument.sound.waves.Envelope$1
 imstrument/sound/waves/WaveSummer.java
  imstrument.sound.waves.WaveSummer
 imstrument/sound/waves/WaveType.java
  imstrument.sound.waves.WaveType
-imstrument/sound/openal/OpenAlException.java
- imstrument.sound.openal.OpenAlException
 imstrument/globals/ImageSynthetizer.java
  imstrument.globals.ImageSynthetizer
+imstrument/globals/GlobalSetting.java
+ imstrument.globals.GlobalSetting
+imstrument/sound/openal/AudioThread.java
+ imstrument.sound.openal.AudioThread
+imstrument/globals/DimensionComparator.java
+ imstrument.globals.DimensionComparator
+imstrument/sound/waves/Wave.java
+ imstrument.sound.waves.Wave
+ imstrument.sound.waves.Wave$1
+imstrument/sound/openal/OpenAlException.java
+ imstrument.sound.openal.OpenAlException
 imstrument/homepage/Homepage.java
  imstrument.homepage.Homepage
  imstrument.homepage.Homepage$1
