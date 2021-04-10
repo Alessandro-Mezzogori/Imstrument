@@ -36,17 +36,35 @@ public class ImagePanel extends JPanel {
             verrano sostituiti dalle manipolazioni create dettate
             dall'algoritmo scelto
          */
-        ArrayList<Wave> waves = new ArrayList<Wave>();
-        Wave carrier = new Wave(Short.MAX_VALUE, 261.6, new Envelope(0.5, 0.001, 0.5, 0.8, 0.01, 0.5,0.2, 0.1));
+        Envelope envelope = new Envelope(0.5, 0.001, 0.4, 0.8, 0.01, 0.4,0.2, 0.1);
+        ArrayList<Wave> waves = new ArrayList<>();
+        Wave carrier = new Wave(Short.MAX_VALUE, 261.6, envelope);
         carrier.setWaveform(WaveType.SINE);
-
-        Wave modulating = new Wave((short)1, 261.6, new Envelope( 0.5, 0.001, 0.5, 0, 0.01, 0.5,0.2, 0.1));
+        Wave modulating = new Wave((short)1, 261.6, envelope);
         modulating.setWaveform(WaveType.SINE);
-
         carrier.setModulatingWave(modulating, 6);
+
+        Envelope envelope1 = new Envelope(1.0, 0.1, 0.3, 0.8, 0.01, 0.3,0.2, 0.1);
+        Wave carrier1 = new Wave(Short.MAX_VALUE, 329.6, envelope1);
+        carrier.setWaveform(WaveType.SINE);
+        Wave modulating1 = new Wave((short)1, 329.6, envelope1);
+        modulating.setWaveform(WaveType.SINE);
+        carrier1.setModulatingWave(modulating1, 6);
+
+        Envelope envelope2 = new Envelope(1.0, 0.001, 0.3, 0.8, 0.01, 0.3,0.2, 0.1);
+        Wave carrier2 = new Wave(Short.MAX_VALUE, 130.8, envelope2);
+        carrier.setWaveform(WaveType.SINE);
+        Wave modulating2 = new Wave((short)1, 130.8, envelope2);
+        modulating.setWaveform(WaveType.SINE);
+        carrier2.setModulatingWave(modulating2, 6);
+
+
+
 
         /* initialize audio thread and WaveSummer*/
         waves.add(carrier);
+        waves.add(carrier1);
+        waves.add(carrier2);
         waveSummer = new WaveSummer(waves);
 
         audioThread = new AudioThread(() -> {
