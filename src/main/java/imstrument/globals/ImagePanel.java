@@ -26,8 +26,9 @@ public class ImagePanel extends JPanel {
     private final boolean centerImage;
 
     /* audio thread params */
-    AudioThread audioThread;
+    private final AudioThread audioThread;
     private final WaveSummer waveSummer;
+    //TODO temp frequency
 
     public ImagePanel(URL url, Dimension margins, Point startingPoint, boolean centerimage) {
         /*
@@ -36,17 +37,18 @@ public class ImagePanel extends JPanel {
             dall'algoritmo scelto
          */
         ArrayList<Wave> waves = new ArrayList<Wave>();
-        Wave wave1 = new Wave(Short.MAX_VALUE, 440, new Envelope(0.5, 0.1, 0.2, 1));
-        wave1.setWaveform(WaveType.SINE);
+        Wave carrier = new Wave(Short.MAX_VALUE, 261.6, new Envelope(0.5, 0.001, 0.5, 0.8, 0.01, 0.5,0.2, 0.1));
+        carrier.setWaveform(WaveType.SINE);
 
-        //TODO check for attack time not being registered in the modulating wave
-        Wave modulating = new Wave((short)1, 80, new Envelope( 1, 0, 0.2, 1));
+        Wave modulating = new Wave((short)1, 261.6, new Envelope( 0.5, 0.001, 0.5, 0, 0.01, 0.5,0.2, 0.1));
         modulating.setWaveform(WaveType.SINE);
 
-        wave1.setModulatingWave(modulating, 2);
+        carrier.setModulatingWave(modulating, 6);
+
         /* initialize audio thread and WaveSummer*/
-        waves.add(wave1);
+        waves.add(carrier);
         waveSummer = new WaveSummer(waves);
+
         audioThread = new AudioThread(() -> {
                 if(waveSummer.isShouldGenerate()) {
                     short[] samples = new short[AudioThread.BUFFER_SIZE];
@@ -82,8 +84,6 @@ public class ImagePanel extends JPanel {
         }
 
         this.addMouseListener(new ImageMouseListener());
-
-        /* initialize synth */
     }
 
     public ImagePanel() {
@@ -182,6 +182,8 @@ public class ImagePanel extends JPanel {
                 //p.y -= currentStartCorner.y;
                 //Color pixelColor = new Color(image.getRGB(p.x, p.y));
                 if (!audioThread.isRunning()) {
+                    // reset wave before starting a new sample generation
+                    waveSummer.resetTime();
                     waveSummer.start();
                     audioThread.triggerPlayback();
                 }

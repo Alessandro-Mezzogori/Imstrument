@@ -19,7 +19,7 @@ public class WaveSummer {
         this.waves = waves;
         sampleRate = DEFAULT_SAMPLE_RATE;
         updateAmplitudeSum();
-        reset();
+        resetTime();
     }
 
 
@@ -33,7 +33,6 @@ public class WaveSummer {
 
     /* generate sample methods */
     public short generateSample(){
-
         /* handle wave decay */
         boolean wavesReleased = true;
         if(release){
@@ -42,7 +41,7 @@ public class WaveSummer {
             }
 
             if(wavesReleased){
-                forceWaveReset();
+                shouldGenerate = false;
                 return 0;
             }
         }
@@ -53,7 +52,6 @@ public class WaveSummer {
         for(Wave wave: this.waves){
             sample += ((double)wave.generateSample(time))/this.amplitudeSum;
         }
-        System.out.println(sample);
         return (short) (sample*this.amplitudeSum);
     }
 
@@ -72,14 +70,10 @@ public class WaveSummer {
             wave.startRelease();
     }
 
-    private void reset(){
+    public void resetTime(){
         sampleIndex = 0;
-        shouldGenerate = false;
         release = false;
-    }
 
-    private void forceWaveReset(){
-        reset();
         for(Wave wave : this.waves)
             wave.reset();
     }

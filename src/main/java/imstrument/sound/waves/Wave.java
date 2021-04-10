@@ -15,15 +15,11 @@ public class Wave {
      */
     private double frequency;
 
-
-
     /* managing and generation attributes*/
     /**
      * classifier of which type of waveform is the current istance
      */
     private WaveType waveform;
-
-
 
     /* fm modulation */
     Wave modulatingWave;
@@ -57,16 +53,15 @@ public class Wave {
     protected double waveFunction(double time){
         double modulatingFrequency = 0.0;
         if(modulatingWave != null) {
-            System.out.println(modulatingWave.generateSample(time));
             modulatingFrequency = indexOfModulation * modulatingWave.generateSample(time);
         }
         //System.out.println(modulatingFrequency);
         return switch (waveform) {
             case SINE -> Math.sin(2 * Math.PI * frequency * time + modulatingFrequency);
-            case SAW -> 2 * (time * frequency - Math.floor(0.5 + time * frequency));
-            case SQUARE -> Math.signum(Math.sin(2 * Math.PI * frequency * time));
-            case TRIANGLE -> Math.abs(2 * (time * frequency - Math.floor(0.5 + time * frequency)));
-            case NOISE -> 2 * Math.random() - 1.0;
+            case SAW -> -(2/Math.PI) * Math.atan(1/Math.tan(time*Math.PI*frequency + modulatingFrequency)) ;
+            case SQUARE -> Math.signum(Math.sin(2 * Math.PI * frequency * time + modulatingFrequency));
+            case TRIANGLE -> Math.abs((2/Math.PI) * Math.atan(1/Math.tan(time*Math.PI*frequency + modulatingFrequency)));
+            //case NOISE -> 2 * Math.random() - 1.0;
         };
     }
 
@@ -103,6 +98,7 @@ public class Wave {
         this.waveform = waveform;
     }
 
+    public void setFrequency(double frequency) {this.frequency = frequency;}
     /* modulating wave methods */
 
     public void setModulatingWave(Wave modulatingWave, double indexOfModulation) {
