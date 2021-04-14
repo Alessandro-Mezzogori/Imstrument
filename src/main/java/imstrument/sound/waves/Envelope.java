@@ -35,7 +35,7 @@ public class Envelope {
     /**
      *
      */
-    private double sustainAmplifier = 1.0;
+    private double sustainAmplifier;
 
     /* release params */
     /**
@@ -110,10 +110,10 @@ public class Envelope {
 
     public double getAmplitudeAmplifier(double time){
         double amplifier = switch (this.state){
-            case ATTACK -> attackAmplifierPeak*(Math.exp(attackVelocity*time)-1.0)/attackDenominator;
-            case DECAY ->  attackAmplifierPeak - (attackAmplifierPeak - sustainAmplifier)*((Math.exp(decayVelocity*(time - startDecayTime))-1.0)/decayDenominator);
+            case ATTACK -> attackAmplifierPeak*(attackTime <= 0.0 ? 1.0 : (Math.exp(attackVelocity*time)-1.0)/attackDenominator);
+            case DECAY ->  attackAmplifierPeak - (attackAmplifierPeak - sustainAmplifier)*(decayTime <= 0 ? 1.0 : (Math.exp(decayVelocity*(time - startDecayTime))-1.0)/decayDenominator);
             case SUSTAIN -> sustainAmplifier;
-            case RELEASE -> startReleaseAmplifier*(1.0 - (Math.exp(releaseVelocity*(time - startReleaseTime))-1.0)/releaseDenominator);
+            case RELEASE -> startReleaseAmplifier*(releaseTime <= 0.0 ? 0.0 : (1.0 - (Math.exp(releaseVelocity*(time - startReleaseTime))-1.0)/releaseDenominator));
             case RELEASED -> 0.0;
         };
         updateEnvelopeState(time, amplifier);

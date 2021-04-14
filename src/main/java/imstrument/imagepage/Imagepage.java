@@ -54,12 +54,7 @@ public class Imagepage extends JFrame {
         /* import menu */
         // TODO import video
         JMenuItem importImage = new JMenuItem("Image");
-        importImage.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                importImage();
-            }
-        });
+        importImage.addActionListener(e -> importImage());
 
         JMenu importMenu = new JMenu("Import");
         importMenu.add(importImage);
@@ -107,7 +102,6 @@ public class Imagepage extends JFrame {
 
     private void importImage(){
         //TODO compatibilità gif
-        System.out.println(soundImagePanel.getBounds());
         JFileChooser imageChooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "JPG & PNG", "jpg", "png"

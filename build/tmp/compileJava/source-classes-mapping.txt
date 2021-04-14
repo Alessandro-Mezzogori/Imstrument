@@ -1,5 +1,5 @@
-imstrument/sound/utils/Octave.java
- imstrument.sound.utils.Octave
+imstrument/start/StartApp.java
+ imstrument.start.StartApp
 imstrument/homepage/Homepage.java
  imstrument.homepage.Homepage
  imstrument.homepage.Homepage$1
@@ -8,8 +8,6 @@ imstrument/sound/utils/ImagePanel.java
 imstrument/sound/waves/Envelope.java
  imstrument.sound.waves.Envelope
  imstrument.sound.waves.Envelope$1
-imstrument/sound/waves/WaveType.java
- imstrument.sound.waves.WaveType
 imstrument/sound/waves/WaveSummer.java
  imstrument.sound.waves.WaveSummer
 imstrument/sound/io/SoundKeyboard.java
@@ -20,23 +18,25 @@ imstrument/sound/openal/AudioThread.java
  imstrument.sound.openal.AudioThread
 imstrument/sound/utils/Note.java
  imstrument.sound.utils.Note
-imstrument/sound/utils/NoteFrequencyMapping.java
- imstrument.sound.utils.NoteFrequencyMapping
+imstrument/sound/utils/SoundImagePanel.java
+ imstrument.sound.utils.SoundImagePanel
+ imstrument.sound.utils.SoundImagePanel$ImageMouseListener
 imstrument/sound/waves/SoundWave.java
  imstrument.sound.waves.SoundWave
  imstrument.sound.waves.SoundWave$1
 imstrument/globals/DimensionComparator.java
  imstrument.globals.DimensionComparator
-imstrument/sound/openal/OpenAlException.java
- imstrument.sound.openal.OpenAlException
+imstrument/sound/utils/Octave.java
+ imstrument.sound.utils.Octave
 imstrument/sound/waves/EnvelopeState.java
  imstrument.sound.waves.EnvelopeState
-imstrument/start/StartApp.java
- imstrument.start.StartApp
+imstrument/sound/openal/OpenAlException.java
+ imstrument.sound.openal.OpenAlException
 imstrument/imagepage/Imagepage.java
  imstrument.imagepage.Imagepage
  imstrument.imagepage.Imagepage$1
  imstrument.imagepage.Imagepage$2
-imstrument/sound/utils/SoundImagePanel.java
- imstrument.sound.utils.SoundImagePanel
- imstrument.sound.utils.SoundImagePanel$ImageMouseListener
+imstrument/sound/utils/NoteFrequencyMapping.java
+ imstrument.sound.utils.NoteFrequencyMapping
+imstrument/sound/waves/SoundWaveType.java
+ imstrument.sound.waves.SoundWaveType

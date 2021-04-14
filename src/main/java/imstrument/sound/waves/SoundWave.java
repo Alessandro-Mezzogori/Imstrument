@@ -19,7 +19,7 @@ public class SoundWave {
     /**
      * classifier of which type of waveform is the current istance
      */
-    private WaveType waveform;
+    private SoundWaveType waveform;
 
     /**
      * the envelope describing the ADSR cycle of the amplitude
@@ -42,7 +42,7 @@ public class SoundWave {
         this.frequency = frequency;
 
         this.envelope = envelope;
-        this.waveform = WaveType.SINE;
+        this.waveform = SoundWaveType.SINE;
 
         reset();
     }
@@ -52,7 +52,7 @@ public class SoundWave {
         this.frequency = 261.63;
 
         this.envelope = new Envelope();
-        this.waveform = WaveType.SINE;
+        this.waveform = SoundWaveType.SINE;
         reset();
     }
 
@@ -110,7 +110,7 @@ public class SoundWave {
     public boolean isReleased(){return envelope.state == EnvelopeState.RELEASED;}
 
     /* setters */
-    public void setWaveform(WaveType waveform) {
+    public void setWaveform(SoundWaveType waveform) {
         this.waveform = waveform;
     }
 

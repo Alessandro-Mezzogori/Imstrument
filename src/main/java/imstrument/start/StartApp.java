@@ -8,7 +8,7 @@ import imstrument.sound.utils.Octave;
 import imstrument.sound.waves.Envelope;
 import imstrument.sound.waves.SoundWave;
 import imstrument.sound.waves.WaveSummer;
-import imstrument.sound.waves.WaveType;
+import imstrument.sound.waves.SoundWaveType;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -20,33 +20,44 @@ public class StartApp {
 
     public static void main(String[] args){
         /* crea una nuova istanza della imstrument.Homepage tramite il dispatcher degli eventi */
-        Envelope envelope = new Envelope(0.5, 0.001, 0.4, 0.8, 0.01, 0.4,0.2, 0.1);
         ArrayList<SoundWave> soundWaves = new ArrayList<>();
+
+
+        Envelope envelope = new Envelope(0.001, 0.001, 0.4, 0.2, 0.01, 0.0,0.0, 0.1);
         SoundWave carrier = new SoundWave(Short.MAX_VALUE, NoteFrequencyMapping.getNoteFrequency(Note.C, Octave._4), envelope);
-        carrier.setWaveform(WaveType.SINE);
+        carrier.setWaveform(SoundWaveType.SINE);
         SoundWave modulating = new SoundWave((short)1, NoteFrequencyMapping.getNoteFrequency(Note.C, Octave._4), envelope);
-        modulating.setWaveform(WaveType.SINE);
+        modulating.setWaveform(SoundWaveType.SINE);
         carrier.setModulatingWave(modulating, 6);
+        soundWaves.add(carrier);
 
-        Envelope envelope1 = new Envelope(1.0, 0.1, 0.3, 0.8, 0.01, 0.3,0.2, 0.1);
+        Envelope envelope1 = new Envelope(0.001, 0.1, 0.3, 0.25, 0.2, 0.0,0.0, 0.1);
         SoundWave carrier1 = new SoundWave(Short.MAX_VALUE, NoteFrequencyMapping.getNoteFrequency(Note.C, Octave._3), envelope1);
-        carrier.setWaveform(WaveType.SINE);
+        carrier1.setWaveform(SoundWaveType.SINE);
         SoundWave modulating1 = new SoundWave((short)1, NoteFrequencyMapping.getNoteFrequency(Note.C, Octave._3), envelope1);
-        modulating.setWaveform(WaveType.SINE);
+        modulating1.setWaveform(SoundWaveType.SINE);
         carrier1.setModulatingWave(modulating1, 6);
+        soundWaves.add(carrier1);
 
-        Envelope envelope2 = new Envelope(1.0, 0.001, 0.3, 0.8, 0.01, 0.3,0.2, 0.1);
+        /*
+        Envelope envelope2 = new Envelope(0.001, 0.001, 0.3, 0.2, 0.01, 0.0,0.0, 0.1);
         SoundWave carrier2 = new SoundWave(Short.MAX_VALUE, NoteFrequencyMapping.getNoteFrequency(Note.G, Octave._4), envelope2);
-        carrier.setWaveform(WaveType.SINE);
+        carrier2.setWaveform(SoundWaveType.SINE);
         SoundWave modulating2 = new SoundWave((short)1, NoteFrequencyMapping.getNoteFrequency(Note.G, Octave._4), envelope2);
-        modulating.setWaveform(WaveType.SINE);
-
+        modulating2.setWaveform(SoundWaveType.SINE);
         carrier2.setModulatingWave(modulating2, 6);
+        soundWaves.add(carrier2);
+        */
+
+        Envelope envelope3 = new Envelope(0.001, 0.001, 0.6, 0.2, 0.01, 0.0,0.0, 0.1);
+        SoundWave carrier3 = new SoundWave(Short.MAX_VALUE, NoteFrequencyMapping.getNoteFrequency(Note.C, Octave._6), envelope3);
+        carrier3.setWaveform(SoundWaveType.SAW);
+        SoundWave modulating3 = new SoundWave((short)1, NoteFrequencyMapping.getNoteFrequency(Note.C, Octave._6), envelope3);
+        modulating3.setWaveform(SoundWaveType.SINE);
+        carrier3.setModulatingWave(modulating3, 6);
+        soundWaves.add(carrier3);
 
         /* initialize audio thread and WaveSummer*/
-        soundWaves.add(carrier);
-        soundWaves.add(carrier1);
-        soundWaves.add(carrier2);
         waveSummer = new WaveSummer(soundWaves);
 
         audioThread = new AudioThread(() -> {
