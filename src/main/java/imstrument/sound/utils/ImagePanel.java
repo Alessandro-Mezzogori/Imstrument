@@ -1,10 +1,7 @@
-package imstrument.globals;
+package imstrument.sound.utils;
 
-import imstrument.sound.openal.AudioThread;
-import imstrument.sound.waves.Envelope;
-import imstrument.sound.waves.Wave;
-import imstrument.sound.waves.WaveSummer;
-import imstrument.sound.waves.WaveType;
+import imstrument.globals.DimensionComparator;
+import imstrument.start.StartApp;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -19,65 +16,17 @@ import java.util.ArrayList;
  * JPanel specialized to show images
  */
 public class ImagePanel extends JPanel {
-    private BufferedImage image;
-    private final Dimension margins;
-    private final Point startingPoint;
-    private final Point currentStartCorner;
-    private final boolean centerImage;
-
-    /* audio thread params */
-    private final AudioThread audioThread;
-    private final WaveSummer waveSummer;
-    //TODO temp frequency
-
+    protected BufferedImage image;
+    protected final Dimension margins;
+    protected final Point startingPoint;
+    protected final Point currentStartCorner;
+    protected final boolean centerImage;
     public ImagePanel(URL url, Dimension margins, Point startingPoint, boolean centerimage) {
         /*
             roba temporanea per i test sulla generazione del suono
             verrano sostituiti dalle manipolazioni create dettate
             dall'algoritmo scelto
          */
-        Envelope envelope = new Envelope(0.5, 0.001, 0.4, 0.8, 0.01, 0.4,0.2, 0.1);
-        ArrayList<Wave> waves = new ArrayList<>();
-        Wave carrier = new Wave(Short.MAX_VALUE, 261.6, envelope);
-        carrier.setWaveform(WaveType.SINE);
-        Wave modulating = new Wave((short)1, 261.6, envelope);
-        modulating.setWaveform(WaveType.SINE);
-        carrier.setModulatingWave(modulating, 6);
-
-        Envelope envelope1 = new Envelope(1.0, 0.1, 0.3, 0.8, 0.01, 0.3,0.2, 0.1);
-        Wave carrier1 = new Wave(Short.MAX_VALUE, 329.6, envelope1);
-        carrier.setWaveform(WaveType.SINE);
-        Wave modulating1 = new Wave((short)1, 329.6, envelope1);
-        modulating.setWaveform(WaveType.SINE);
-        carrier1.setModulatingWave(modulating1, 6);
-
-        Envelope envelope2 = new Envelope(1.0, 0.001, 0.3, 0.8, 0.01, 0.3,0.2, 0.1);
-        Wave carrier2 = new Wave(Short.MAX_VALUE, 130.8, envelope2);
-        carrier.setWaveform(WaveType.SINE);
-        Wave modulating2 = new Wave((short)1, 130.8, envelope2);
-        modulating.setWaveform(WaveType.SINE);
-        carrier2.setModulatingWave(modulating2, 6);
-
-
-
-
-        /* initialize audio thread and WaveSummer*/
-        waves.add(carrier);
-        waves.add(carrier1);
-        waves.add(carrier2);
-        waveSummer = new WaveSummer(waves);
-
-        audioThread = new AudioThread(() -> {
-                if(waveSummer.isShouldGenerate()) {
-                    short[] samples = new short[AudioThread.BUFFER_SIZE];
-                    for (int i = 0; i < AudioThread.BUFFER_SIZE; i++) {
-                        samples[i] = waveSummer.generateSample();
-                    }
-                    return samples;
-                }
-                return null;
-            }
-        );
 
         /* set default coordinates of image in panel*/
         this.startingPoint = startingPoint;
@@ -101,7 +50,6 @@ public class ImagePanel extends JPanel {
             this.image = null;
         }
 
-        this.addMouseListener(new ImageMouseListener());
     }
 
     public ImagePanel() {
@@ -189,34 +137,5 @@ public class ImagePanel extends JPanel {
     public void setImage(BufferedImage image) {
         this.image = image;
         this.repaint();
-    }
-
-    private class ImageMouseListener extends MouseAdapter {
-        @Override
-        public void mousePressed(MouseEvent e) {
-            if (image != null) {
-                //Point p = e.getPoint();
-                //p.x -= currentStartCorner.x;
-                //p.y -= currentStartCorner.y;
-                //Color pixelColor = new Color(image.getRGB(p.x, p.y));
-                if (!audioThread.isRunning()) {
-                    // reset wave before starting a new sample generation
-                    waveSummer.resetTime();
-                    waveSummer.start();
-                    audioThread.triggerPlayback();
-                }
-
-            }
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            waveSummer.stop();
-        }
-    }
-
-    /* audio thread cleanup on closing*/
-    public void closeAudioThread(){
-        audioThread.close();
     }
 }

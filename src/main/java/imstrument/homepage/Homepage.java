@@ -3,6 +3,8 @@ package imstrument.homepage;
 /* imstrument packages */
 import imstrument.globals.*;
 import imstrument.imagepage.Imagepage;
+import imstrument.sound.utils.ImagePanel;
+import imstrument.start.StartApp;
 
 /* general packages*/
 import javax.swing.*;
@@ -84,15 +86,5 @@ public class Homepage extends JFrame { /* Logic attributes */
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true); // shows jframe
         requestFocus(); // requestes focus for event dispatching
-
-        this.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                imstrumentLogo.closeAudioThread();
-                super.windowClosing(e);
-            }
-
-
-        });
     }
 }

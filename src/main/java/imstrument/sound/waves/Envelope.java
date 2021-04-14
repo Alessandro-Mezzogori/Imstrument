@@ -77,7 +77,7 @@ public class Envelope {
      * @param attackAmplifierPeak maximum amplifier value reached at the end of the attack curve value between [0.0, 1.0] (outside of it will be corrected to 0.0 or 1.0)
      * @param decayTime time in seconds to reach the sustain amplifier value
      * @param decayVelocity coefficient for the decay curve, the larger it is the faster the sound reaches the sustain amplifier value
-     * @param sustainAmplifierm value maintained during the sustain curve  value between [0.0, 1.0] (outside of it will be corrected to 0.0 or 1.0)
+     * @param sustainAmplifier value maintained during the sustain curve  value between [0.0, 1.0] (outside of it will be corrected to 0.0 or 1.0)
      * @param releaseTime time in seconds to reach an amplitude of 0.0
      * @param releaseVelocity coefficient for the realease curve, the larger it is the faster the sound reaches 0.0 amplitude
      */
@@ -102,6 +102,10 @@ public class Envelope {
         this.releaseTime = releaseTime;
         this.releaseVelocity = releaseVelocity;
         computeReleaseDenominator();
+    }
+
+    public Envelope(){
+        this(0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0);
     }
 
     public double getAmplitudeAmplifier(double time){
@@ -160,6 +164,20 @@ public class Envelope {
         release = false;
     }
 
+    public void importSettings(Envelope envelope){
+        this.attackTime = envelope.attackTime;
+        this.attackVelocity = envelope.attackVelocity;
+        this.attackAmplifierPeak = envelope.attackAmplifierPeak;
+
+        this.decayTime = envelope.decayTime;
+        this.decayVelocity = envelope.decayVelocity;
+
+        this.sustainAmplifier = envelope.sustainAmplifier;
+
+        this.releaseTime = envelope.releaseTime;
+        this.releaseVelocity = envelope.releaseVelocity;
+    }
+
     /* utils */
     private void computeAttackDenominator(){
         attackDenominator = Math.exp(attackVelocity* attackTime) - 1.0;
@@ -170,9 +188,5 @@ public class Envelope {
     }
 
     private void computeDecayDenominator(){decayDenominator = Math.exp(decayVelocity* decayTime) - 1.0;}
-    /* setters */
-    public void setAttack(double attackTime, double attackVelocity){
-        this.attackTime = attackTime;
-        this.attackVelocity = attackVelocity;
-    }
+
 }

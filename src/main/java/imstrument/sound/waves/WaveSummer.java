@@ -1,43 +1,33 @@
 package imstrument.sound.waves;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class WaveSummer {
-    private final ArrayList<Wave> waves;
+    private final ArrayList<SoundWave> soundWaves;
     private boolean shouldGenerate;
     private int sampleRate;
     private double amplitudeSum;
 
-    /* sound generation params */
-    public static final int DEFAULT_SAMPLE_RATE = 44100;
-
     private int sampleIndex;
     private boolean release;
 
-    public WaveSummer(ArrayList<Wave> waves){
-        this.waves = waves;
+    /* sound generation static params */
+    public static final int DEFAULT_SAMPLE_RATE = 44100;
+
+
+    public WaveSummer(ArrayList<SoundWave> soundWaves){
+        this.soundWaves = soundWaves;
         sampleRate = DEFAULT_SAMPLE_RATE;
         updateAmplitudeSum();
-        resetTime();
     }
 
-
-    public WaveSummer(Wave[] waves){
-        this(new ArrayList<Wave>(Arrays.asList(waves)));
-    }
-
-    public WaveSummer(){
-        this(new ArrayList<Wave>());
-    }
-
-    /* generate sample methods */
+    /* interface/public methods */
     public short generateSample(){
         /* handle wave decay */
         boolean wavesReleased = true;
         if(release){
-            for(Wave wave : this.waves) {
-                wavesReleased = wavesReleased && wave.isReleased();
+            for(SoundWave soundWave : this.soundWaves) {
+                wavesReleased = wavesReleased && soundWave.isReleased();
             }
 
             if(wavesReleased){
@@ -49,14 +39,15 @@ public class WaveSummer {
         /* generate sample */
         double time = (double)(this.sampleIndex++)/this.sampleRate;
         double sample = 0.0;
-        for(Wave wave: this.waves){
-            sample += ((double)wave.generateSample(time))/this.amplitudeSum;
+        for(SoundWave soundWave : this.soundWaves){
+            sample += ((double) soundWave.generateSample(time))/this.amplitudeSum;
         }
         return (short) (sample*this.amplitudeSum);
     }
 
     /* wave generation controls */
     public void start(){
+        reset();
         this.shouldGenerate = true;
     }
 
@@ -64,37 +55,42 @@ public class WaveSummer {
         startWavesRelease();
     }
 
-    private void startWavesRelease(){
-        this.release = true;
-        for(Wave wave : waves)
-            wave.startRelease();
-    }
-
-    public void resetTime(){
-        sampleIndex = 0;
-        release = false;
-
-        for(Wave wave : this.waves)
-            wave.reset();
-    }
-
     public boolean isShouldGenerate() {
         return shouldGenerate;
     }
 
-    /* wave summer params control*/
-    public void addWave(Wave wave){
-        this.waves.add(wave);
+    /* wave getters and setters */
+    public void addWave(SoundWave soundWave){
+        this.soundWaves.add(soundWave);
         updateAmplitudeSum();
     }
+
+    public SoundWave getWave(int index){ return soundWaves.get(index); }
 
     public void setSampleRate(int sampleRate){
         this.sampleRate = sampleRate;
     }
 
+    public int getNumberOfWaves(){ return soundWaves.size();}
+
+    /* inner logic methods */
+    private void startWavesRelease(){
+        this.release = true;
+        for(SoundWave soundWave : soundWaves)
+            soundWave.startRelease();
+    }
+
+    private void reset(){
+        sampleIndex = 0;
+        release = false;
+
+        for(SoundWave soundWave : this.soundWaves)
+            soundWave.reset();
+    }
+
     private void updateAmplitudeSum(){
         amplitudeSum = 0.0;
-        for(Wave wave: this.waves)
-            amplitudeSum += wave.maxAmplitude;
+        for(SoundWave soundWave : this.soundWaves)
+            amplitudeSum += soundWave.maxAmplitude;
     }
 }

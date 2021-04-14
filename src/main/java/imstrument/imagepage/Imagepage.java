@@ -3,8 +3,10 @@ package imstrument.imagepage;
 /* imstrument packages */
 
 import imstrument.globals.GlobalSetting;
-import imstrument.globals.ImagePanel;
+import imstrument.sound.utils.ImagePanel;
 import imstrument.homepage.Homepage;
+import imstrument.sound.utils.SoundImagePanel;
+import imstrument.start.StartApp;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -20,11 +22,8 @@ import java.io.IOException;
 public class Imagepage extends JFrame {
     /* GUI components */
     JMenuBar menuBar;
-    ImagePanel imagePanel;
+    SoundImagePanel soundImagePanel;
 
-    //temp
-    private boolean shouldGenerate;
-    private int wavePos;
     public Imagepage(){
         /* initialize components */
         /* create menubar */
@@ -84,16 +83,16 @@ public class Imagepage extends JFrame {
         menuBar.add(mp3Menu);
 
         /* image panel */
-        this.imagePanel = new ImagePanel();
+        this.soundImagePanel = new SoundImagePanel();
         /* jframe settings and params */
         this.setLayout(new BorderLayout());
         this.add(menuBar, BorderLayout.NORTH);
-        this.add(imagePanel, BorderLayout.CENTER);
+        this.add(soundImagePanel, BorderLayout.CENTER);
 
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                imagePanel.closeAudioThread();
+                StartApp.audioThread.close();
                 super.windowClosing(e);
             }
         });
@@ -108,7 +107,7 @@ public class Imagepage extends JFrame {
 
     private void importImage(){
         //TODO compatibilità gif
-        System.out.println(imagePanel.getBounds());
+        System.out.println(soundImagePanel.getBounds());
         JFileChooser imageChooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "JPG & PNG", "jpg", "png"
@@ -117,7 +116,7 @@ public class Imagepage extends JFrame {
         int choosingResult = imageChooser.showOpenDialog(this);
         if(choosingResult == JFileChooser.APPROVE_OPTION){
             try {
-                this.imagePanel.setImage(ImageIO.read(imageChooser.getSelectedFile()));
+                this.soundImagePanel.setImage(ImageIO.read(imageChooser.getSelectedFile()));
             } catch (IOException e) {
                 //TODO notifica utente in caso di errore e sopprimi chiusura
                 e.printStackTrace();

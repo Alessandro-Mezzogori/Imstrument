@@ -1,35 +1,42 @@
-imstrument/start/StartApp.java
- imstrument.start.StartApp
-imstrument/sound/waves/EnvelopeState.java
- imstrument.sound.waves.EnvelopeState
+imstrument/sound/utils/Octave.java
+ imstrument.sound.utils.Octave
+imstrument/homepage/Homepage.java
+ imstrument.homepage.Homepage
+ imstrument.homepage.Homepage$1
+imstrument/sound/utils/ImagePanel.java
+ imstrument.sound.utils.ImagePanel
 imstrument/sound/waves/Envelope.java
  imstrument.sound.waves.Envelope
  imstrument.sound.waves.Envelope$1
-imstrument/sound/waves/WaveSummer.java
- imstrument.sound.waves.WaveSummer
 imstrument/sound/waves/WaveType.java
  imstrument.sound.waves.WaveType
-imstrument/globals/ImageSynthetizer.java
- imstrument.globals.ImageSynthetizer
+imstrument/sound/waves/WaveSummer.java
+ imstrument.sound.waves.WaveSummer
+imstrument/sound/io/SoundKeyboard.java
+ imstrument.sound.io.SoundKeyboard
 imstrument/globals/GlobalSetting.java
  imstrument.globals.GlobalSetting
 imstrument/sound/openal/AudioThread.java
  imstrument.sound.openal.AudioThread
+imstrument/sound/utils/Note.java
+ imstrument.sound.utils.Note
+imstrument/sound/utils/NoteFrequencyMapping.java
+ imstrument.sound.utils.NoteFrequencyMapping
+imstrument/sound/waves/SoundWave.java
+ imstrument.sound.waves.SoundWave
+ imstrument.sound.waves.SoundWave$1
 imstrument/globals/DimensionComparator.java
  imstrument.globals.DimensionComparator
-imstrument/sound/waves/Wave.java
- imstrument.sound.waves.Wave
- imstrument.sound.waves.Wave$1
 imstrument/sound/openal/OpenAlException.java
  imstrument.sound.openal.OpenAlException
-imstrument/homepage/Homepage.java
- imstrument.homepage.Homepage
- imstrument.homepage.Homepage$1
- imstrument.homepage.Homepage$2
-imstrument/globals/ImagePanel.java
- imstrument.globals.ImagePanel
- imstrument.globals.ImagePanel$ImageMouseListener
+imstrument/sound/waves/EnvelopeState.java
+ imstrument.sound.waves.EnvelopeState
+imstrument/start/StartApp.java
+ imstrument.start.StartApp
 imstrument/imagepage/Imagepage.java
  imstrument.imagepage.Imagepage
  imstrument.imagepage.Imagepage$1
  imstrument.imagepage.Imagepage$2
+imstrument/sound/utils/SoundImagePanel.java
+ imstrument.sound.utils.SoundImagePanel
+ imstrument.sound.utils.SoundImagePanel$ImageMouseListener
