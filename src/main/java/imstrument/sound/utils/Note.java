@@ -1,5 +1,8 @@
 package imstrument.sound.utils;
 
+/**
+ * Enum containing all the notes in a musical scale
+ */
 public enum Note{
     C(1),
     C_SHARP(2),
@@ -14,12 +17,16 @@ public enum Note{
     A_SHARP(11),
     B(12);
 
-    private int noteNumber;
+    private final int noteNumber;
 
     Note(int noteNumber){
         this.noteNumber = noteNumber;
     }
 
+    /**
+     *
+     * @return the matching number of the Note (from C to B starting from 1)
+     */
     public int getNoteNumber(){
         return noteNumber;
     }

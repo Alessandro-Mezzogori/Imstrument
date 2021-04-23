@@ -1,5 +1,8 @@
 package imstrument.sound.waves;
 
+/**
+ * Object abstracting the concept of wave
+ */
 public class SoundWave {
     /**
      * default sample rate of all Wave instances, standard of WAV
@@ -107,16 +110,23 @@ public class SoundWave {
 
     /* methods for envelope profile */
 
+    /**
+     *
+     * @return if the soundwave envelope is in the RELEASED state (amplitude = 0.0)
+     */
     public boolean isReleased(){return envelope.state == EnvelopeState.RELEASED;}
 
     /* setters */
+
+    /**
+     * sets the SoundWave waveform
+     * @param waveform waveform to be setted to
+     */
     public void setWaveform(SoundWaveType waveform) {
         this.waveform = waveform;
     }
 
-    public void setFrequency(double frequency) {this.frequency = frequency;}
     /* modulating wave methods */
-
     /**
      * sets the modulating sound wave of the sound wave (it implicitly sets the max amplitude to 1)
      * @param modulatingSoundWave instance of the SoundWave class
@@ -134,10 +144,16 @@ public class SoundWave {
      */
     public SoundWave getModulatingWave(){return modulatingSoundWave;}
 
+    /**
+     * method to import settings from another SoundWave object, better than copying the object in performance
+     * @param soundWave SoundWave object to be copied from
+     */
     public void importSoundWaveSettings(SoundWave soundWave){
         soundWave.envelope.importSettings(soundWave.envelope);
 
+        /* if a modulating wave is present copy the modulating wave settings too */
         if (soundWave.modulatingSoundWave != null){
+            /* if the current instance doesn't have modulation instantiate it */
             if(this.modulatingSoundWave == null)
                 this.modulatingSoundWave = new SoundWave();
 

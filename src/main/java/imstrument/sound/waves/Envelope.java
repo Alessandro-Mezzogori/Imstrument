@@ -1,5 +1,8 @@
 package imstrument.sound.waves;
 
+/**
+ * Object modeling the ADSR (Attack, Decay, Sustain, Release) Envelope of the amplitude of a sound wave
+ */
 public class Envelope {
     EnvelopeState state;
     /*
@@ -108,6 +111,11 @@ public class Envelope {
         this(0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0);
     }
 
+    /**
+     * returns the coefficient at the time of the wave generation
+     * @param time time in seconds from the start of the soundwave generation
+     * @return number between [0.0, attackAmplifierPeak] with a max of [0.0, 1.0]
+     */
     public double getAmplitudeAmplifier(double time){
         double amplifier = switch (this.state){
             case ATTACK -> attackAmplifierPeak*(attackTime <= 0.0 ? 1.0 : (Math.exp(attackVelocity*time)-1.0)/attackDenominator);
@@ -121,6 +129,11 @@ public class Envelope {
         return amplifier; //normalizes to values beetwen [0,1]
     }
 
+    /**
+     * updates the envelope state by the time and amplifier
+     * @param time time in seconds from the start of the soundwave generation
+     * @param amplifier number between [0.0, attackAmplifierPeak]
+     */
     private void updateEnvelopeState(double time, double amplifier){
         // decay, sustain, release
         if(state == EnvelopeState.RELEASED)
@@ -155,15 +168,25 @@ public class Envelope {
         state = EnvelopeState.SUSTAIN;
     }
 
+    /**
+     * starts the envelope release
+     */
     public void startRelease(){
         release = true;
     }
 
+    /**
+     * resets the envelope to the initial state
+     */
     public void reset(){
         state = EnvelopeState.ATTACK;
         release = false;
     }
 
+    /**
+     * imports the settings of another envolope object for performance reasons
+     * @param envelope settings source
+     */
     public void importSettings(Envelope envelope){
         this.attackTime = envelope.attackTime;
         this.attackVelocity = envelope.attackVelocity;
@@ -178,7 +201,7 @@ public class Envelope {
         this.releaseVelocity = envelope.releaseVelocity;
     }
 
-    /* utils */
+    /* computer*Denominator, optimization to speed up the generation of the AmplitudeAmplifier*/
     private void computeAttackDenominator(){
         attackDenominator = Math.exp(attackVelocity* attackTime) - 1.0;
     }
@@ -188,5 +211,4 @@ public class Envelope {
     }
 
     private void computeDecayDenominator(){decayDenominator = Math.exp(decayVelocity* decayTime) - 1.0;}
-
 }

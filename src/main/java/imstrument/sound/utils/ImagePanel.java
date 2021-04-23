@@ -13,14 +13,40 @@ import java.net.URL;
 import java.util.ArrayList;
 
 /**
- * JPanel specialized to show images
+ *  specialized JPanel to show images with responsive capabilities
  */
 public class ImagePanel extends JPanel {
+    /**
+     * image displayed
+     */
     protected BufferedImage image;
+
+    /**
+     * margins from the border of the ImagePanel container
+     */
     protected final Dimension margins;
+    /**
+     *  top-left corner of the image
+     */
     protected final Point startingPoint;
+
+    /**
+     * point used for centering
+     */
     protected final Point currentStartCorner;
+
+    /**
+     * flag, if true it will center the image inside it's container
+     */
     protected final boolean centerImage;
+
+    /**
+     * construct a new ImagePanel object
+     * @param url path to image file
+     * @param margins margins from the border of the imagepanel container
+     * @param startingPoint top-left corner of the image (0,0) to render in the top left of the container
+     * @param centerimage if true it will center the image in the container
+     */
     public ImagePanel(URL url, Dimension margins, Point startingPoint, boolean centerimage) {
         /*
             roba temporanea per i test sulla generazione del suono
@@ -64,24 +90,25 @@ public class ImagePanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (image != null) {
+            /* prepering objects to do the centering math and/or rendering of the image*/
             Dimension parentSize = this.getSize();
             Dimension imageSize = this.getPreferredSize();
             this.currentStartCorner.x = this.startingPoint.x;
             this.currentStartCorner.y = this.startingPoint.y;
             DimensionComparator dimensionComparator = new DimensionComparator();
-            System.out.println(parentSize);
-            System.out.println(imageSize);
 
+            /* if the image is bigger of the parent size it gets resized */
             if (dimensionComparator.isBigger(imageSize, parentSize)) {
-
                 imageSize = this.getScaledSize(true);
                 System.out.println(imageSize);
             }
 
+            /* centers the image in the parent container */
             if (this.centerImage) {
                 this.currentStartCorner.x = (parentSize.width - imageSize.width) / 2 - this.margins.width;
                 this.currentStartCorner.y = (parentSize.height - imageSize.height) / 2 - this.margins.height;
             }
+
             //TODO rimpiazzare con OPENCV per migliore qualità e velocità
             g.drawImage(image, this.currentStartCorner.x, this.currentStartCorner.y, imageSize.width, imageSize.height, this);
         }
