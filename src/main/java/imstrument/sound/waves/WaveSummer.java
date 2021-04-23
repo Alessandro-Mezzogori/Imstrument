@@ -71,7 +71,7 @@ public class WaveSummer {
         double time = (double)(this.sampleIndex++)/this.sampleRate;
         double sample = 0.0;
         for(SoundWave soundWave : this.soundWaves){
-            sample += ((double) soundWave.generateSample(time))/this.amplitudeSum;
+            sample += (soundWave.generateSample(time))/this.amplitudeSum;
         }
         return (short) (sample*this.amplitudeSum);
     }
@@ -105,7 +105,7 @@ public class WaveSummer {
 
     /**
      * add a new wave object to the summer
-     * @param soundWave
+     * @param soundWave SoundWave object to be added
      */
     public void addWave(SoundWave soundWave){
         this.soundWaves.add(soundWave);
