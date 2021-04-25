@@ -70,6 +70,7 @@ public class WaveManager{
                 sample += soundWaves.get(i).generateSample();
 
                 /* TODO  add velocity to key pressed ? */
+                /* TODO da mettere a posto lo stacco quando una certa wave va in release */
                 amplitudeSum += soundWaves.get(i).maxAmplitude;
             }
         }
@@ -107,13 +108,13 @@ public class WaveManager{
 
     /* wave getters and setters */
 
-    public void setShouldGenerate(int waveIndex, boolean value){
-        if(value && !shouldGenerate.get(waveIndex)) {
+    public void triggerWaveGeneration(int waveIndex, boolean value){
+        if(soundWaves.get(waveIndex).isReleasingOrRelease() ) {
             soundWaves.get(waveIndex).reset();
-            generatingSamples = true;
         }
 
-        shouldGenerate.set(waveIndex, value);
+        generatingSamples = true;
+        shouldGenerate.set(waveIndex, true);
     }
 
     /* inner logic methods */
@@ -121,11 +122,26 @@ public class WaveManager{
         soundWaves.get(index).startRelease();
     }
 
-    public void importWaveSettings(SoundWave soundWave){
-        for(int i = 0; i < soundWaves.size(); i++){
-            SoundWave sw = soundWaves.get(i);
+    public void importWaveSettings(SoundWave soundWave, KeyboardRows keyboardRows, Octave octave){
+        for(int i = 0; i < octaveKeyCount; i++){
+            SoundWave sw = soundWaves.get(i + keyboardRows.getRowNumber()*12);
             sw.importSoundWaveSettings(soundWave);
-            sw.setFrequency(NoteFrequencyMapping.getNoteFrequency(Note.values()[i % octaveKeyCount], Octave.values()[3 + i/octaveKeyCount]));
+            sw.setFrequency(NoteFrequencyMapping.getNoteFrequency(Note.values()[i], octave));
+        }
+    }
+
+    public enum KeyboardRows{
+        TOP_ROW(0),
+        BOTTOM_ROW(1),
+        ;
+
+        int rowNumber;
+        KeyboardRows(int rowNumber){
+            this.rowNumber = rowNumber;
+        }
+
+        public int getRowNumber() {
+            return rowNumber;
         }
     }
 }

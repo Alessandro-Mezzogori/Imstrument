@@ -127,6 +127,12 @@ public class SoundWave {
      */
     public boolean isReleased(){return envelope.state == EnvelopeState.RELEASED;}
 
+    /**
+     *
+     * @return if the soundwave envelope is in the RELEASE state (amplitude = 0.0)
+     */
+    public boolean isReleasingOrRelease(){return envelope.state == EnvelopeState.RELEASE || envelope.state == EnvelopeState.RELEASED;}
+
     /* setters */
 
     /**

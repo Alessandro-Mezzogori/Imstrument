@@ -10,6 +10,7 @@ imstrument/sound/waves/Envelope.java
  imstrument.sound.waves.Envelope$1
 imstrument/sound/waves/WaveManager.java
  imstrument.sound.waves.WaveManager
+ imstrument.sound.waves.WaveManager$KeyboardRows
 imstrument/start/TopContainer.java
  imstrument.start.TopContainer
  imstrument.start.TopContainer$1

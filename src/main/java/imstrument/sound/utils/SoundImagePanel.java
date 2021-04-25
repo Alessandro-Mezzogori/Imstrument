@@ -37,7 +37,7 @@ public class SoundImagePanel extends ImagePanel{
                 //Color pixelColor = new Color(image.getRGB(p.x, p.y));
 
                 /* stops the audio thread from starting over and over again for performance and quality */
-                StartApp.waveManager.setShouldGenerate(WaveManager.MOUSE_SOUNDWAVE_INDEX, true);
+                StartApp.waveManager.triggerWaveGeneration(WaveManager.MOUSE_SOUNDWAVE_INDEX, true);
                 if (!StartApp.audioThread.isRunning()) {
                     StartApp.audioThread.triggerPlayback();
                 }

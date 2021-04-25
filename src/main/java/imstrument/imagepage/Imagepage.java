@@ -2,17 +2,11 @@ package imstrument.imagepage;
 
 /* imstrument packages */
 
-import imstrument.globals.GlobalSetting;
-import imstrument.sound.utils.ImagePanel;
-import imstrument.homepage.Homepage;
-import imstrument.sound.utils.Note;
 import imstrument.sound.utils.SoundImagePanel;
-import imstrument.sound.waves.WaveManager;
 import imstrument.start.StartApp;
 import imstrument.start.TopContainer;
 
 import javax.imageio.ImageIO;
-import javax.security.auth.kerberos.KerberosTicket;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
@@ -179,30 +173,30 @@ public class Imagepage extends JPanel {
                 }
 
                 switch (e.getActionCommand()){
-                    case "w" -> StartApp.waveManager.setShouldGenerate(1, true);
-                    case "3" -> StartApp.waveManager.setShouldGenerate(2, true);
-                    case "e" -> StartApp.waveManager.setShouldGenerate(3, true);
-                    case "4" -> StartApp.waveManager.setShouldGenerate(4, true);
-                    case "r" -> StartApp.waveManager.setShouldGenerate(5, true);
-                    case "t" -> StartApp.waveManager.setShouldGenerate(6, true);
-                    case "6" -> StartApp.waveManager.setShouldGenerate(7, true);
-                    case "y" -> StartApp.waveManager.setShouldGenerate(8, true);
-                    case "7" -> StartApp.waveManager.setShouldGenerate(9, true);
-                    case "u" -> StartApp.waveManager.setShouldGenerate(10, true);
-                    case "8" -> StartApp.waveManager.setShouldGenerate(11, true);
-                    case "i" -> StartApp.waveManager.setShouldGenerate(12, true);
-                    case "z" -> StartApp.waveManager.setShouldGenerate(13, true);
-                    case "s" -> StartApp.waveManager.setShouldGenerate(14, true);
-                    case "x" -> StartApp.waveManager.setShouldGenerate(15, true);
-                    case "d" -> StartApp.waveManager.setShouldGenerate(16, true);
-                    case "c" -> StartApp.waveManager.setShouldGenerate(17, true);
-                    case "v" -> StartApp.waveManager.setShouldGenerate(18, true);
-                    case "g" -> StartApp.waveManager.setShouldGenerate(19, true);
-                    case "b" -> StartApp.waveManager.setShouldGenerate(20, true);
-                    case "h" -> StartApp.waveManager.setShouldGenerate(21, true);
-                    case "n" -> StartApp.waveManager.setShouldGenerate(22, true);
-                    case "j" -> StartApp.waveManager.setShouldGenerate(23, true);
-                    case "m" -> StartApp.waveManager.setShouldGenerate(24, true);
+                    case "w" -> StartApp.waveManager.triggerWaveGeneration(1, true);
+                    case "3" -> StartApp.waveManager.triggerWaveGeneration(2, true);
+                    case "e" -> StartApp.waveManager.triggerWaveGeneration(3, true);
+                    case "4" -> StartApp.waveManager.triggerWaveGeneration(4, true);
+                    case "r" -> StartApp.waveManager.triggerWaveGeneration(5, true);
+                    case "t" -> StartApp.waveManager.triggerWaveGeneration(6, true);
+                    case "6" -> StartApp.waveManager.triggerWaveGeneration(7, true);
+                    case "y" -> StartApp.waveManager.triggerWaveGeneration(8, true);
+                    case "7" -> StartApp.waveManager.triggerWaveGeneration(9, true);
+                    case "u" -> StartApp.waveManager.triggerWaveGeneration(10, true);
+                    case "8" -> StartApp.waveManager.triggerWaveGeneration(11, true);
+                    case "i" -> StartApp.waveManager.triggerWaveGeneration(12, true);
+                    case "z" -> StartApp.waveManager.triggerWaveGeneration(13, true);
+                    case "s" -> StartApp.waveManager.triggerWaveGeneration(14, true);
+                    case "x" -> StartApp.waveManager.triggerWaveGeneration(15, true);
+                    case "d" -> StartApp.waveManager.triggerWaveGeneration(16, true);
+                    case "c" -> StartApp.waveManager.triggerWaveGeneration(17, true);
+                    case "v" -> StartApp.waveManager.triggerWaveGeneration(18, true);
+                    case "g" -> StartApp.waveManager.triggerWaveGeneration(19, true);
+                    case "b" -> StartApp.waveManager.triggerWaveGeneration(20, true);
+                    case "h" -> StartApp.waveManager.triggerWaveGeneration(21, true);
+                    case "n" -> StartApp.waveManager.triggerWaveGeneration(22, true);
+                    case "j" -> StartApp.waveManager.triggerWaveGeneration(23, true);
+                    case "m" -> StartApp.waveManager.triggerWaveGeneration(24, true);
                 }
             }
         };
@@ -246,35 +240,53 @@ public class Imagepage extends JPanel {
         actionMap.put("CT_T", onPressed);
         actionMap.put("C#T_T", onPressed);
         actionMap.put("DT_T", onPressed);
+        actionMap.put("D#T_T", onPressed);
         actionMap.put("ET_T", onPressed);
         actionMap.put("FT_T", onPressed);
+        actionMap.put("F#T_T", onPressed);
         actionMap.put("GT_T", onPressed);
+        actionMap.put("G#T_T", onPressed);
         actionMap.put("AT_T", onPressed);
+        actionMap.put("A#T_T", onPressed);
         actionMap.put("BT_T", onPressed);
 
         actionMap.put("CB_T", onPressed);
+        actionMap.put("C#B_T", onPressed);
         actionMap.put("DB_T", onPressed);
+        actionMap.put("D#B_T", onPressed);
         actionMap.put("EB_T", onPressed);
         actionMap.put("FB_T", onPressed);
+        actionMap.put("F#B_T", onPressed);
         actionMap.put("GB_T", onPressed);
+        actionMap.put("G#B_T", onPressed);
         actionMap.put("AB_T", onPressed);
+        actionMap.put("A#B_T", onPressed);
         actionMap.put("BB_T", onPressed);
 
         actionMap.put("CT_R", onRelease);
         actionMap.put("C#T_R", onRelease);
         actionMap.put("DT_R", onRelease);
+        actionMap.put("D#T_R", onRelease);
         actionMap.put("ET_R", onRelease);
         actionMap.put("FT_R", onRelease);
+        actionMap.put("F#T_R", onRelease);
         actionMap.put("GT_R", onRelease);
+        actionMap.put("G#T_R", onRelease);
         actionMap.put("AT_R", onRelease);
+        actionMap.put("A#T_R", onRelease);
         actionMap.put("BT_R", onRelease);
 
         actionMap.put("CB_R", onRelease);
+        actionMap.put("C#B_R", onRelease);
         actionMap.put("DB_R", onRelease);
+        actionMap.put("D#B_R", onRelease);
         actionMap.put("EB_R", onRelease);
         actionMap.put("FB_R", onRelease);
+        actionMap.put("F#B_R", onRelease);
         actionMap.put("GB_R", onRelease);
+        actionMap.put("G#B_R", onRelease);
         actionMap.put("AB_R", onRelease);
+        actionMap.put("A#B_R", onRelease);
         actionMap.put("BB_R", onRelease);
     }
 }

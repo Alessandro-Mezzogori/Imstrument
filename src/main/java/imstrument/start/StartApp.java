@@ -28,7 +28,8 @@ public class StartApp {
         /* initialize audio thread and WaveManager*/
 
         waveManager = new WaveManager();
-        waveManager.importWaveSettings(carrier);
+        waveManager.importWaveSettings(carrier, WaveManager.KeyboardRows.TOP_ROW, Octave._3);
+        waveManager.importWaveSettings(carrier, WaveManager.KeyboardRows.BOTTOM_ROW, Octave._2);
 
         audioThread = new AudioThread(() -> {
             boolean isGenerating = false;
