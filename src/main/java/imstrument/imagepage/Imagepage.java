@@ -204,8 +204,6 @@ public class Imagepage extends JPanel {
         Action onRelease = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(e.getActionCommand());
-
                 switch (e.getActionCommand()){
                     case "w" -> StartApp.waveManager.startWaveRelease(1);
                     case "3" -> StartApp.waveManager.startWaveRelease(2);
