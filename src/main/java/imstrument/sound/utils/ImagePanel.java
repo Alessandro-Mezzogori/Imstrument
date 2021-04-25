@@ -100,7 +100,6 @@ public class ImagePanel extends JPanel {
             /* if the image is bigger of the parent size it gets resized */
             if (dimensionComparator.isBigger(imageSize, parentSize)) {
                 imageSize = this.getScaledSize(true);
-                System.out.println(imageSize);
             }
 
             /* centers the image in the parent container */

@@ -1,5 +1,6 @@
 package imstrument.sound.utils;
 
+import imstrument.sound.waves.WaveManager;
 import imstrument.start.StartApp;
 
 import java.awt.*;
@@ -36,8 +37,8 @@ public class SoundImagePanel extends ImagePanel{
                 //Color pixelColor = new Color(image.getRGB(p.x, p.y));
 
                 /* stops the audio thread from starting over and over again for performance and quality */
+                StartApp.waveManager.setShouldGenerate(WaveManager.MOUSE_SOUNDWAVE_INDEX, true);
                 if (!StartApp.audioThread.isRunning()) {
-                    StartApp.waveSummer.start();
                     StartApp.audioThread.triggerPlayback();
                 }
 
@@ -46,7 +47,7 @@ public class SoundImagePanel extends ImagePanel{
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            StartApp.waveSummer.stop();
+            StartApp.waveManager.startWaveRelease(WaveManager.MOUSE_SOUNDWAVE_INDEX);
         }
     }
 }

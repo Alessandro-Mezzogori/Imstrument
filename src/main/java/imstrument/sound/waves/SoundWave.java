@@ -10,6 +10,11 @@ public class SoundWave {
     public static final int DEFAULT_SAMPLE_RATE = 44100;
 
     /**
+     * index of the current generated sample
+     */
+    private int sampleIndex;
+
+    /**
      * max amplitude of the Wave istance
      */
     protected short maxAmplitude;
@@ -63,11 +68,11 @@ public class SoundWave {
      * returns the next sample of the wave
      * @return returns short with the value of the next sample
      */
-    public double generateSample(double time){
+    public double generateSample(){
+        double time = (double)(sampleIndex++)/DEFAULT_SAMPLE_RATE;
         double amplitude = envelope.getAmplitudeAmplifier(time)*maxAmplitude;
         return amplitude * waveFunction(time);
     }
-
 
     /**
      * retrieves the function of the wave object corrisponding to the current waveForm attribute value
@@ -76,9 +81,8 @@ public class SoundWave {
     private double waveFunction(double time){
         double modulatingFrequency = 0.0;
         if(modulatingSoundWave != null) {
-            modulatingFrequency = indexOfModulation * modulatingSoundWave.generateSample(time);
+            modulatingFrequency = indexOfModulation * modulatingSoundWave.generateModulatingSample(time);
         }
-        //System.out.println(modulatingFrequency);
         return switch (waveform) {
             case SINE -> Math.sin(2 * Math.PI * frequency * time + modulatingFrequency);
             case SAW -> -(2/Math.PI) * Math.atan(1/Math.tan(time*Math.PI*frequency + modulatingFrequency)) ;
@@ -86,6 +90,12 @@ public class SoundWave {
             case TRIANGLE -> Math.abs((2/Math.PI) * Math.atan(1/Math.tan(time*Math.PI*frequency + modulatingFrequency)));
             //case NOISE -> 2 * Math.random() - 1.0;
         };
+    }
+
+    //TODO crea una classe ModulatingSoundWave
+    private double generateModulatingSample(double time){
+        double amplitude = envelope.getAmplitudeAmplifier(time)*maxAmplitude;
+        return amplitude * waveFunction(time);
     }
 
     /**
@@ -103,6 +113,7 @@ public class SoundWave {
      */
     public void reset() {
         envelope.reset();
+        sampleIndex = 0;
 
         if(modulatingSoundWave != null)
             modulatingSoundWave.reset();
@@ -124,6 +135,18 @@ public class SoundWave {
      */
     public void setWaveform(SoundWaveType waveform) {
         this.waveform = waveform;
+    }
+
+    /**
+     * sets the Soundwave frequency
+     * @param frequency frequency to be setted to
+     */
+    public void setFrequency(double frequency) {
+        if(modulatingSoundWave != null) {
+            /* keeps the ratio of carrier and modulating frequency the same*/
+            modulatingSoundWave.setFrequency(frequency*this.frequency/modulatingSoundWave.frequency);
+        }
+        this.frequency = frequency;
     }
 
     /* modulating wave methods */
@@ -149,7 +172,10 @@ public class SoundWave {
      * @param soundWave SoundWave object to be copied from
      */
     public void importSoundWaveSettings(SoundWave soundWave){
-        soundWave.envelope.importSettings(soundWave.envelope);
+        this.maxAmplitude = soundWave.maxAmplitude;
+        this.waveform = soundWave.waveform;
+        this.envelope.importSettings(soundWave.envelope);
+
 
         /* if a modulating wave is present copy the modulating wave settings too */
         if (soundWave.modulatingSoundWave != null){
@@ -157,7 +183,13 @@ public class SoundWave {
             if(this.modulatingSoundWave == null)
                 this.modulatingSoundWave = new SoundWave();
 
-            this.modulatingSoundWave.importSoundWaveSettings(modulatingSoundWave.modulatingSoundWave);
+            this.modulatingSoundWave.importSoundWaveSettings(soundWave.modulatingSoundWave);
+            this.indexOfModulation = soundWave.indexOfModulation;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Max: " + maxAmplitude + " Type: " + waveform + " F: " + frequency + "\nEnvelope:\n" + envelope.toString();
     }
 }

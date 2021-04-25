@@ -5,10 +5,14 @@ package imstrument.imagepage;
 import imstrument.globals.GlobalSetting;
 import imstrument.sound.utils.ImagePanel;
 import imstrument.homepage.Homepage;
+import imstrument.sound.utils.Note;
 import imstrument.sound.utils.SoundImagePanel;
+import imstrument.sound.waves.WaveManager;
 import imstrument.start.StartApp;
+import imstrument.start.TopContainer;
 
 import javax.imageio.ImageIO;
+import javax.security.auth.kerberos.KerberosTicket;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
@@ -19,7 +23,7 @@ import java.io.IOException;
 /**
  * specialized JPanel to show the imagepage of the application Imstrument
  */
-public class Imagepage extends JFrame {
+public class Imagepage extends JPanel {
     /* GUI components */
     JMenuBar menuBar;
     SoundImagePanel soundImagePanel;
@@ -43,12 +47,18 @@ public class Imagepage extends JFrame {
         } catch (IOException e) {
             logoIcon.setText("Homepage");
         }
+
         logoIcon.addActionListener(
                 e -> {
-                    SwingUtilities.invokeLater(Homepage::new);
-                    dispose();
+                    // TODO better method to open new jframe
+                    JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor((JComponent) e.getSource());
+                    if(topFrame instanceof TopContainer){
+                        TopContainer topContainer = (TopContainer) topFrame;
+                        topContainer.changeCard(TopContainer.HOMEPAGE);
+                    }
                 }
         );
+
         menuBar.add(logoIcon);
 
         /* import menu */
@@ -84,20 +94,7 @@ public class Imagepage extends JFrame {
         this.add(menuBar, BorderLayout.NORTH);
         this.add(soundImagePanel, BorderLayout.CENTER);
 
-        this.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                StartApp.audioThread.close();
-                super.windowClosing(e);
-            }
-        });
-
-
-        setMinimumSize(GlobalSetting.MINIMUM_WINDOW_SIZE);
-        pack();
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true); // shows jframe
-        requestFocus(); // requestes focus for event dispatching
+        setKeyboardBindings();
     }
 
     private void importImage(){
@@ -117,5 +114,167 @@ public class Imagepage extends JFrame {
             }
             //System.out.println(imageChooser.getSelectedFile().getName());
         }
+    }
+
+    private void setKeyboardBindings(){
+        InputMap inputMap = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, false), "CT_T");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_3, 0, false), "C#T_T");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0, false), "DT_T");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_4, 0, false), "D#T_T");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_R, 0, false), "ET_T");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_T, 0, false), "FT_T");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_6, 0, false), "F#T_T");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, 0, false), "GT_T");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_7, 0, false), "G#T_T");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_U, 0, false), "AT_T");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_8, 0, false), "A#T_T");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_I, 0, false), "BT_T");
+
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, 0, false), "CB_T");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, false), "C#B_T");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_X, 0, false), "DB_T");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0, false), "D#B_T");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_C, 0, false), "EB_T");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, 0, false), "FB_T");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_G, 0, false), "F#B_T");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_B, 0, false), "GB_T");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_H, 0, false), "G#B_T");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_N, 0, false), "AB_T");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_J, 0, false), "A#B_T");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_M, 0, false), "BB_T");
+
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, true), "CT_R");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_3, 0, true), "C#T_R");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0, true), "DT_R");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_4, 0, true), "D#T_R");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_R, 0, true), "ET_R");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_T, 0, true), "FT_R");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_6, 0, true), "F#T_R");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, 0, true), "GT_R");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_7, 0, true), "G#T_R");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_U, 0, true), "AT_R");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_8, 0, true), "A#T_R");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_I, 0, true), "BT_R");
+
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, 0, true), "CB_R");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, true), "C#B_R");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_X, 0, true), "DB_R");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0, true), "D#B_R");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_C, 0, true), "EB_R");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, 0, true), "FB_R");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_G, 0, true), "F#B_R");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_B, 0, true), "GB_R");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_H, 0, true), "G#B_R");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_N, 0, true), "AB_R");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_J, 0, true), "A#B_R");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_M, 0, true), "BB_R");
+
+        Action onPressed = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!StartApp.audioThread.isRunning()) {
+                    StartApp.audioThread.triggerPlayback();
+                }
+
+                switch (e.getActionCommand()){
+                    case "w" -> StartApp.waveManager.setShouldGenerate(1, true);
+                    case "3" -> StartApp.waveManager.setShouldGenerate(2, true);
+                    case "e" -> StartApp.waveManager.setShouldGenerate(3, true);
+                    case "4" -> StartApp.waveManager.setShouldGenerate(4, true);
+                    case "r" -> StartApp.waveManager.setShouldGenerate(5, true);
+                    case "t" -> StartApp.waveManager.setShouldGenerate(6, true);
+                    case "6" -> StartApp.waveManager.setShouldGenerate(7, true);
+                    case "y" -> StartApp.waveManager.setShouldGenerate(8, true);
+                    case "7" -> StartApp.waveManager.setShouldGenerate(9, true);
+                    case "u" -> StartApp.waveManager.setShouldGenerate(10, true);
+                    case "8" -> StartApp.waveManager.setShouldGenerate(11, true);
+                    case "i" -> StartApp.waveManager.setShouldGenerate(12, true);
+                    case "z" -> StartApp.waveManager.setShouldGenerate(13, true);
+                    case "s" -> StartApp.waveManager.setShouldGenerate(14, true);
+                    case "x" -> StartApp.waveManager.setShouldGenerate(15, true);
+                    case "d" -> StartApp.waveManager.setShouldGenerate(16, true);
+                    case "c" -> StartApp.waveManager.setShouldGenerate(17, true);
+                    case "v" -> StartApp.waveManager.setShouldGenerate(18, true);
+                    case "g" -> StartApp.waveManager.setShouldGenerate(19, true);
+                    case "b" -> StartApp.waveManager.setShouldGenerate(20, true);
+                    case "h" -> StartApp.waveManager.setShouldGenerate(21, true);
+                    case "n" -> StartApp.waveManager.setShouldGenerate(22, true);
+                    case "j" -> StartApp.waveManager.setShouldGenerate(23, true);
+                    case "m" -> StartApp.waveManager.setShouldGenerate(24, true);
+                }
+            }
+        };
+
+        Action onRelease = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println(e.getActionCommand());
+
+                switch (e.getActionCommand()){
+                    case "w" -> StartApp.waveManager.startWaveRelease(1);
+                    case "3" -> StartApp.waveManager.startWaveRelease(2);
+                    case "e" -> StartApp.waveManager.startWaveRelease(3);
+                    case "4" -> StartApp.waveManager.startWaveRelease(4);
+                    case "r" -> StartApp.waveManager.startWaveRelease(5);
+                    case "t" -> StartApp.waveManager.startWaveRelease(6);
+                    case "6" -> StartApp.waveManager.startWaveRelease(7);
+                    case "y" -> StartApp.waveManager.startWaveRelease(8);
+                    case "7" -> StartApp.waveManager.startWaveRelease(9);
+                    case "u" -> StartApp.waveManager.startWaveRelease(10);
+                    case "8" -> StartApp.waveManager.startWaveRelease(11);
+                    case "i" -> StartApp.waveManager.startWaveRelease(12);
+                    case "z" -> StartApp.waveManager.startWaveRelease(13);
+                    case "s" -> StartApp.waveManager.startWaveRelease(14);
+                    case "x" -> StartApp.waveManager.startWaveRelease(15);
+                    case "d" -> StartApp.waveManager.startWaveRelease(16);
+                    case "c" -> StartApp.waveManager.startWaveRelease(17);
+                    case "v" -> StartApp.waveManager.startWaveRelease(18);
+                    case "g" -> StartApp.waveManager.startWaveRelease(19);
+                    case "b" -> StartApp.waveManager.startWaveRelease(20);
+                    case "h" -> StartApp.waveManager.startWaveRelease(21);
+                    case "n" -> StartApp.waveManager.startWaveRelease(22);
+                    case "j" -> StartApp.waveManager.startWaveRelease(23);
+                    case "m" -> StartApp.waveManager.startWaveRelease(24);
+                }
+            }
+        };
+
+        ActionMap actionMap = getActionMap();
+
+        actionMap.put("CT_T", onPressed);
+        actionMap.put("C#T_T", onPressed);
+        actionMap.put("DT_T", onPressed);
+        actionMap.put("ET_T", onPressed);
+        actionMap.put("FT_T", onPressed);
+        actionMap.put("GT_T", onPressed);
+        actionMap.put("AT_T", onPressed);
+        actionMap.put("BT_T", onPressed);
+
+        actionMap.put("CB_T", onPressed);
+        actionMap.put("DB_T", onPressed);
+        actionMap.put("EB_T", onPressed);
+        actionMap.put("FB_T", onPressed);
+        actionMap.put("GB_T", onPressed);
+        actionMap.put("AB_T", onPressed);
+        actionMap.put("BB_T", onPressed);
+
+        actionMap.put("CT_R", onRelease);
+        actionMap.put("C#T_R", onRelease);
+        actionMap.put("DT_R", onRelease);
+        actionMap.put("ET_R", onRelease);
+        actionMap.put("FT_R", onRelease);
+        actionMap.put("GT_R", onRelease);
+        actionMap.put("AT_R", onRelease);
+        actionMap.put("BT_R", onRelease);
+
+        actionMap.put("CB_R", onRelease);
+        actionMap.put("DB_R", onRelease);
+        actionMap.put("EB_R", onRelease);
+        actionMap.put("FB_R", onRelease);
+        actionMap.put("GB_R", onRelease);
+        actionMap.put("AB_R", onRelease);
+        actionMap.put("BB_R", onRelease);
     }
 }

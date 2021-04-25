@@ -5,6 +5,7 @@ import imstrument.globals.*;
 import imstrument.imagepage.Imagepage;
 import imstrument.sound.utils.ImagePanel;
 import imstrument.start.StartApp;
+import imstrument.start.TopContainer;
 
 /* general packages*/
 import javax.swing.*;
@@ -17,7 +18,7 @@ import java.awt.event.WindowEvent;
 /**
  * specialized JPanel to show the homepage of the application Imstrument
  */
-public class Homepage extends JFrame { /* Logic attributes */
+public class Homepage extends JPanel { /* Logic attributes */
      /* GUI components */
     Label credits; // used to display creators and maybe copyright
     ImagePanel imstrumentLogo;
@@ -58,8 +59,11 @@ public class Homepage extends JFrame { /* Logic attributes */
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     // TODO better method to open new jframe
-                    SwingUtilities.invokeLater(Imagepage::new);
-                    dispose();
+                    JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor((JComponent) e.getSource());
+                    if(topFrame instanceof TopContainer){
+                        TopContainer topContainer = (TopContainer) topFrame;
+                        topContainer.changeCard(TopContainer.IMAGEPAGE);
+                    }
                 }
             }
         );
@@ -80,11 +84,5 @@ public class Homepage extends JFrame { /* Logic attributes */
         creditsConstraints.gridwidth = 3;
         credits = new Label("created by Villani Luca and Mezzogori Alessandro");
         this.add(credits, creditsConstraints);
-
-        setMinimumSize(GlobalSetting.MINIMUM_WINDOW_SIZE);
-        pack();
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true); // shows jframe
-        requestFocus(); // requestes focus for event dispatching
     }
 }

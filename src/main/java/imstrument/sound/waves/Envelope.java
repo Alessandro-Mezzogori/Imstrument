@@ -199,6 +199,10 @@ public class Envelope {
 
         this.releaseTime = envelope.releaseTime;
         this.releaseVelocity = envelope.releaseVelocity;
+
+        computeReleaseDenominator();
+        computeDecayDenominator();
+        computeAttackDenominator();
     }
 
     /* computer*Denominator, optimization to speed up the generation of the AmplitudeAmplifier*/
@@ -211,4 +215,12 @@ public class Envelope {
     }
 
     private void computeDecayDenominator(){decayDenominator = Math.exp(decayVelocity* decayTime) - 1.0;}
+
+    @Override
+    public String toString() {
+        return "Attack: " + attackTime + " " + attackVelocity +
+                "\nDecay " + decayTime + " " + decayVelocity +
+                "\nSustain: " + sustainAmplifier +
+                "\nRelease: " + releaseTime + " " + releaseVelocity + "\n";
+    }
 }
