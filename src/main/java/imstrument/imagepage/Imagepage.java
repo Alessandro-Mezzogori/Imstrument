@@ -173,30 +173,30 @@ public class Imagepage extends JPanel {
                 }
 
                 switch (e.getActionCommand()){
-                    case "w" -> StartApp.waveManager.triggerWaveGeneration(1, true);
-                    case "3" -> StartApp.waveManager.triggerWaveGeneration(2, true);
-                    case "e" -> StartApp.waveManager.triggerWaveGeneration(3, true);
-                    case "4" -> StartApp.waveManager.triggerWaveGeneration(4, true);
-                    case "r" -> StartApp.waveManager.triggerWaveGeneration(5, true);
-                    case "t" -> StartApp.waveManager.triggerWaveGeneration(6, true);
-                    case "6" -> StartApp.waveManager.triggerWaveGeneration(7, true);
-                    case "y" -> StartApp.waveManager.triggerWaveGeneration(8, true);
-                    case "7" -> StartApp.waveManager.triggerWaveGeneration(9, true);
-                    case "u" -> StartApp.waveManager.triggerWaveGeneration(10, true);
-                    case "8" -> StartApp.waveManager.triggerWaveGeneration(11, true);
-                    case "i" -> StartApp.waveManager.triggerWaveGeneration(12, true);
-                    case "z" -> StartApp.waveManager.triggerWaveGeneration(13, true);
-                    case "s" -> StartApp.waveManager.triggerWaveGeneration(14, true);
-                    case "x" -> StartApp.waveManager.triggerWaveGeneration(15, true);
-                    case "d" -> StartApp.waveManager.triggerWaveGeneration(16, true);
-                    case "c" -> StartApp.waveManager.triggerWaveGeneration(17, true);
-                    case "v" -> StartApp.waveManager.triggerWaveGeneration(18, true);
-                    case "g" -> StartApp.waveManager.triggerWaveGeneration(19, true);
-                    case "b" -> StartApp.waveManager.triggerWaveGeneration(20, true);
-                    case "h" -> StartApp.waveManager.triggerWaveGeneration(21, true);
-                    case "n" -> StartApp.waveManager.triggerWaveGeneration(22, true);
-                    case "j" -> StartApp.waveManager.triggerWaveGeneration(23, true);
-                    case "m" -> StartApp.waveManager.triggerWaveGeneration(24, true);
+                    case "w" -> StartApp.waveManager.triggerWaveGeneration(1);
+                    case "3" -> StartApp.waveManager.triggerWaveGeneration(2);
+                    case "e" -> StartApp.waveManager.triggerWaveGeneration(3);
+                    case "4" -> StartApp.waveManager.triggerWaveGeneration(4);
+                    case "r" -> StartApp.waveManager.triggerWaveGeneration(5);
+                    case "t" -> StartApp.waveManager.triggerWaveGeneration(6);
+                    case "6" -> StartApp.waveManager.triggerWaveGeneration(7);
+                    case "y" -> StartApp.waveManager.triggerWaveGeneration(8);
+                    case "7" -> StartApp.waveManager.triggerWaveGeneration(9);
+                    case "u" -> StartApp.waveManager.triggerWaveGeneration(10);
+                    case "8" -> StartApp.waveManager.triggerWaveGeneration(11);
+                    case "i" -> StartApp.waveManager.triggerWaveGeneration(12);
+                    case "z" -> StartApp.waveManager.triggerWaveGeneration(13);
+                    case "s" -> StartApp.waveManager.triggerWaveGeneration(14);
+                    case "x" -> StartApp.waveManager.triggerWaveGeneration(15);
+                    case "d" -> StartApp.waveManager.triggerWaveGeneration(16);
+                    case "c" -> StartApp.waveManager.triggerWaveGeneration(17);
+                    case "v" -> StartApp.waveManager.triggerWaveGeneration(18);
+                    case "g" -> StartApp.waveManager.triggerWaveGeneration(19);
+                    case "b" -> StartApp.waveManager.triggerWaveGeneration(20);
+                    case "h" -> StartApp.waveManager.triggerWaveGeneration(21);
+                    case "n" -> StartApp.waveManager.triggerWaveGeneration(22);
+                    case "j" -> StartApp.waveManager.triggerWaveGeneration(23);
+                    case "m" -> StartApp.waveManager.triggerWaveGeneration(24);
                 }
             }
         };

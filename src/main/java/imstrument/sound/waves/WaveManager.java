@@ -108,7 +108,7 @@ public class WaveManager{
 
     /* wave getters and setters */
 
-    public void triggerWaveGeneration(int waveIndex, boolean value){
+    public void triggerWaveGeneration(int waveIndex){
         if(soundWaves.get(waveIndex).isReleasingOrRelease() ) {
             soundWaves.get(waveIndex).reset();
         }
