@@ -4,7 +4,6 @@ import imstrument.sound.utils.Note;
 import imstrument.sound.utils.NoteFrequencyMapping;
 import imstrument.sound.utils.Octave;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -37,7 +36,6 @@ public class WaveManager{
     /**
      * default sample rate
      */
-    public static final int DEFAULT_SAMPLE_RATE = 44100;
     public static final int MOUSE_SOUNDWAVE_INDEX = 0;
 
 
