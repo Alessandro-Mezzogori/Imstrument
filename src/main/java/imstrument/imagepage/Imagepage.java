@@ -2,13 +2,15 @@ package imstrument.imagepage;
 
 /* imstrument packages */
 
-import imstrument.algorithm.HorizontalAlgorithm;
 import imstrument.sound.utils.SoundImagePanel;
 import imstrument.start.StartApp;
 import imstrument.start.TopContainer;
+import imstrument.virtualkeyboard.Virtualkeyboard;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.MenuKeyEvent;
+import javax.swing.event.MenuKeyListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.*;
@@ -75,8 +77,13 @@ public class Imagepage extends JPanel {
         // TODO visualizzatore note
         // TODO mappa note
         JMenu visualizeMenu = new JMenu("Visualize");
-        visualizeMenu.add(new JMenuItem("Keyboard"));
-
+        JMenuItem virtualKeyboard = new JMenuItem("Virtual Keyboard");
+        virtualKeyboard.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwingUtilities.invokeLater(Virtualkeyboard::new);            }
+        });
+        visualizeMenu.add(virtualKeyboard);
         menuBar.add(visualizeMenu);
 
         /* mp3 management menu */
@@ -86,8 +93,6 @@ public class Imagepage extends JPanel {
 
         /* image panel */
         this.soundImagePanel = new SoundImagePanel();
-        this.soundImagePanel.setSoundAlgorithm(new HorizontalAlgorithm());
-
         /* jframe settings and params */
         this.setLayout(new BorderLayout());
         this.add(menuBar, BorderLayout.NORTH);
@@ -116,8 +121,6 @@ public class Imagepage extends JPanel {
     }
 
     private void setKeyboardBindings(){
-        // TODO add stop sound when application is out of focus
-
         InputMap inputMap = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, false), "CT_T");
