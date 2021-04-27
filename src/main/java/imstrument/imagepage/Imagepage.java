@@ -2,6 +2,7 @@ package imstrument.imagepage;
 
 /* imstrument packages */
 
+import imstrument.algorithm.HorizontalAlgorithm;
 import imstrument.sound.utils.SoundImagePanel;
 import imstrument.start.StartApp;
 import imstrument.start.TopContainer;
@@ -93,6 +94,7 @@ public class Imagepage extends JPanel {
 
         /* image panel */
         this.soundImagePanel = new SoundImagePanel();
+        this.soundImagePanel.setSoundAlgorithm(new HorizontalAlgorithm());
         /* jframe settings and params */
         this.setLayout(new BorderLayout());
         this.add(menuBar, BorderLayout.NORTH);
