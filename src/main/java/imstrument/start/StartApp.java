@@ -18,7 +18,7 @@ public class StartApp {
         /* crea una nuova istanza della imstrument.Homepage tramite il dispatcher degli eventi */
         Envelope envelope = new Envelope(1, 0.001, 1.0, 0.1, 0.01, 1.0,0.5, 0.1);
         SoundWave carrier = new SoundWave(Short.MAX_VALUE, NoteFrequencyMapping.getNoteFrequency(Note.C, Octave._4), envelope);
-        carrier.setWaveform(SoundWaveType.SINE);
+        carrier.setWaveform(SoundWaveType.SAW);
 
         SoundWave modulating = new SoundWave((short)1, NoteFrequencyMapping.getNoteFrequency(Note.C, Octave._4), envelope);
         modulating.setWaveform(SoundWaveType.SINE);
@@ -45,5 +45,7 @@ public class StartApp {
         });
 
         SwingUtilities.invokeLater(TopContainer::new);
+
+        //TODO remove (only for testing)
     }
 }

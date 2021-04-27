@@ -122,9 +122,13 @@ public class WaveManager{
         soundWaves.get(index).startRelease();
     }
 
+    public void importMouseWaveSettings(SoundWave soundWave){
+        soundWaves.get(0).importSoundWaveSettings(soundWave);
+    }
+
     public void importWaveSettings(SoundWave soundWave, KeyboardRows keyboardRows, Octave octave){
         for(int i = 0; i < octaveKeyCount; i++){
-            SoundWave sw = soundWaves.get(i + keyboardRows.getRowNumber()*12);
+            SoundWave sw = soundWaves.get(i + keyboardRows.getRowNumber()*12 + 1);
             sw.importSoundWaveSettings(soundWave);
             sw.setFrequency(NoteFrequencyMapping.getNoteFrequency(Note.values()[i], octave));
         }

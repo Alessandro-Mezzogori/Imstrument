@@ -2,6 +2,7 @@ package imstrument.imagepage;
 
 /* imstrument packages */
 
+import imstrument.algorithm.HorizontalAlgorithm;
 import imstrument.sound.utils.SoundImagePanel;
 import imstrument.start.StartApp;
 import imstrument.start.TopContainer;
@@ -74,6 +75,8 @@ public class Imagepage extends JPanel {
         // TODO visualizzatore note
         // TODO mappa note
         JMenu visualizeMenu = new JMenu("Visualize");
+        visualizeMenu.add(new JMenuItem("Keyboard"));
+
         menuBar.add(visualizeMenu);
 
         /* mp3 management menu */
@@ -83,6 +86,8 @@ public class Imagepage extends JPanel {
 
         /* image panel */
         this.soundImagePanel = new SoundImagePanel();
+        this.soundImagePanel.setSoundAlgorithm(new HorizontalAlgorithm());
+
         /* jframe settings and params */
         this.setLayout(new BorderLayout());
         this.add(menuBar, BorderLayout.NORTH);
@@ -111,6 +116,8 @@ public class Imagepage extends JPanel {
     }
 
     private void setKeyboardBindings(){
+        // TODO add stop sound when application is out of focus
+
         InputMap inputMap = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, false), "CT_T");
