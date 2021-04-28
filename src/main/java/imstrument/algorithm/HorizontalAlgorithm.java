@@ -10,8 +10,8 @@ import imstrument.start.StartApp;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class HorizontalAlgorithm implements Algorithm{
-    private final int colorsLength = 16;
+public class HorizontalAlgorithm extends Algorithm{
+    private final int colorsLength = 100;
     private final Point[] points;
 
     public HorizontalAlgorithm(){
@@ -23,7 +23,50 @@ public class HorizontalAlgorithm implements Algorithm{
     }
 
     @Override
-    public void compute(BufferedImage image, Point clickedPoint, boolean computeSoundWave) {
+    public void computeSoundWave(BufferedImage image) {
+        Color[] colors = new Color[colorsLength];
+        for (int i = 0; i < colorsLength; i++) {
+            colors[i] = new Color(image.getRGB(points[i].x, points[i].y));
+        }
+
+        Envelope envelope = new Envelope(
+                colors[0].getRed() / 255.0,
+                colors[0].getGreen() / 255.0,
+                colors[0].getBlue() / 255.0,
+                colors[1].getRed() / 255.0,
+                colors[1].getGreen() / 255.0,
+                colors[1].getBlue() / 255.0,
+                colors[2].getRed() / 255.0,
+                colors[2].getGreen() / 255.0
+        );
+        SoundWave soundWave = new SoundWave(Short.MAX_VALUE, NoteFrequencyMapping.getNoteFrequency(Note.C, Octave._4), envelope);
+
+        Envelope modulatingEnvelope = new Envelope(
+                colors[3].getRed() / 255.0,
+                colors[3].getGreen() / 255.0,
+                colors[3].getBlue() / 255.0,
+                colors[4].getRed() / 255.0,
+                colors[4].getGreen() / 255.0,
+                colors[4].getBlue() / 255.0,
+                colors[5].getRed() / 255.0,
+                colors[5].getGreen() / 255.0
+        );
+        SoundWave modulating = new SoundWave(
+                (short) 1,
+                colors[6].getRed() * colors[6].getGreen() * 0.10906574394, // magic number
+                modulatingEnvelope
+        );
+
+        soundWave.setModulatingWave(modulating, (int) (colors[6].getBlue() / 30) + 2);
+
+        System.out.println(soundWave);
+        System.out.println(modulating);
+
+        StartApp.waveManager.importMouseWaveSettings(soundWave);
+    }
+
+    @Override
+    public void computePoints(BufferedImage image, Point clickedPoint) {
         int x = clickedPoint.x - (colorsLength - 1)/2;
         int y = clickedPoint.y;
 
@@ -47,48 +90,6 @@ public class HorizontalAlgorithm implements Algorithm{
         for(int i = 0; i < colorsLength; i++){
             points[i] = new Point(x, y);
             x += 1;
-        }
-
-        if(computeSoundWave) {
-            Color[] colors = new Color[colorsLength];
-            for (int i = 0; i < colorsLength; i++) {
-                colors[i] = new Color(image.getRGB(points[i].x, points[i].y));
-            }
-
-            Envelope envelope = new Envelope(
-                    colors[0].getRed() / 255.0,
-                    colors[0].getGreen() / 255.0,
-                    colors[0].getBlue() / 255.0,
-                    colors[1].getRed() / 255.0,
-                    colors[1].getGreen() / 255.0,
-                    colors[1].getBlue() / 255.0,
-                    colors[2].getRed() / 255.0,
-                    colors[2].getGreen() / 255.0
-            );
-            SoundWave soundWave = new SoundWave(Short.MAX_VALUE, NoteFrequencyMapping.getNoteFrequency(Note.C, Octave._4), envelope);
-
-            Envelope modulatingEnvelope = new Envelope(
-                    colors[3].getRed() / 255.0,
-                    colors[3].getGreen() / 255.0,
-                    colors[3].getBlue() / 255.0,
-                    colors[4].getRed() / 255.0,
-                    colors[4].getGreen() / 255.0,
-                    colors[4].getBlue() / 255.0,
-                    colors[5].getRed() / 255.0,
-                    colors[5].getGreen() / 255.0
-            );
-            SoundWave modulating = new SoundWave(
-                    (short) 1,
-                    colors[6].getRed() * colors[6].getGreen() * 0.10906574394, // magic number
-                    modulatingEnvelope
-            );
-
-            soundWave.setModulatingWave(modulating, (int) (colors[6].getBlue() / 30) + 2);
-
-            System.out.println(soundWave);
-            System.out.println(modulating);
-
-            StartApp.waveManager.importMouseWaveSettings(soundWave);
         }
     }
 
