@@ -84,10 +84,10 @@ public class SoundWave {
             modulatingFrequency = indexOfModulation * modulatingSoundWave.generateModulatingSample(time);
         }
         return switch (waveform) {
-            case SINE -> Math.sin(2 * Math.PI * frequency * time + modulatingFrequency);
-            case SAW -> -(2/Math.PI) * Math.atan(1/Math.tan(time*Math.PI*frequency + modulatingFrequency)) ;
-            case SQUARE -> Math.signum(Math.sin(2 * Math.PI * frequency * time + modulatingFrequency));
-            case TRIANGLE -> Math.abs((2/Math.PI) * Math.atan(1/Math.tan(time*Math.PI*frequency + modulatingFrequency)));
+            case SINE -> Math.sin(2 * Math.PI * (frequency + modulatingFrequency)* time);
+            case SAW -> -(2/Math.PI) * Math.atan(1/Math.tan(time*Math.PI*(frequency + modulatingFrequency) )) ;
+            case SQUARE -> Math.signum(Math.sin(2 * Math.PI * (frequency + modulatingFrequency)* time));
+            case TRIANGLE -> Math.abs((2/Math.PI) * Math.atan(1/Math.tan(time*Math.PI*(frequency + modulatingFrequency))));
             //case NOISE -> 2 * Math.random() - 1.0;
         };
     }
