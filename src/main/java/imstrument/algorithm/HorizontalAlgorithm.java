@@ -11,7 +11,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class HorizontalAlgorithm extends Algorithm{
-    private final int colorsLength = 100;
+    private final int colorsLength = 18;
     private final Point[] points;
 
     public HorizontalAlgorithm(){
@@ -30,36 +30,35 @@ public class HorizontalAlgorithm extends Algorithm{
         }
 
         Envelope envelope = new Envelope(
-                colors[0].getRed() / 255.0,
-                colors[0].getGreen() / 255.0,
-                colors[0].getBlue() / 255.0,
-                colors[1].getRed() / 255.0,
-                colors[1].getGreen() / 255.0,
-                colors[1].getBlue() / 255.0,
-                colors[2].getRed() / 255.0,
-                colors[2].getGreen() / 255.0
+                getLuminance(colors[0])/255,
+                getLuminance(colors[1])/255,
+                getLuminance(colors[2])/255,
+                getLuminance(colors[3])/255,
+                getLuminance(colors[4])/255,
+                getLuminance(colors[5])/255,
+                getLuminance(colors[6])/255,
+                getLuminance(colors[7])/255
         );
         SoundWave soundWave = new SoundWave(Short.MAX_VALUE, NoteFrequencyMapping.getNoteFrequency(Note.C, Octave._4), envelope);
 
         Envelope modulatingEnvelope = new Envelope(
-                colors[3].getRed() / 255.0,
-                colors[3].getGreen() / 255.0,
-                colors[3].getBlue() / 255.0,
-                colors[4].getRed() / 255.0,
-                colors[4].getGreen() / 255.0,
-                colors[4].getBlue() / 255.0,
-                colors[5].getRed() / 255.0,
-                colors[5].getGreen() / 255.0
+                getLuminance(colors[8])/255,
+                getLuminance(colors[9])/255,
+                getLuminance(colors[10])/255,
+                getLuminance(colors[11])/255,
+                getLuminance(colors[12])/255,
+                getLuminance(colors[13])/255,
+                getLuminance(colors[14])/255,
+                getLuminance(colors[15])/255
         );
         SoundWave modulating = new SoundWave(
-                (short) 1,
-                colors[6].getRed() * colors[6].getGreen() * 0.10906574394, // magic number
-                modulatingEnvelope
+                (short) 1, getLuminance(colors[16])*10 , modulatingEnvelope
         );
 
-        soundWave.setModulatingWave(modulating, (int) (colors[6].getBlue() / 30) + 2);
+        soundWave.setModulatingWave(modulating, 3);
 
         System.out.println(soundWave);
+        System.out.println("I: " + getLuminance(colors[17])/25.5);
         System.out.println(modulating);
 
         StartApp.waveManager.importMouseWaveSettings(soundWave);
