@@ -13,6 +13,13 @@ imstrument/sound/waves/WaveManager.java
  imstrument.sound.waves.WaveManager$KeyboardRows
 imstrument/sound/waves/SoundWaveType.java
  imstrument.sound.waves.SoundWaveType
+imstrument/start/TopContainer.java
+ imstrument.start.TopContainer
+ imstrument.start.TopContainer$1
+imstrument/virtualkeyboard/Virtualkeyboard.java
+ imstrument.virtualkeyboard.Virtualkeyboard
+imstrument/virtualkeyboard/ButtonKey.java
+ imstrument.virtualkeyboard.ButtonKey
 imstrument/globals/GlobalSetting.java
  imstrument.globals.GlobalSetting
 imstrument/sound/openal/AudioThread.java
@@ -33,12 +40,18 @@ imstrument/sound/waves/EnvelopeState.java
  imstrument.sound.waves.EnvelopeState
 imstrument/sound/openal/OpenAlException.java
  imstrument.sound.openal.OpenAlException
+imstrument/algorithm/Algorithm.java
+ imstrument.algorithm.Algorithm
+imstrument/virtualkeyboard/WhiteButton.java
+ imstrument.virtualkeyboard.WhiteButton
 imstrument/sound/utils/NoteFrequencyMapping.java
  imstrument.sound.utils.NoteFrequencyMapping
-imstrument/start/TopContainer.java
- imstrument.start.TopContainer
- imstrument.start.TopContainer$1
+imstrument/virtualkeyboard/BlackButton.java
+ imstrument.virtualkeyboard.BlackButton
+imstrument/algorithm/HorizontalAlgorithm.java
+ imstrument.algorithm.HorizontalAlgorithm
 imstrument/imagepage/Imagepage.java
  imstrument.imagepage.Imagepage
  imstrument.imagepage.Imagepage$1
  imstrument.imagepage.Imagepage$2
+ imstrument.imagepage.Imagepage$3

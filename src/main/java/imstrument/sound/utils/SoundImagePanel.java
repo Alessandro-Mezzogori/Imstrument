@@ -65,10 +65,8 @@ public class SoundImagePanel extends ImagePanel{
                 p.x -= currentStartCorner.x;
                 p.y -= currentStartCorner.y;
 
-                if(soundAlgorithm != null) {
-                    SoundImagePanel panel = ((SoundImagePanel) e.getSource());
-
-                    soundAlgorithm.compute(image, p, true);
+                if(soundAlgorithm != null && soundAlgorithm.getPoints().length != 0) {
+                    soundAlgorithm.computeSoundWave(image);
                 }
 
                 /* stops the audio thread from starting over and over again for performance and quality */
@@ -87,7 +85,7 @@ public class SoundImagePanel extends ImagePanel{
                 p.x -= currentStartCorner.x;
                 p.y -= currentStartCorner.y;
 
-                soundAlgorithm.compute(image, p, false);
+                soundAlgorithm.computePoints(image, p);
                 ((SoundImagePanel) e.getSource()).repaint();
             }
         }
