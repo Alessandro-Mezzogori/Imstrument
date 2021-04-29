@@ -185,35 +185,13 @@ public class Imagepage extends JPanel {
         Action onPressed = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!StartApp.audioThread.isRunning()) {
-                    StartApp.audioThread.triggerPlayback();
-                }
+                int index = convertBindingToIndex(e.getActionCommand());
 
-                switch (e.getActionCommand()){
-                    case "w" -> StartApp.waveManager.triggerWaveGeneration(1);
-                    case "3" -> StartApp.waveManager.triggerWaveGeneration(2);
-                    case "e" -> StartApp.waveManager.triggerWaveGeneration(3);
-                    case "4" -> StartApp.waveManager.triggerWaveGeneration(4);
-                    case "r" -> StartApp.waveManager.triggerWaveGeneration(5);
-                    case "t" -> StartApp.waveManager.triggerWaveGeneration(6);
-                    case "6" -> StartApp.waveManager.triggerWaveGeneration(7);
-                    case "y" -> StartApp.waveManager.triggerWaveGeneration(8);
-                    case "7" -> StartApp.waveManager.triggerWaveGeneration(9);
-                    case "u" -> StartApp.waveManager.triggerWaveGeneration(10);
-                    case "8" -> StartApp.waveManager.triggerWaveGeneration(11);
-                    case "i" -> StartApp.waveManager.triggerWaveGeneration(12);
-                    case "z" -> StartApp.waveManager.triggerWaveGeneration(13);
-                    case "s" -> StartApp.waveManager.triggerWaveGeneration(14);
-                    case "x" -> StartApp.waveManager.triggerWaveGeneration(15);
-                    case "d" -> StartApp.waveManager.triggerWaveGeneration(16);
-                    case "c" -> StartApp.waveManager.triggerWaveGeneration(17);
-                    case "v" -> StartApp.waveManager.triggerWaveGeneration(18);
-                    case "g" -> StartApp.waveManager.triggerWaveGeneration(19);
-                    case "b" -> StartApp.waveManager.triggerWaveGeneration(20);
-                    case "h" -> StartApp.waveManager.triggerWaveGeneration(21);
-                    case "n" -> StartApp.waveManager.triggerWaveGeneration(22);
-                    case "j" -> StartApp.waveManager.triggerWaveGeneration(23);
-                    case "m" -> StartApp.waveManager.triggerWaveGeneration(24);
+                if(index != -1){
+                    StartApp.waveManager.triggerWaveGeneration(index);
+                    if (virtualKeyboard != null){
+                        virtualKeyboard.setPressed(index - 1, true);
+                    }
                 }
             }
         };

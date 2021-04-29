@@ -3,6 +3,7 @@ package imstrument.sound.waves;
 import imstrument.sound.utils.Note;
 import imstrument.sound.utils.NoteFrequencyMapping;
 import imstrument.sound.utils.Octave;
+import imstrument.start.StartApp;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -109,6 +110,9 @@ public class WaveManager{
     /* wave getters and setters */
 
     public void triggerWaveGeneration(int waveIndex){
+        if (!StartApp.audioThread.isRunning()) {
+            StartApp.audioThread.triggerPlayback();
+        }
         if(soundWaves.get(waveIndex).isReleasingOrRelease() ) {
             soundWaves.get(waveIndex).reset();
         }
