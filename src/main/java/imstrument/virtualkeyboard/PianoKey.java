@@ -32,11 +32,11 @@ public class PianoKey extends JComponent {
         }
         if (color==KeyColor.WHITE){
             g.setColor(java.awt.Color.WHITE);
-            g.fillRect(0,0,35,160);
+            g.fillRect(0,0,35,150);
         }
         else if(color==KeyColor.BLACK){
             g.setColor(java.awt.Color.BLACK);
-            g.fillRect(0,0,25,95);
+            g.fillRect(0,0,25,85);
         }
     }
 
