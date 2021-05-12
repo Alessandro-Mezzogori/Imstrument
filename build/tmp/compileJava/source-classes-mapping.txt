@@ -3,6 +3,8 @@ imstrument/start/StartApp.java
 imstrument/homepage/Homepage.java
  imstrument.homepage.Homepage
  imstrument.homepage.Homepage$1
+imstrument/sound/waves/Soundwave.java
+ imstrument.sound.waves.Soundwave
 imstrument/sound/utils/ImagePanel.java
  imstrument.sound.utils.ImagePanel
 imstrument/sound/waves/Envelope.java
@@ -27,13 +29,13 @@ imstrument/sound/utils/Note.java
 imstrument/sound/utils/SoundImagePanel.java
  imstrument.sound.utils.SoundImagePanel
  imstrument.sound.utils.SoundImagePanel$ImageMouseListener
-imstrument/sound/waves/SoundWave.java
- imstrument.sound.waves.SoundWave
- imstrument.sound.waves.SoundWave$1
 imstrument/globals/DimensionComparator.java
  imstrument.globals.DimensionComparator
-imstrument/sound/utils/NoteFrequencyMapping.java
- imstrument.sound.utils.NoteFrequencyMapping
+imstrument/sound/waves/SoundwaveSummer.java
+ imstrument.sound.waves.SoundwaveSummer
+imstrument/virtualkeyboard/PianoKey.java
+ imstrument.virtualkeyboard.PianoKey
+ imstrument.virtualkeyboard.PianoKey$KeyColor
 imstrument/sound/utils/Octave.java
  imstrument.sound.utils.Octave
 imstrument/sound/waves/EnvelopeState.java
@@ -42,9 +44,10 @@ imstrument/sound/openal/OpenAlException.java
  imstrument.sound.openal.OpenAlException
 imstrument/algorithm/Algorithm.java
  imstrument.algorithm.Algorithm
-imstrument/virtualkeyboard/PianoKey.java
- imstrument.virtualkeyboard.PianoKey
- imstrument.virtualkeyboard.PianoKey$KeyColor
+imstrument/sound/waves/WaveTable.java
+ imstrument.sound.waves.WaveTable
+imstrument/sound/utils/NoteFrequencyMapping.java
+ imstrument.sound.utils.NoteFrequencyMapping
 imstrument/virtualkeyboard/VirtualKeyboard.java
  imstrument.virtualkeyboard.VirtualKeyboard
  imstrument.virtualkeyboard.VirtualKeyboard$PianoKeyAdapter

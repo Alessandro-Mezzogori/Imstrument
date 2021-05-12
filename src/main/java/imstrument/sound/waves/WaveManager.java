@@ -17,7 +17,12 @@ public class WaveManager{
     /**
      * array of the soundwaves generating samples
      */
-    private final ArrayList<SoundWave> soundWaves;
+    private final ArrayList<SoundwaveSummer> soundwaveSummers;
+
+    /* TODO 3 onde a cui verrano passat gli indici a cui si vuole accedere */
+    /* TODO array di index e indexStep per ogni waveCount, quando si cambia ottava si aggiorna indexWaveStep */
+    /* TODO interpolazione quando il numero di onde che sta playing */
+    /* TODO una sola envelope per ogni onda (macro envelope, visibile/modificabile in una tab a parte (tipo keyboard)*/
 
     private final int waveCount = 25; // 0 -> click wave, 1-24 -> keyboard triggered waves
     private final int octaveKeyCount = 12;
@@ -41,11 +46,11 @@ public class WaveManager{
 
 
     public WaveManager(){
-        this.soundWaves = new ArrayList<>();
+        this.soundwaveSummers = new ArrayList<>();
         for(int i = 0 ; i < waveCount; i++)
-            this.soundWaves.add(new SoundWave());
+            this.soundwaveSummers.add(new SoundwaveSummer());
 
-        shouldGenerate = new ArrayList<>(Arrays.asList(new Boolean[soundWaves.size()]));
+        shouldGenerate = new ArrayList<>(Arrays.asList(new Boolean[soundwaveSummers.size()]));
         Collections.fill(shouldGenerate, Boolean.FALSE);
 
     }
@@ -65,24 +70,20 @@ public class WaveManager{
 
         /* generate sample */
         double sample = 0.0;
-        double amplitudeSum = 0.0;
-        for(int i = 0; i < soundWaves.size(); i++){
+        int sampleNumber = 0;
+        for(int i = 0; i < soundwaveSummers.size(); i++){
             if(shouldGenerate.get(i)) {
-                sample += soundWaves.get(i).generateSample();
-
-                /* TODO  add velocity to key pressed ? */
-                /* TODO da mettere a posto lo stacco quando una certa wave va in release */
-                amplitudeSum += soundWaves.get(i).maxAmplitude;
+                sample += soundwaveSummers.get(i).generateSample();
+                sampleNumber++;
             }
         }
-
-        return (short) ((sample/amplitudeSum)*Short.MAX_VALUE);
+        return (short) (sample*Short.MAX_VALUE/sampleNumber); //TODO implement interpolation
     }
 
     private void updateGeneratingSamples(){
         boolean wavesReleased = true;
-        for(int i = 0; i < soundWaves.size(); i++) {
-            boolean isReleased = soundWaves.get(i).isReleased();
+        for(int i = 0; i < soundwaveSummers.size(); i++) {
+            boolean isReleased = soundwaveSummers.get(i).isReleased();
 
             if(!isReleased){
                 wavesReleased = false;
@@ -113,8 +114,8 @@ public class WaveManager{
         if (!StartApp.audioThread.isRunning()) {
             StartApp.audioThread.triggerPlayback();
         }
-        if(soundWaves.get(waveIndex).isReleasingOrRelease() ) {
-            soundWaves.get(waveIndex).reset();
+        if(soundwaveSummers.get(waveIndex).isReleasingOrRelease() ) {
+            soundwaveSummers.get(waveIndex).reset();
         }
 
         generatingSamples = true;
@@ -123,18 +124,17 @@ public class WaveManager{
 
     /* inner logic methods */
     public void startWaveRelease(int index){
-        soundWaves.get(index).startRelease();
+        soundwaveSummers.get(index).startRelease();
     }
 
-    public void importMouseWaveSettings(SoundWave soundWave){
-        soundWaves.get(0).importSoundWaveSettings(soundWave);
+    public void importMouseWaveSettings(SoundwaveSummer soundWaveSummer){
+        soundwaveSummers.get(0).importSoundwaveSummer(soundWaveSummer);
     }
 
-    public void importWaveSettings(SoundWave soundWave, KeyboardRows keyboardRows, Octave octave){
+    public void importWaveSettings(SoundwaveSummer soundWaveSummer, KeyboardRows keyboardRows, Octave octave){
         for(int i = 0; i < octaveKeyCount; i++){
-            SoundWave sw = soundWaves.get(i + keyboardRows.getRowNumber()*12 + 1);
-            sw.importSoundWaveSettings(soundWave);
-            sw.setFrequency(NoteFrequencyMapping.getNoteFrequency(Note.values()[i], octave));
+            SoundwaveSummer sw = soundwaveSummers.get(i + keyboardRows.getRowNumber()*12 + 1);
+            sw.importSoundwaveSummer(soundWaveSummer, NoteFrequencyMapping.getNoteFrequency(Note.values()[i], octave));
         }
     }
 

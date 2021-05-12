@@ -1,15 +1,12 @@
 package imstrument.sound.utils;
 
 import imstrument.algorithm.Algorithm;
-import imstrument.algorithm.HorizontalAlgorithm;
-import imstrument.sound.waves.SoundWave;
 import imstrument.sound.waves.WaveManager;
 import imstrument.start.StartApp;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 import java.net.URL;
 
 /**

@@ -11,10 +11,10 @@ public abstract class Algorithm {
     }
 
     /**
-     * method to compute changes in the mouse SoundWave on based
+     * method to compute changes in the mouse SoundwaveSummer on based
      * on the point clicked on the image
      *
-     * should affect: Envelope and/or frequency of the Mouse SoundWave
+     * should affect: Envelope and/or frequency of the Mouse SoundwaveSummer
      */
     public abstract void computeSoundWave(BufferedImage image);
     public abstract void computePoints(BufferedImage image, Point clickedPoint);

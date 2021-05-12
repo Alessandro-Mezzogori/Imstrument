@@ -207,7 +207,6 @@ public class Imagepage extends JPanel {
                         virtualKeyboard.setPressed(index - 1, false);
                     }
                 }
-                System.out.println(index + " " + e.getActionCommand());
             }
         };
 
@@ -269,29 +268,29 @@ public class Imagepage extends JPanel {
     private int convertBindingToIndex(String actionCommand) {
         return switch (actionCommand) {
             case "w" -> 1;
-            case "3" -> 8;
-            case "e" -> 2;
-            case "4" -> 9;
-            case "r" -> 3;
-            case "t" -> 4;
-            case "6" -> 10;
-            case "y" -> 5;
-            case "7" -> 11;
-            case "u" -> 6;
-            case "8" -> 12;
-            case "i" -> 7;
+            case "3" -> 2;
+            case "e" -> 3;
+            case "4" -> 4;
+            case "r" -> 5;
+            case "t" -> 6;
+            case "6" -> 7;
+            case "y" -> 8;
+            case "7" -> 9;
+            case "u" -> 10;
+            case "8" -> 11;
+            case "i" -> 12;
             case "z" -> 13;
-            case "s" -> 20;
-            case "x" -> 14;
-            case "d" -> 21;
-            case "c" -> 15;
-            case "v" -> 16;
-            case "g" -> 22;
-            case "b" -> 17;
-            case "h" -> 23;
-            case "n" -> 18;
-            case "j" -> 24;
-            case "m" -> 19;
+            case "s" -> 14;
+            case "x" -> 15;
+            case "d" -> 16;
+            case "c" -> 17;
+            case "v" -> 18;
+            case "g" -> 19;
+            case "b" -> 20;
+            case "h" -> 21;
+            case "n" -> 22;
+            case "j" -> 23;
+            case "m" -> 24;
             default -> -1;
         };
 
