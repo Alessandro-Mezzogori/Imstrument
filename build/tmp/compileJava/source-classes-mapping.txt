@@ -13,14 +13,12 @@ imstrument/sound/waves/Envelope.java
 imstrument/sound/waves/WaveManager.java
  imstrument.sound.waves.WaveManager
  imstrument.sound.waves.WaveManager$KeyboardRows
-imstrument/virtualkeyboard/VirtualKeyboard.java
- imstrument.virtualkeyboard.VirtualKeyboard
- imstrument.virtualkeyboard.VirtualKeyboard$PianoKeyAdapter
+imstrument/sound/waves/SoundWaveType.java
+ imstrument.sound.waves.SoundWaveType
 imstrument/algorithm/HorizontalAlgorithm.java
  imstrument.algorithm.HorizontalAlgorithm
-imstrument/start/TopContainer.java
- imstrument.start.TopContainer
- imstrument.start.TopContainer$1
+imstrument/sound/waves/WaveTable.java
+ imstrument.sound.waves.WaveTable
 imstrument/globals/GlobalSetting.java
  imstrument.globals.GlobalSetting
 imstrument/sound/openal/AudioThread.java
@@ -45,15 +43,15 @@ imstrument/sound/openal/OpenAlException.java
  imstrument.sound.openal.OpenAlException
 imstrument/algorithm/Algorithm.java
  imstrument.algorithm.Algorithm
+imstrument/sound/utils/NoteFrequencyMapping.java
+ imstrument.sound.utils.NoteFrequencyMapping
+imstrument/start/TopContainer.java
+ imstrument.start.TopContainer
+ imstrument.start.TopContainer$1
+imstrument/virtualkeyboard/VirtualKeyboardVisualizer.java
+ imstrument.virtualkeyboard.VirtualKeyboardVisualizer
+ imstrument.virtualkeyboard.VirtualKeyboardVisualizer$PianoKeyAdapter
 imstrument/imagepage/Imagepage.java
  imstrument.imagepage.Imagepage
  imstrument.imagepage.Imagepage$1
- imstrument.imagepage.Imagepage$1$1
  imstrument.imagepage.Imagepage$2
- imstrument.imagepage.Imagepage$3
-imstrument/sound/utils/NoteFrequencyMapping.java
- imstrument.sound.utils.NoteFrequencyMapping
-imstrument/sound/waves/WaveTable.java
- imstrument.sound.waves.WaveTable
-imstrument/sound/waves/SoundWaveType.java
- imstrument.sound.waves.SoundWaveType
