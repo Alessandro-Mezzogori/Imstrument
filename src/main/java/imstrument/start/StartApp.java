@@ -13,7 +13,7 @@ public class StartApp {
     public static AudioThread audioThread;
 
     public static void main(String[] args){
-        Envelope envelope = new Envelope(1, 0.001, 1.0, 0.1, 0.01, 1.0,0.5, 0.1);
+        Envelope envelope = new Envelope(0.001, 4, 1.0, 0.001, 1, 1.0,0.001, 0.1);
         SoundwaveSummer carrier = new SoundwaveSummer(
                 new Soundwave[]{
                         new Soundwave(WaveTable.SINE, 440),

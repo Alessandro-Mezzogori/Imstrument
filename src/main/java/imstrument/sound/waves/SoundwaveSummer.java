@@ -1,16 +1,9 @@
 package imstrument.sound.waves;
 
-import org.lwjgl.system.CallbackI;
-
 /**
  * Object abstracting the concept of wave
  */
 public class SoundwaveSummer {
-    /**
-     * default sample rate of all Wave instances, standard of WAV
-     */
-    public static final int DEFAULT_SAMPLE_RATE = 44100;
-
     /**
      * index of the current generated sample
      */
@@ -48,7 +41,6 @@ public class SoundwaveSummer {
     /**
      * starts the decay of the sound
      */
-    // TODO RIFARE
     public void startRelease(){
         envelope.startRelease();
     }
@@ -56,10 +48,12 @@ public class SoundwaveSummer {
     /**
      * reset the generation of the wave
      */
-    // TODO RIFARE
     public void reset() {
         envelope.reset();
         sampleIndex = 0;
+
+        for(Soundwave soundwave : soundwaves)
+            soundwave.reset();
     }
 
     /* methods for envelope profile */
@@ -87,6 +81,7 @@ public class SoundwaveSummer {
 
     public void importSoundwaveSummer(SoundwaveSummer soundwaveSummer){
         /* "copies" the waves contained in soundwaveSummer*/
+        envelope.importSettings(soundwaveSummer.envelope);
         soundwaves = new Soundwave[soundwaveSummer.getSoundwavesNumber()];
         for(int i = 0; i < soundwaves.length; i++)
             soundwaves[i] = new Soundwave(soundwaveSummer.soundwaves[i]);

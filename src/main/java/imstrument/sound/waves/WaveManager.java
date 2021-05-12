@@ -74,14 +74,12 @@ public class WaveManager{
 
         /* generate sample */
         double sample = 0.0;
-        int sampleNumber = 0;
         for(int i = 0; i < soundwaveSummers.size(); i++){
             if(shouldGenerate.get(i)) {
                 sample += soundwaveSummers.get(i).generateSample();
-                sampleNumber++;
             }
         }
-        return (short) (sample*Short.MAX_VALUE/sampleNumber); //TODO implement interpolation
+        return (short) (sample*Short.MAX_VALUE/soundwaveSummers.size()); //TODO implement interpolation
     }
 
     private void updateGeneratingSamples(){

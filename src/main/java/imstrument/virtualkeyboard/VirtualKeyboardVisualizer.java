@@ -204,7 +204,7 @@ public class VirtualKeyboardVisualizer extends JFrame {
         }
     }
 
-    private static class PianoKeyAdapter extends MouseAdapter {
+    private class PianoKeyAdapter extends MouseAdapter {
         @Override
         public void mousePressed(MouseEvent e) {
             PianoKey pianoKey = (PianoKey) e.getSource();

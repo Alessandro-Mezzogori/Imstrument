@@ -78,7 +78,9 @@ public class Imagepage extends JPanel {
         // TODO mappa note
         JMenu visualizeMenu = new JMenu("Visualize");
         JMenuItem visualizeVirtualKeyboard = new JMenuItem("Virtual Keyboard");
-        visualizeVirtualKeyboard.addActionListener(e -> SwingUtilities.invokeLater(VirtualKeyboardVisualizer::new));
+        visualizeVirtualKeyboard.addActionListener(
+                e -> SwingUtilities.invokeLater(() -> virtualKeyboardVisualizer = new VirtualKeyboardVisualizer())
+        );
         visualizeMenu.add(visualizeVirtualKeyboard);
         menuBar.add(visualizeMenu);
 
