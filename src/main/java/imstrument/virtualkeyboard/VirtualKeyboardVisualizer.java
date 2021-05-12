@@ -1,28 +1,34 @@
 package imstrument.virtualkeyboard;
 
+import imstrument.sound.waves.WaveManager;
 import imstrument.start.StartApp;
-import org.lwjgl.system.CallbackI;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
-import javax.swing.event.MouseInputAdapter;
-import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 
-public class VirtualKeyboard extends JFrame implements ActionListener {
-    private PianoKey[] keys;
-    final boolean[] isWhite = new boolean[]{true, false, true, false, true, true, false, true, false, true, false, true};
+public class VirtualKeyboardVisualizer extends JFrame {
+    /**
+     * array containing all the keys rendered in a virtual keyboard
+     */
+    private final PianoKey[] keys;
 
-    public VirtualKeyboard() {
+    /**
+     *  flags telling if the current key is a white key or a black one
+     *  must be the same lenght as WaveManager.OCTAVE_KEY_COUNT
+     */
+    private final boolean[] isWhite = new boolean[]{true, false, true, false, true, true, false, true, false, true, false, true};
+
+    public VirtualKeyboardVisualizer() {
         //Create the GUI
         setTitle("Imstrument Piano Keyboard");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         /* Init Array for the PianoKeys */
-        keys= new PianoKey[isWhite.length];
+        keys= new PianoKey[WaveManager.OCTAVE_KEY_COUNT * 2];
 
         /* Create the main panel for the keyboard */
         Container mainPanel = getContentPane();
@@ -31,8 +37,8 @@ public class VirtualKeyboard extends JFrame implements ActionListener {
         mainPanel.setBackground(Color.GRAY);
         mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        int numberOfKeyboards = 2;
-        for (int i = 0; i < numberOfKeyboards; i++) {
+        final int numberOfKeyboards = 2;
+        for (int keyboardIndex = 0; keyboardIndex < numberOfKeyboards; keyboardIndex++) {
             //creating the notes panel
             JPanel notesPanel = createNotes();
 
@@ -45,7 +51,7 @@ public class VirtualKeyboard extends JFrame implements ActionListener {
             JButton switchLeft  = createSwitch('l');
 
             /* Creating the pianokeyboard */
-            JLayeredPane pianoKeyboard = createKeyboard(i);
+            JLayeredPane pianoKeyboard = createKeyboard(keyboardIndex);
 
             /* Creating the panel where we can put the piano and the two buttons*/
             JPanel pianoPanel = new JPanel();
@@ -64,7 +70,6 @@ public class VirtualKeyboard extends JFrame implements ActionListener {
         setVisible(true);
         setResizable(false);
         setSize(570, 500);
-
     }
 
     /**
@@ -121,11 +126,13 @@ public class VirtualKeyboard extends JFrame implements ActionListener {
                 }
             }
             /* create new piano key */
-            keys[i] = new PianoKey(i, keyColor);
-            keys[i].setLocation(point);
-            keys[i].setSize(size);
-            keys[i].addMouseListener(new PianoKeyAdapter());
-            keyBoard.add(keys[i], layer);
+            // i + WaveManager.OCTAVE_KEY_COUNT * keyboardIndex + 1 -> links to the corrisponding wavesummer in the wave manager
+            int currentKeyIndex = i + WaveManager.OCTAVE_KEY_COUNT * keyboardIndex;
+            keys[currentKeyIndex] = new PianoKey(currentKeyIndex + 1, keyColor);
+            keys[currentKeyIndex].setLocation(point);
+            keys[currentKeyIndex].setSize(size);
+            keys[currentKeyIndex].addMouseListener(new PianoKeyAdapter());
+            keyBoard.add(keys[currentKeyIndex], layer);
 
             if(addRigidArea){
                 keyBoard.add(Box.createRigidArea(new Dimension(2, 0)));
@@ -187,7 +194,6 @@ public class VirtualKeyboard extends JFrame implements ActionListener {
         }
         switchOctave.setForeground(Color.WHITE);
         switchOctave.setBackground(Color.BLACK);
-        switchOctave.addActionListener(this);
 
         return switchOctave;
     }
@@ -196,16 +202,9 @@ public class VirtualKeyboard extends JFrame implements ActionListener {
         if(index < keys.length){
             keys[index].setPressed(value);
         }
-        System.out.println("Implement second row");
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
-
-    private class PianoKeyAdapter extends MouseAdapter {
-
+    private static class PianoKeyAdapter extends MouseAdapter {
         @Override
         public void mousePressed(MouseEvent e) {
             PianoKey pianoKey = (PianoKey) e.getSource();

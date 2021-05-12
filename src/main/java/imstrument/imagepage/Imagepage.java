@@ -6,7 +6,7 @@ import imstrument.algorithm.HorizontalAlgorithm;
 import imstrument.sound.utils.SoundImagePanel;
 import imstrument.start.StartApp;
 import imstrument.start.TopContainer;
-import imstrument.virtualkeyboard.VirtualKeyboard;
+import imstrument.virtualkeyboard.VirtualKeyboardVisualizer;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -23,7 +23,7 @@ public class Imagepage extends JPanel {
     /* GUI components */
     JMenuBar menuBar;
     SoundImagePanel soundImagePanel;
-    VirtualKeyboard virtualKeyboard;
+    VirtualKeyboardVisualizer virtualKeyboardVisualizer;
 
     public Imagepage(){
         /* initialize components */
@@ -78,17 +78,7 @@ public class Imagepage extends JPanel {
         // TODO mappa note
         JMenu visualizeMenu = new JMenu("Visualize");
         JMenuItem visualizeVirtualKeyboard = new JMenuItem("Virtual Keyboard");
-        visualizeVirtualKeyboard.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        virtualKeyboard = new VirtualKeyboard();
-                    }
-                });
-            }
-        });
+        visualizeVirtualKeyboard.addActionListener(e -> SwingUtilities.invokeLater(VirtualKeyboardVisualizer::new));
         visualizeMenu.add(visualizeVirtualKeyboard);
         menuBar.add(visualizeMenu);
 
@@ -189,8 +179,8 @@ public class Imagepage extends JPanel {
 
                 if(index != -1){
                     StartApp.waveManager.triggerWaveGeneration(index);
-                    if (virtualKeyboard != null){
-                        virtualKeyboard.setPressed(index - 1, true);
+                    if (virtualKeyboardVisualizer != null){
+                        virtualKeyboardVisualizer.setPressed(index - 1, true);
                     }
                 }
             }
@@ -203,8 +193,8 @@ public class Imagepage extends JPanel {
 
                 if(index != -1){
                     StartApp.waveManager.startWaveRelease(index);
-                    if (virtualKeyboard != null){
-                        virtualKeyboard.setPressed(index - 1, false);
+                    if (virtualKeyboardVisualizer != null){
+                        virtualKeyboardVisualizer.setPressed(index - 1, false);
                     }
                 }
             }

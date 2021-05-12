@@ -24,8 +24,7 @@ public class WaveManager{
     /* TODO interpolazione quando il numero di onde che sta playing */
     /* TODO una sola envelope per ogni onda (macro envelope, visibile/modificabile in una tab a parte (tipo keyboard)*/
 
-    private final int waveCount = 25; // 0 -> click wave, 1-24 -> keyboard triggered waves
-    private final int octaveKeyCount = 12;
+
 
     /**
      * array of boolean values, if true the corrisponding wave at the same index will generate
@@ -40,14 +39,19 @@ public class WaveManager{
 
     /* sound generation static params */
     /**
-     * default sample rate
+     * index of the wavesummer associated with mouse click
      */
     public static final int MOUSE_SOUNDWAVE_INDEX = 0;
-
+    /**
+     * numbers of keys in a single octave
+     */
+    public static final int OCTAVE_KEY_COUNT = 12;
 
     public WaveManager(){
         this.soundwaveSummers = new ArrayList<>();
-        for(int i = 0 ; i < waveCount; i++)
+        // 0 -> click wave, 1-24 -> keyboard triggered waves
+        int waveCount = 25;
+        for(int i = 0; i < waveCount; i++)
             this.soundwaveSummers.add(new SoundwaveSummer());
 
         shouldGenerate = new ArrayList<>(Arrays.asList(new Boolean[soundwaveSummers.size()]));
@@ -132,7 +136,7 @@ public class WaveManager{
     }
 
     public void importWaveSettings(SoundwaveSummer soundWaveSummer, KeyboardRows keyboardRows, Octave octave){
-        for(int i = 0; i < octaveKeyCount; i++){
+        for(int i = 0; i < OCTAVE_KEY_COUNT; i++){
             SoundwaveSummer sw = soundwaveSummers.get(i + keyboardRows.getRowNumber()*12 + 1);
             sw.importSoundwaveSummer(soundWaveSummer, NoteFrequencyMapping.getNoteFrequency(Note.values()[i], octave));
         }
