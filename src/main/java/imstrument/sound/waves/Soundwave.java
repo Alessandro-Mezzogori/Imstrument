@@ -2,44 +2,32 @@ package imstrument.sound.waves;
 
 public class Soundwave {
     private double frequency;
-    private int waveTableIndex;
-    private int waveTableIndexStep;
-    private WaveTable waveTable;
+    private int waveIndex;
+    private int waveIndexStep;
 
-    public Soundwave(WaveTable waveTable, double frequency){
-        this.waveTable = waveTable;
+    private Wavetable wavetable;
+
+    public Soundwave(Wavetable wavetable, double frequency){
+        this.wavetable = wavetable;
 
         setFrequency(frequency);
-        reset();
-    }
 
-    public Soundwave(Soundwave soundwave){
-        setFrequency(soundwave.getFrequency());
-        setWaveTable(soundwave.getWaveTable());
         reset();
     }
 
     public double getSample(){
-        double sample = waveTable.getSamples()[waveTableIndex];
-        waveTableIndex = (waveTableIndex + waveTableIndexStep) % WaveTable.WAVETABLE_SIZE;
+        double sample = wavetable.getSamples(0)[waveIndex];
+        waveIndex = (waveIndex + waveIndexStep) % Wavetable.WAVETABLE_SIZE;
         return sample;
     }
 
     public void reset(){
-        this.waveTableIndex = 0;
+        this.waveIndex = 0;
     }
 
-    public void setFrequency(double frequency){
+    /* getters and setters */
+    private void setFrequency(double frequency){
         this.frequency = frequency;
-        this.waveTableIndexStep = (int)frequency*WaveTable.WAVETABLE_SIZE/WaveTable.SAMPLE_RATE;
+        this.waveIndexStep = (int) (frequency*Wavetable.WAVETABLE_SIZE/Wavetable.SAMPLE_RATE);
     }
-
-    public double getFrequency(){return this.frequency;}
-
-    public void setWaveTable(WaveTable waveTable){
-        this.waveTable = waveTable;
-    }
-
-    public WaveTable getWaveTable(){return this.waveTable;}
-
 }

@@ -1,8 +1,8 @@
 package imstrument.algorithm;
 
 import imstrument.sound.waves.Envelope;
-import imstrument.sound.waves.SoundwaveSummer;
-import imstrument.sound.waves.WaveTable;
+import imstrument.sound.waves.Soundwave;
+import imstrument.sound.waves.Wavetable;
 import imstrument.start.StartApp;
 
 import java.awt.*;
@@ -37,10 +37,9 @@ public class HorizontalAlgorithm extends Algorithm{
                 (255 - getLuminance(colors[6]))/255,
                 getLuminance(colors[7])/255
         );
-        SoundwaveSummer soundWaveSummer = new SoundwaveSummer();
+        Soundwave soundwave = new Soundwave(new Wavetable(Wavetable.Type.SIMPLE, 0), 440);
 
-        System.out.println(soundWaveSummer);
-        StartApp.waveManager.importMouseWaveSettings(soundWaveSummer);
+        StartApp.waveManager.importMouseWaveSettings(soundwave);
     }
 
     @Override

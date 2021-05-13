@@ -18,6 +18,9 @@ imstrument/algorithm/HorizontalAlgorithm.java
 imstrument/start/TopContainer.java
  imstrument.start.TopContainer
  imstrument.start.TopContainer$1
+imstrument/sound/waves/Wavetable.java
+ imstrument.sound.waves.Wavetable
+ imstrument.sound.waves.Wavetable$Type
 imstrument/globals/GlobalSetting.java
  imstrument.globals.GlobalSetting
 imstrument/sound/openal/AudioThread.java
@@ -29,8 +32,6 @@ imstrument/sound/utils/SoundImagePanel.java
  imstrument.sound.utils.SoundImagePanel$ImageMouseListener
 imstrument/globals/DimensionComparator.java
  imstrument.globals.DimensionComparator
-imstrument/sound/waves/SoundwaveSummer.java
- imstrument.sound.waves.SoundwaveSummer
 imstrument/virtualkeyboard/PianoKey.java
  imstrument.virtualkeyboard.PianoKey
  imstrument.virtualkeyboard.PianoKey$KeyColor
@@ -51,7 +52,5 @@ imstrument/imagepage/Imagepage.java
  imstrument.imagepage.Imagepage$2
 imstrument/sound/utils/NoteFrequencyMapping.java
  imstrument.sound.utils.NoteFrequencyMapping
-imstrument/sound/waves/WaveTable.java
- imstrument.sound.waves.WaveTable
-imstrument/sound/waves/SoundWaveType.java
- imstrument.sound.waves.SoundWaveType
+imstrument/sound/waves/WaveTableEnum.java
+ imstrument.sound.waves.WaveTableEnum

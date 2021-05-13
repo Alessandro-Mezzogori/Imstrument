@@ -216,7 +216,7 @@ public class VirtualKeyboardVisualizer extends JFrame {
         public void mouseReleased(MouseEvent e) {
             PianoKey pianoKey = (PianoKey) e.getSource();
             pianoKey.setPressed(false);
-            StartApp.waveManager.startWaveRelease(pianoKey.getId());
+            StartApp.waveManager.setShouldGenerate(false, pianoKey.getId());
         }
     }
 }

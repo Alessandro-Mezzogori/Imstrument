@@ -89,7 +89,7 @@ public class SoundImagePanel extends ImagePanel{
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            StartApp.waveManager.startWaveRelease(WaveManager.MOUSE_SOUNDWAVE_INDEX);
+            StartApp.waveManager.setShouldGenerate(false, WaveManager.MOUSE_SOUNDWAVE_INDEX);
         }
 
         @Override

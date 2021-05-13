@@ -4,12 +4,15 @@ import imstrument.sound.utils.Note;
 import imstrument.sound.utils.NoteFrequencyMapping;
 import imstrument.sound.utils.Octave;
 
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.SQLInvalidAuthorizationSpecException;
 
-public enum WaveTable {
+public enum WaveTableEnum {
     SINE, SAW, TRIANGLE, SQUARE;
 
-    public static final int WAVETABLE_SIZE = 8192;
+    public static final int WAVETABLE_SIZE = 4096;
     public static final int SAMPLE_RATE = 44100;
 
     private final double[] wavetable = new double[WAVETABLE_SIZE];

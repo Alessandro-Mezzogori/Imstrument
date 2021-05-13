@@ -194,7 +194,7 @@ public class Imagepage extends JPanel {
                 int index = convertBindingToIndex(e.getActionCommand());
 
                 if(index != -1){
-                    StartApp.waveManager.startWaveRelease(index);
+                    StartApp.waveManager.setShouldGenerate(false, index);
                     if (virtualKeyboardVisualizer != null){
                         virtualKeyboardVisualizer.setPressed(index - 1, false);
                     }
