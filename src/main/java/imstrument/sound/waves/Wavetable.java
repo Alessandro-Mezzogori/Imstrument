@@ -5,7 +5,7 @@ public class Wavetable {
     private Type type;
     private int wavetableIndex;
 
-    public static int WAVETABLE_SIZE = 8192;
+    public static int WAVETABLE_SIZE = 4096;
     public static int SAMPLE_RATE = 48000;
     private static final double fundamentalFrequency = ((double) SAMPLE_RATE/WAVETABLE_SIZE);
 

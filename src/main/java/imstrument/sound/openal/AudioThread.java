@@ -12,7 +12,7 @@ import static org.lwjgl.openal.ALC10.*;
  * @author G223 Productions
  */
 public class AudioThread extends Thread {
-    public static final int BUFFER_SIZE = 512;
+    public static final int BUFFER_SIZE = 1024;
     static final int BUFFER_COUNT = 8;
     public static final int SAMPLE_RATE = 44100;
 

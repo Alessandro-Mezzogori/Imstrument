@@ -133,10 +133,6 @@ public class Envelope {
         );
         updateEnvelopeState(time, amplifier);
 
-
-        if(counter++ % 1000 == 0)
-            System.out.println("A: " + amplifier + " S: " + state);
-
         return amplifier; //normalizes to values beetwen [0,1]
     }
 
