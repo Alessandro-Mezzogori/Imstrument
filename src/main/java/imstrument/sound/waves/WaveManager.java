@@ -17,7 +17,7 @@ public class WaveManager{
     /**
      * array of the soundwaves generating samples
      */
-    private final ArrayList<Soundwave> soundwaves;
+    public final ArrayList<Soundwave> soundwaves;
 
     /* TODO 3 onde a cui verrano passat gli indici a cui si vuole accedere */
     /* TODO array di index e indexStep per ogni waveCount, quando si cambia ottava si aggiorna indexWaveStep */
@@ -65,6 +65,8 @@ public class WaveManager{
     public void setShouldGenerate(boolean shouldGenerate, int index) {
         //TODO add controls
         this.shouldGenerate.set(index, shouldGenerate);
+        if(!shouldGenerate)
+            this.soundwaves.get(index).reset();
     }
 
     /**
@@ -83,7 +85,7 @@ public class WaveManager{
         }
 
         this.generatingSamples = isGenerating;
-        return (short) (sample*Short.MAX_VALUE/3); //TODO implement interpolation and normalization
+        return (short) (sample*Short.MAX_VALUE/5.0); //TODO implement interpolation and normalization
     }
 
     /**
@@ -111,8 +113,7 @@ public class WaveManager{
     public void importWaveSettings(Soundwave soundwave, KeyboardRows keyboardRows, Octave octave){
         for(int i = 0; i < OCTAVE_KEY_COUNT; i++){
             //TODO import
-            soundwaves.set(i + keyboardRows.getRowNumber()*12 + 1, soundwave);
-            //sw.importSoundwaveSummer(soundWaveSummer, NoteFrequencyMapping.getNoteFrequency(Note.values()[i], octave));
+            soundwaves.get(i + keyboardRows.getRowNumber()*12 + 1).importFrom(soundwave, NoteFrequencyMapping.getNoteFrequency(Note.values()[i], octave));
         }
     }
 

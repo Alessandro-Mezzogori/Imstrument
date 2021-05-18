@@ -4,6 +4,7 @@ package imstrument.imagepage;
 
 import imstrument.algorithm.HorizontalAlgorithm;
 import imstrument.sound.utils.SoundImagePanel;
+import imstrument.sound.waves.Test;
 import imstrument.start.StartApp;
 import imstrument.start.TopContainer;
 import imstrument.virtualkeyboard.VirtualKeyboardVisualizer;
@@ -77,11 +78,18 @@ public class Imagepage extends JPanel {
         // TODO visualizzatore note
         // TODO mappa note
         JMenu visualizeMenu = new JMenu("Visualize");
+
         JMenuItem visualizeVirtualKeyboard = new JMenuItem("Virtual Keyboard");
         visualizeVirtualKeyboard.addActionListener(
                 e -> SwingUtilities.invokeLater(() -> virtualKeyboardVisualizer = new VirtualKeyboardVisualizer())
         );
         visualizeMenu.add(visualizeVirtualKeyboard);
+
+        JMenuItem visualizeSoundwave = new JMenuItem("Soundwave");
+        visualizeSoundwave.addActionListener(
+                e -> SwingUtilities.invokeLater(Test::new)
+        );
+        visualizeMenu.add(visualizeSoundwave);
         menuBar.add(visualizeMenu);
 
         /* mp3 management menu */
