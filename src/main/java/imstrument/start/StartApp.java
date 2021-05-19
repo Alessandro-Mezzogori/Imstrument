@@ -4,7 +4,6 @@ import imstrument.sound.openal.AudioThread;
 import imstrument.sound.utils.Octave;
 import imstrument.sound.waves.*;
 import imstrument.sound.wavetables.Wavetable;
-import imstrument.sound.wavetables.WavetableFile;
 
 import javax.swing.*;
 
@@ -12,9 +11,10 @@ public class StartApp {
     public static WaveManager waveManager;
     public static AudioThread audioThread;
 
-    public static Wavetable wavetable;
-
     public static void main(String[] args){
+        Wavetable wavetable = new Wavetable(Wavetable.Type.SIMPLE, 0);
+        wavetable.readFromFile();
+
         Soundwave carrier = new Soundwave(
                 new Wavetable(Wavetable.Type.SIMPLE, 0),
                 440.0
