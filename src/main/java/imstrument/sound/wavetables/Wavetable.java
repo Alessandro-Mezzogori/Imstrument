@@ -1,4 +1,4 @@
-package imstrument.sound.waves;
+package imstrument.sound.wavetables;
 
 public class Wavetable {
     private float[][] wavetables;
@@ -25,6 +25,8 @@ public class Wavetable {
             wavetables[1][i] = Math.signum(wavetables[0][i]);
             wavetables[2][i] = (float)(2*(time*fundamentalFrequency - Math.floor(0.5 + time*fundamentalFrequency)));
         }
+
+
 
         //TODO switch type
     }

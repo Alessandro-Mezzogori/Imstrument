@@ -3,6 +3,7 @@ package imstrument.sound.waves;
 import imstrument.sound.utils.Note;
 import imstrument.sound.utils.NoteFrequencyMapping;
 import imstrument.sound.utils.Octave;
+import imstrument.sound.wavetables.Wavetable;
 import imstrument.start.StartApp;
 
 import java.util.ArrayList;

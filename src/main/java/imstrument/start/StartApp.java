@@ -3,6 +3,8 @@ package imstrument.start;
 import imstrument.sound.openal.AudioThread;
 import imstrument.sound.utils.Octave;
 import imstrument.sound.waves.*;
+import imstrument.sound.wavetables.Wavetable;
+import imstrument.sound.wavetables.WavetableFile;
 
 import javax.swing.*;
 

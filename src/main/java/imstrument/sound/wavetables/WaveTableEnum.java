@@ -1,4 +1,4 @@
-package imstrument.sound.waves;
+package imstrument.sound.wavetables;
 
 import imstrument.sound.utils.Note;
 import imstrument.sound.utils.NoteFrequencyMapping;

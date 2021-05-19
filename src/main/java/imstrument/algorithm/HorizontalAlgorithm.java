@@ -2,7 +2,7 @@ package imstrument.algorithm;
 
 import imstrument.sound.waves.Envelope;
 import imstrument.sound.waves.Soundwave;
-import imstrument.sound.waves.Wavetable;
+import imstrument.sound.wavetables.Wavetable;
 import imstrument.start.StartApp;
 
 import java.awt.*;

@@ -1,4 +1,6 @@
-package imstrument.sound.waves;
+package imstrument.sound.wavetables;
+
+import imstrument.sound.wavetables.WaveVisualizer;
 
 import javax.swing.*;
 import java.awt.*;

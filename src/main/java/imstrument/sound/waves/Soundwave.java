@@ -1,5 +1,7 @@
 package imstrument.sound.waves;
 
+import imstrument.sound.wavetables.Wavetable;
+
 public class Soundwave {
     private double frequency;
     private int sampleIndex;

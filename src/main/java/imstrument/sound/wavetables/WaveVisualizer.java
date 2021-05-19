@@ -1,8 +1,8 @@
-package imstrument.sound.waves;
+package imstrument.sound.wavetables;
 
+import imstrument.sound.waves.Soundwave;
 import imstrument.start.StartApp;
 
-import javax.swing.*;
 import java.awt.*;
 
 //TODO temporaneo, usato principalmente per debugging

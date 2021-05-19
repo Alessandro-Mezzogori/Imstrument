@@ -4,7 +4,7 @@ package imstrument.imagepage;
 
 import imstrument.algorithm.HorizontalAlgorithm;
 import imstrument.sound.utils.SoundImagePanel;
-import imstrument.sound.waves.Test;
+import imstrument.sound.wavetables.Test;
 import imstrument.start.StartApp;
 import imstrument.start.TopContainer;
 import imstrument.virtualkeyboard.VirtualKeyboardVisualizer;
