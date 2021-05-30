@@ -72,7 +72,6 @@ public class Wavetable {
             //TODO se file non è trovato crearlo
             FileOutputStream fileOutputStream = new FileOutputStream(this.getClass().getResource("/imstrument/wavetables/simple").getPath());
 
-            System.out.println("Writing to " + WavetableFile.class.getResource("/imstrument/wavetables/simple").getPath());
             int offset = 0;
             for(int i = 0; i < wavetables.length; i++) {
                 byte[] byteArray = DatatypeConversion.FloatArray2ByteArray(wavetables[i]);
@@ -80,7 +79,6 @@ public class Wavetable {
                 fileOutputStream.flush();
                 offset += byteArray.length;
             }
-            System.out.println("End of writing");
             fileOutputStream.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();

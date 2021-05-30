@@ -19,7 +19,7 @@ public class StartApp {
                 new Wavetable(Wavetable.Type.SIMPLE, 0),
                 440.0
         );
-        carrier.sweepEnvelope = new Envelope(1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.5, 1.0);
+        carrier.sweepEnvelope = new Envelope(1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.5, 1.0);
 
         /* initialize audio thread and WaveManager*/
 
