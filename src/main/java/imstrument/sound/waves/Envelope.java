@@ -105,10 +105,28 @@ public class Envelope {
         this.releaseTime = releaseTime;
         this.releaseVelocity = releaseVelocity;
         computeReleaseDenominator();
+
+        reset();
     }
 
     public Envelope(){
         this(0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0);
+    }
+
+    public Envelope(Envelope envelope){
+        attackTime = envelope.attackTime;
+        attackVelocity = envelope.attackVelocity;
+        attackAmplifierPeak = envelope.attackAmplifierPeak;
+        decayTime = envelope.decayTime;
+        decayVelocity = envelope.decayVelocity;
+        sustainAmplifier = envelope.sustainAmplifier;
+        releaseTime = envelope.releaseTime;
+        releaseVelocity = envelope.releaseVelocity;
+
+        computeAttackDenominator();
+        computeDecayDenominator();
+        computeReleaseDenominator();
+        reset();
     }
 
     /**
@@ -116,14 +134,19 @@ public class Envelope {
      * @param time time in seconds from the start of the soundwave generation
      * @return number between [0.0, attackAmplifierPeak] with a max of [0.0, 1.0]
      */
+    static int counter = 0;
+
     public double getAmplitudeAmplifier(double time){
-        double amplifier = switch (this.state){
-            case ATTACK -> attackAmplifierPeak*(attackTime <= 0.0 ? 1.0 : (Math.exp(attackVelocity*time)-1.0)/attackDenominator);
-            case DECAY ->  attackAmplifierPeak - (attackAmplifierPeak - sustainAmplifier)*(decayTime <= 0 ? 1.0 : (Math.exp(decayVelocity*(time - startDecayTime))-1.0)/decayDenominator);
-            case SUSTAIN -> sustainAmplifier;
-            case RELEASE -> startReleaseAmplifier*(releaseTime <= 0.0 ? 0.0 : (1.0 - (Math.exp(releaseVelocity*(time - startReleaseTime))-1.0)/releaseDenominator));
-            case RELEASED -> 0.0;
-        };
+        double amplifier = Math.max(
+            switch (this.state){
+                case ATTACK -> attackAmplifierPeak*(attackTime <= 0.0 ? 1.0 : (Math.exp(attackVelocity*time)-1.0)/attackDenominator);
+                case DECAY ->  attackAmplifierPeak - (attackAmplifierPeak - sustainAmplifier)*(decayTime <= 0 ? 1.0 : (Math.exp(decayVelocity*(time - startDecayTime))-1.0)/decayDenominator);
+                case SUSTAIN -> sustainAmplifier;
+                case RELEASE -> startReleaseAmplifier*(releaseTime <= 0.0 ? 0.0 : (1.0 - (Math.exp(releaseVelocity*(time - startReleaseTime))-1.0)/releaseDenominator));
+                case RELEASED -> 0.0;
+            },
+            0.0
+        );
         updateEnvelopeState(time, amplifier);
 
         return amplifier; //normalizes to values beetwen [0,1]
@@ -222,5 +245,9 @@ public class Envelope {
                 "\nDecay " + decayTime + " " + decayVelocity +
                 "\nSustain: " + sustainAmplifier +
                 "\nRelease: " + releaseTime + " " + releaseVelocity + "\n";
+    }
+
+    public double getTotalTime(){
+        return  attackTime + decayTime + ((attackTime + decayTime) / 2) + releaseTime;
     }
 }

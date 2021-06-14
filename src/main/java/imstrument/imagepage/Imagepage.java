@@ -2,9 +2,12 @@ package imstrument.imagepage;
 
 /* imstrument packages */
 
+import imstrument.algorithm.HorizontalAlgorithm;
 import imstrument.sound.utils.SoundImagePanel;
+import imstrument.sound.wavetables.Test;
 import imstrument.start.StartApp;
 import imstrument.start.TopContainer;
+import imstrument.virtualkeyboard.VirtualKeyboardVisualizer;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -21,6 +24,7 @@ public class Imagepage extends JPanel {
     /* GUI components */
     JMenuBar menuBar;
     SoundImagePanel soundImagePanel;
+    VirtualKeyboardVisualizer virtualKeyboardVisualizer;
 
     public Imagepage(){
         /* initialize components */
@@ -44,7 +48,6 @@ public class Imagepage extends JPanel {
 
         logoIcon.addActionListener(
                 e -> {
-                    // TODO better method to open new jframe
                     JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor((JComponent) e.getSource());
                     if(topFrame instanceof TopContainer){
                         TopContainer topContainer = (TopContainer) topFrame;
@@ -56,7 +59,6 @@ public class Imagepage extends JPanel {
         menuBar.add(logoIcon);
 
         /* import menu */
-        // TODO import video
         JMenuItem importImage = new JMenuItem("Image");
         importImage.addActionListener(e -> importImage());
 
@@ -71,9 +73,20 @@ public class Imagepage extends JPanel {
         menuBar.add(algorithmsMenu);
 
         /* visualize menu */
-        // TODO visualizzatore note
         // TODO mappa note
         JMenu visualizeMenu = new JMenu("Visualize");
+
+        JMenuItem visualizeVirtualKeyboard = new JMenuItem("Virtual Keyboard");
+        visualizeVirtualKeyboard.addActionListener(
+                e -> SwingUtilities.invokeLater(() -> virtualKeyboardVisualizer = new VirtualKeyboardVisualizer())
+        );
+        visualizeMenu.add(visualizeVirtualKeyboard);
+
+        JMenuItem visualizeSoundwave = new JMenuItem("Soundwave");
+        visualizeSoundwave.addActionListener(
+                e -> SwingUtilities.invokeLater(Test::new)
+        );
+        visualizeMenu.add(visualizeSoundwave);
         menuBar.add(visualizeMenu);
 
         /* mp3 management menu */
@@ -83,6 +96,7 @@ public class Imagepage extends JPanel {
 
         /* image panel */
         this.soundImagePanel = new SoundImagePanel();
+        this.soundImagePanel.setSoundAlgorithm(new HorizontalAlgorithm());
         /* jframe settings and params */
         this.setLayout(new BorderLayout());
         this.add(menuBar, BorderLayout.NORTH);
@@ -92,7 +106,6 @@ public class Imagepage extends JPanel {
     }
 
     private void importImage(){
-        //TODO compatibilità gif
         JFileChooser imageChooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "JPG & PNG", "jpg", "png"
@@ -168,35 +181,13 @@ public class Imagepage extends JPanel {
         Action onPressed = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!StartApp.audioThread.isRunning()) {
-                    StartApp.audioThread.triggerPlayback();
-                }
+                int index = convertBindingToIndex(e.getActionCommand());
 
-                switch (e.getActionCommand()){
-                    case "w" -> StartApp.waveManager.triggerWaveGeneration(1);
-                    case "3" -> StartApp.waveManager.triggerWaveGeneration(2);
-                    case "e" -> StartApp.waveManager.triggerWaveGeneration(3);
-                    case "4" -> StartApp.waveManager.triggerWaveGeneration(4);
-                    case "r" -> StartApp.waveManager.triggerWaveGeneration(5);
-                    case "t" -> StartApp.waveManager.triggerWaveGeneration(6);
-                    case "6" -> StartApp.waveManager.triggerWaveGeneration(7);
-                    case "y" -> StartApp.waveManager.triggerWaveGeneration(8);
-                    case "7" -> StartApp.waveManager.triggerWaveGeneration(9);
-                    case "u" -> StartApp.waveManager.triggerWaveGeneration(10);
-                    case "8" -> StartApp.waveManager.triggerWaveGeneration(11);
-                    case "i" -> StartApp.waveManager.triggerWaveGeneration(12);
-                    case "z" -> StartApp.waveManager.triggerWaveGeneration(13);
-                    case "s" -> StartApp.waveManager.triggerWaveGeneration(14);
-                    case "x" -> StartApp.waveManager.triggerWaveGeneration(15);
-                    case "d" -> StartApp.waveManager.triggerWaveGeneration(16);
-                    case "c" -> StartApp.waveManager.triggerWaveGeneration(17);
-                    case "v" -> StartApp.waveManager.triggerWaveGeneration(18);
-                    case "g" -> StartApp.waveManager.triggerWaveGeneration(19);
-                    case "b" -> StartApp.waveManager.triggerWaveGeneration(20);
-                    case "h" -> StartApp.waveManager.triggerWaveGeneration(21);
-                    case "n" -> StartApp.waveManager.triggerWaveGeneration(22);
-                    case "j" -> StartApp.waveManager.triggerWaveGeneration(23);
-                    case "m" -> StartApp.waveManager.triggerWaveGeneration(24);
+                if(index != -1){
+                    StartApp.waveManager.triggerWaveGeneration(index);
+                    if (virtualKeyboardVisualizer != null){
+                        virtualKeyboardVisualizer.setPressed(index - 1, true);
+                    }
                 }
             }
         };
@@ -204,31 +195,13 @@ public class Imagepage extends JPanel {
         Action onRelease = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                switch (e.getActionCommand()){
-                    case "w" -> StartApp.waveManager.startWaveRelease(1);
-                    case "3" -> StartApp.waveManager.startWaveRelease(2);
-                    case "e" -> StartApp.waveManager.startWaveRelease(3);
-                    case "4" -> StartApp.waveManager.startWaveRelease(4);
-                    case "r" -> StartApp.waveManager.startWaveRelease(5);
-                    case "t" -> StartApp.waveManager.startWaveRelease(6);
-                    case "6" -> StartApp.waveManager.startWaveRelease(7);
-                    case "y" -> StartApp.waveManager.startWaveRelease(8);
-                    case "7" -> StartApp.waveManager.startWaveRelease(9);
-                    case "u" -> StartApp.waveManager.startWaveRelease(10);
-                    case "8" -> StartApp.waveManager.startWaveRelease(11);
-                    case "i" -> StartApp.waveManager.startWaveRelease(12);
-                    case "z" -> StartApp.waveManager.startWaveRelease(13);
-                    case "s" -> StartApp.waveManager.startWaveRelease(14);
-                    case "x" -> StartApp.waveManager.startWaveRelease(15);
-                    case "d" -> StartApp.waveManager.startWaveRelease(16);
-                    case "c" -> StartApp.waveManager.startWaveRelease(17);
-                    case "v" -> StartApp.waveManager.startWaveRelease(18);
-                    case "g" -> StartApp.waveManager.startWaveRelease(19);
-                    case "b" -> StartApp.waveManager.startWaveRelease(20);
-                    case "h" -> StartApp.waveManager.startWaveRelease(21);
-                    case "n" -> StartApp.waveManager.startWaveRelease(22);
-                    case "j" -> StartApp.waveManager.startWaveRelease(23);
-                    case "m" -> StartApp.waveManager.startWaveRelease(24);
+                int index = convertBindingToIndex(e.getActionCommand());
+
+                if(index != -1){
+                    StartApp.waveManager.setShouldGenerate(false, index);
+                    if (virtualKeyboardVisualizer != null){
+                        virtualKeyboardVisualizer.setPressed(index - 1, false);
+                    }
                 }
             }
         };
@@ -286,5 +259,36 @@ public class Imagepage extends JPanel {
         actionMap.put("AB_R", onRelease);
         actionMap.put("A#B_R", onRelease);
         actionMap.put("BB_R", onRelease);
+    }
+    
+    private int convertBindingToIndex(String actionCommand) {
+        return switch (actionCommand) {
+            case "w" -> 1;
+            case "3" -> 2;
+            case "e" -> 3;
+            case "4" -> 4;
+            case "r" -> 5;
+            case "t" -> 6;
+            case "6" -> 7;
+            case "y" -> 8;
+            case "7" -> 9;
+            case "u" -> 10;
+            case "8" -> 11;
+            case "i" -> 12;
+            case "z" -> 13;
+            case "s" -> 14;
+            case "x" -> 15;
+            case "d" -> 16;
+            case "c" -> 17;
+            case "v" -> 18;
+            case "g" -> 19;
+            case "b" -> 20;
+            case "h" -> 21;
+            case "n" -> 22;
+            case "j" -> 23;
+            case "m" -> 24;
+            default -> -1;
+        };
+
     }
 }

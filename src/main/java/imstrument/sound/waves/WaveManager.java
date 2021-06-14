@@ -3,6 +3,8 @@ package imstrument.sound.waves;
 import imstrument.sound.utils.Note;
 import imstrument.sound.utils.NoteFrequencyMapping;
 import imstrument.sound.utils.Octave;
+import imstrument.sound.wavetables.Wavetable;
+import imstrument.start.StartApp;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,10 +18,7 @@ public class WaveManager{
     /**
      * array of the soundwaves generating samples
      */
-    private final ArrayList<SoundWave> soundWaves;
-
-    private final int waveCount = 25; // 0 -> click wave, 1-24 -> keyboard triggered waves
-    private final int octaveKeyCount = 12;
+    public final ArrayList<Soundwave> soundwaves;
 
     /**
      * array of boolean values, if true the corrisponding wave at the same index will generate
@@ -34,17 +33,22 @@ public class WaveManager{
 
     /* sound generation static params */
     /**
-     * default sample rate
+     * index of the wavesummer associated with mouse click
      */
     public static final int MOUSE_SOUNDWAVE_INDEX = 0;
-
+    /**
+     * numbers of keys in a single octave
+     */
+    public static final int OCTAVE_KEY_COUNT = 12;
 
     public WaveManager(){
-        this.soundWaves = new ArrayList<>();
-        for(int i = 0 ; i < waveCount; i++)
-            this.soundWaves.add(new SoundWave());
+        this.soundwaves = new ArrayList<>();
+        // 0 -> click wave, 1-24 -> keyboard triggered waves
+        int waveCount = 25;
+        for(int i = 0; i < waveCount; i++)
+            this.soundwaves.add(new Soundwave(new Wavetable(Wavetable.Type.SIMPLE, 0), 0));
 
-        shouldGenerate = new ArrayList<>(Arrays.asList(new Boolean[soundWaves.size()]));
+        shouldGenerate = new ArrayList<>(Arrays.asList(new Boolean[soundwaves.size()]));
         Collections.fill(shouldGenerate, Boolean.FALSE);
 
     }
@@ -52,51 +56,31 @@ public class WaveManager{
 
     /* interface/public methods */
 
+    public void setShouldGenerate(boolean shouldGenerate, int index) {
+        //TODO add controls
+        this.shouldGenerate.set(index, shouldGenerate);
+        if(!shouldGenerate)
+            this.soundwaves.get(index).reset();
+    }
+
     /**
      * generates the next audio sample
      * @return the audio sample linked to the current sampleIndex
      */
     public synchronized short generateSample(){
-        /* handle wave decay */
-        updateGeneratingSamples();
-        if(!generatingSamples)
-            return 0;
-
         /* generate sample */
         double sample = 0.0;
-        double amplitudeSum = 0.0;
-        for(int i = 0; i < soundWaves.size(); i++){
+        boolean isGenerating = false;
+        for(int i = 0; i < soundwaves.size(); i++){
             if(shouldGenerate.get(i)) {
-                sample += soundWaves.get(i).generateSample();
-
-                /* TODO  add velocity to key pressed ? */
-                /* TODO da mettere a posto lo stacco quando una certa wave va in release */
-                amplitudeSum += soundWaves.get(i).maxAmplitude;
+                isGenerating = true;
+                sample += soundwaves.get(i).getSample();
             }
         }
 
-        return (short) ((sample/amplitudeSum)*Short.MAX_VALUE);
+        this.generatingSamples = isGenerating;
+        return (short) (sample*Short.MAX_VALUE/5.0); //TODO implement interpolation and normalization
     }
-
-    private void updateGeneratingSamples(){
-        boolean wavesReleased = true;
-        for(int i = 0; i < soundWaves.size(); i++) {
-            boolean isReleased = soundWaves.get(i).isReleased();
-
-            if(!isReleased){
-                wavesReleased = false;
-            }
-            else{
-                shouldGenerate.set(i, false);
-            }
-        }
-
-        if(wavesReleased){
-            generatingSamples = false;
-        }
-    }
-
-    /* wave generation controls */
 
     /**
      *
@@ -109,24 +93,20 @@ public class WaveManager{
     /* wave getters and setters */
 
     public void triggerWaveGeneration(int waveIndex){
-        if(soundWaves.get(waveIndex).isReleasingOrRelease() ) {
-            soundWaves.get(waveIndex).reset();
+        if (!StartApp.audioThread.isRunning()) {
+            StartApp.audioThread.triggerPlayback();
         }
-
         generatingSamples = true;
         shouldGenerate.set(waveIndex, true);
     }
 
-    /* inner logic methods */
-    public void startWaveRelease(int index){
-        soundWaves.get(index).startRelease();
+    public void importMouseWaveSettings(Soundwave soundwave){
+        soundwaves.set(0 ,soundwave);
     }
 
-    public void importWaveSettings(SoundWave soundWave, KeyboardRows keyboardRows, Octave octave){
-        for(int i = 0; i < octaveKeyCount; i++){
-            SoundWave sw = soundWaves.get(i + keyboardRows.getRowNumber()*12);
-            sw.importSoundWaveSettings(soundWave);
-            sw.setFrequency(NoteFrequencyMapping.getNoteFrequency(Note.values()[i], octave));
+    public void importWaveSettings(Soundwave soundwave, KeyboardRows keyboardRows, Octave octave){
+        for(int i = 0; i < OCTAVE_KEY_COUNT; i++){
+            soundwaves.get(i + keyboardRows.getRowNumber()*12 + 1).importFrom(soundwave, NoteFrequencyMapping.getNoteFrequency(Note.values()[i], octave));
         }
     }
 

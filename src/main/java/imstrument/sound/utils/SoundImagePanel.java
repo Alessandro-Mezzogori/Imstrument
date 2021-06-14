@@ -1,5 +1,6 @@
 package imstrument.sound.utils;
 
+import imstrument.algorithm.Algorithm;
 import imstrument.sound.waves.WaveManager;
 import imstrument.start.StartApp;
 
@@ -12,16 +13,42 @@ import java.net.URL;
  * extension of ImagePanel class providing audio generation on triggers
  */
 public class SoundImagePanel extends ImagePanel{
+    private Algorithm soundAlgorithm;
+
+    private boolean drawMouse;
+
+
     public SoundImagePanel(URL url, Dimension margins, Point startingPoint, boolean centerimage) {
         super(url, margins, startingPoint, centerimage);
 
+        drawMouse = false;
         this.addMouseListener(new ImageMouseListener());
     }
 
     public SoundImagePanel(){
         super();
 
-        this.addMouseListener(new ImageMouseListener());
+        drawMouse = false;
+
+        ImageMouseListener listener = new ImageMouseListener();
+        this.addMouseListener(listener);
+        this.addMouseMotionListener(listener);
+    }
+
+    public void setSoundAlgorithm(Algorithm algorithm){
+        soundAlgorithm = algorithm;
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        if(drawMouse) {
+            g.setColor(Color.red);
+            for (Point point : soundAlgorithm.getPoints())
+                g.fillRect(point.x + currentStartCorner.x, point.y + currentStartCorner.y, 1, 1);
+        }
+
     }
 
     /**
@@ -31,10 +58,13 @@ public class SoundImagePanel extends ImagePanel{
         @Override
         public void mousePressed(MouseEvent e) {
             if (image != null) {
-                //Point p = e.getPoint();
-                //p.x -= currentStartCorner.x;
-                //p.y -= currentStartCorner.y;
-                //Color pixelColor = new Color(image.getRGB(p.x, p.y));
+                Point p = e.getPoint();
+                p.x -= currentStartCorner.x;
+                p.y -= currentStartCorner.y;
+
+                if(soundAlgorithm != null && soundAlgorithm.getPoints().length != 0) {
+                    soundAlgorithm.computeSoundWave(image);
+                }
 
                 /* stops the audio thread from starting over and over again for performance and quality */
                 StartApp.waveManager.triggerWaveGeneration(WaveManager.MOUSE_SOUNDWAVE_INDEX);
@@ -46,8 +76,32 @@ public class SoundImagePanel extends ImagePanel{
         }
 
         @Override
+        public void mouseMoved(MouseEvent e) {
+            if(drawMouse) {
+                Point p = e.getPoint();
+                p.x -= currentStartCorner.x;
+                p.y -= currentStartCorner.y;
+
+                soundAlgorithm.computePoints(image, p);
+                ((SoundImagePanel) e.getSource()).repaint();
+            }
+        }
+
+        @Override
         public void mouseReleased(MouseEvent e) {
-            StartApp.waveManager.startWaveRelease(WaveManager.MOUSE_SOUNDWAVE_INDEX);
+            StartApp.waveManager.setShouldGenerate(false, WaveManager.MOUSE_SOUNDWAVE_INDEX);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            if(image != null) {
+                drawMouse = true;
+            }
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            drawMouse = false;
         }
     }
 }
