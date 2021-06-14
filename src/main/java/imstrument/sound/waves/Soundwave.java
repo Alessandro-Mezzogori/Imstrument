@@ -116,6 +116,6 @@ public class Soundwave {
             modulatingWave = null;
         }
 
-        reset();;
+        reset();
     }
 }
