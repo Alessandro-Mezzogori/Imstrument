@@ -186,7 +186,7 @@ public class Imagepage extends JPanel {
                 if(index != -1){
                     StartApp.waveManager.triggerWaveGeneration(index);
                     if (virtualKeyboardVisualizer != null){
-                        virtualKeyboardVisualizer.setPressed(index - 1, true);
+                        virtualKeyboardVisualizer.setPressed(index , true);
                     }
                 }
             }
@@ -200,7 +200,7 @@ public class Imagepage extends JPanel {
                 if(index != -1){
                     StartApp.waveManager.setShouldGenerate(false, index);
                     if (virtualKeyboardVisualizer != null){
-                        virtualKeyboardVisualizer.setPressed(index - 1, false);
+                        virtualKeyboardVisualizer.setPressed(index , false);
                     }
                 }
             }

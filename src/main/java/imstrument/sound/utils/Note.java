@@ -30,4 +30,5 @@ public enum Note{
     public int getNoteNumber(){
         return noteNumber;
     }
-}
+
+    }

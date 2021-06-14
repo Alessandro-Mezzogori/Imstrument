@@ -2,6 +2,7 @@ package imstrument.virtualkeyboard;
 
 import imstrument.sound.waves.WaveManager;
 import imstrument.start.StartApp;
+import imstrument.sound.utils.Note;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -9,6 +10,8 @@ import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Hashtable;
 
 public class VirtualKeyboardVisualizer extends JFrame {
     /**
@@ -21,11 +24,14 @@ public class VirtualKeyboardVisualizer extends JFrame {
      *  must be the same lenght as WaveManager.OCTAVE_KEY_COUNT
      */
     private final boolean[] isWhite = new boolean[]{true, false, true, false, true, true, false, true, false, true, false, true};
+    private JLabel[] entryBox;
+
+    private final String[] noteNameLookup = new String[]{"c", "c#", "d", "d#", "e", "f", "f#", "g", "g#", "a", "a#", "b", "" };
 
     public VirtualKeyboardVisualizer() {
         //Create the GUI
         setTitle("Imstrument Piano Keyboard");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         /* Init Array for the PianoKeys */
         keys= new PianoKey[WaveManager.OCTAVE_KEY_COUNT * 2];
@@ -38,9 +44,10 @@ public class VirtualKeyboardVisualizer extends JFrame {
         mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
         final int numberOfKeyboards = 2;
+        entryBox= new JLabel[numberOfKeyboards];
         for (int keyboardIndex = 0; keyboardIndex < numberOfKeyboards; keyboardIndex++) {
             //creating the notes panel
-            JPanel notesPanel = createNotes();
+            JPanel notesPanel = createNotes(keyboardIndex);
 
             /* adding to the main panel*/
             mainPanel.add(notesPanel);
@@ -142,7 +149,7 @@ public class VirtualKeyboardVisualizer extends JFrame {
         keyBoard.add(Box.createRigidArea(new Dimension(55, 0)));
         return keyBoard;
     }
-    private JPanel createNotes(){
+    private JPanel createNotes(int keyboardIndex){
         //Creating the note panel that needs to be next to the last white key
         JPanel notesPanel = new JPanel();
         notesPanel.setLayout(new BoxLayout(notesPanel,BoxLayout.X_AXIS));
@@ -151,7 +158,7 @@ public class VirtualKeyboardVisualizer extends JFrame {
         notesPanel.add(Box.createRigidArea(new Dimension(50,0)));
 
         //Creating note label
-        JLabel notesLabel = new JLabel("Notes:");
+        JLabel notesLabel = new JLabel("Note:");
         notesLabel.setForeground(Color.WHITE);
         notesLabel.setBackground(Color.BLACK);
         notesLabel.setHorizontalAlignment(JLabel.LEFT);
@@ -159,14 +166,15 @@ public class VirtualKeyboardVisualizer extends JFrame {
         notesPanel.add(Box.createRigidArea(new Dimension(10, 0)));
 
         //create entry box
-        JTextArea entryBox = new JTextArea();
-        entryBox.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
-        entryBox.setFont(new Font("Ariel", Font.BOLD, 14));
-        entryBox.setForeground(Color.BLACK);
-        entryBox.setBackground(new Color (170,180,254));
+        entryBox[keyboardIndex] = new JLabel("Le note compariranno qui");
+        entryBox[keyboardIndex].setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+        entryBox[keyboardIndex].setFont(new Font("Ariel", Font.BOLD, 14));
+        entryBox[keyboardIndex].setForeground(Color.WHITE);
+        entryBox[keyboardIndex].setBackground(new Color (170,180,254));
+
 
         //adding to the JPanel
-        notesPanel.add(entryBox);
+        notesPanel.add(entryBox[keyboardIndex]);
         notesPanel.add(Box.createRigidArea(new Dimension(50, 0)));
 
         return notesPanel;
@@ -199,23 +207,29 @@ public class VirtualKeyboardVisualizer extends JFrame {
     }
 
     public void setPressed(int index, boolean value){
+        index -= 1;
         if(index < keys.length){
             keys[index].setPressed(value);
+            setEntryText(index);
         }
+
+    }
+    public void setEntryText(int index){
+        entryBox[index/isWhite.length].setText(noteNameLookup[index%isWhite.length]);
     }
 
     private class PianoKeyAdapter extends MouseAdapter {
         @Override
         public void mousePressed(MouseEvent e) {
             PianoKey pianoKey = (PianoKey) e.getSource();
-            pianoKey.setPressed(true);
+            setPressed(pianoKey.getId(), true);
             StartApp.waveManager.triggerWaveGeneration(pianoKey.getId());
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
             PianoKey pianoKey = (PianoKey) e.getSource();
-            pianoKey.setPressed(false);
+            setPressed(pianoKey.getId(),false);
             StartApp.waveManager.setShouldGenerate(false, pianoKey.getId());
         }
     }
