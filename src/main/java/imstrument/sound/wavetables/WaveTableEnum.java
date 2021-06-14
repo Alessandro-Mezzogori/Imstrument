@@ -12,7 +12,7 @@ import java.sql.SQLInvalidAuthorizationSpecException;
 public enum WaveTableEnum {
     SINE, SAW, TRIANGLE, SQUARE;
 
-    public static final int WAVETABLE_SIZE = 4096;
+    public static final int WAVETABLE_SIZE = 2048;
     public static final int SAMPLE_RATE = 44100;
 
     private final double[] wavetable = new double[WAVETABLE_SIZE];

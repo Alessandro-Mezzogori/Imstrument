@@ -17,15 +17,24 @@ public class StartApp {
 
         Soundwave carrier = new Soundwave(
                 new Wavetable(Wavetable.Type.SIMPLE, 0),
-                440.0
+                440.0,
+                new Envelope(1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.5, 1.0),
+                new Soundwave(
+                        new Wavetable(Wavetable.Type.SIMPLE, 0),
+                        10.0,
+                        new Envelope(1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.5, 1.0),
+                        null,
+                        0.0
+                ),
+                1000.0
         );
-        carrier.sweepEnvelope = new Envelope(1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.5, 1.0);
+        //carrier.sweepEnvelope = new Envelope(1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.5, 1.0);
 
         /* initialize audio thread and WaveManager*/
 
         waveManager = new WaveManager();
-        waveManager.importWaveSettings(carrier, WaveManager.KeyboardRows.TOP_ROW, Octave._1);
-        waveManager.importWaveSettings(carrier, WaveManager.KeyboardRows.BOTTOM_ROW, Octave._5);
+        waveManager.importWaveSettings(carrier, WaveManager.KeyboardRows.TOP_ROW, Octave._3);
+        waveManager.importWaveSettings(carrier, WaveManager.KeyboardRows.BOTTOM_ROW, Octave._4);
 
         audioThread = new AudioThread(() -> {
             boolean isGenerating = false;

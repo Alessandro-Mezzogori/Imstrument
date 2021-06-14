@@ -48,7 +48,6 @@ public class Imagepage extends JPanel {
 
         logoIcon.addActionListener(
                 e -> {
-                    // TODO better method to open new jframe
                     JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor((JComponent) e.getSource());
                     if(topFrame instanceof TopContainer){
                         TopContainer topContainer = (TopContainer) topFrame;
@@ -60,7 +59,6 @@ public class Imagepage extends JPanel {
         menuBar.add(logoIcon);
 
         /* import menu */
-        // TODO import video
         JMenuItem importImage = new JMenuItem("Image");
         importImage.addActionListener(e -> importImage());
 
@@ -75,7 +73,6 @@ public class Imagepage extends JPanel {
         menuBar.add(algorithmsMenu);
 
         /* visualize menu */
-        // TODO visualizzatore note
         // TODO mappa note
         JMenu visualizeMenu = new JMenu("Visualize");
 
@@ -109,7 +106,6 @@ public class Imagepage extends JPanel {
     }
 
     private void importImage(){
-        //TODO compatibilità gif
         JFileChooser imageChooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "JPG & PNG", "jpg", "png"

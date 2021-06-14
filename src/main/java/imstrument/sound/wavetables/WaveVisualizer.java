@@ -21,7 +21,7 @@ public class WaveVisualizer extends Canvas {
             double sample = soundwave.getSample();
             for(int j = 0; j < jstep; j++)
                 sample = soundwave.getSample();
-            g.drawLine(x, (int)(prevSample * 20) + y, x + 1, (int)(sample * 20) + y);
+            graphics2D.drawLine(x, (int)(prevSample * 20) + y, x + 1, (int)(sample * 20) + y);
             prevSample = sample;
         }
 

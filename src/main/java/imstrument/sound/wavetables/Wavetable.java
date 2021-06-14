@@ -15,6 +15,7 @@ public class Wavetable {
 
     public static int WAVETABLE_SIZE = 4096;
     public static int SAMPLE_RATE = 48000;
+    public static double FUNDAMENTAL_FREQUENCY = ((double)WAVETABLE_SIZE)/SAMPLE_RATE;
     private static final double fundamentalFrequency = ((double) SAMPLE_RATE/WAVETABLE_SIZE);
 
     public Wavetable(Type type, int wavetableIndex){
@@ -57,6 +58,11 @@ public class Wavetable {
 
     public int getWavetableNumber(){ return wavetables.length; }
     public int getWavetableIndex(){return wavetableIndex; }
+
+    /* static helper functions */
+    public static double getStepSize(double frequency){
+        return frequency*FUNDAMENTAL_FREQUENCY;
+    }
 
     public enum Type{
         SIMPLE, //SINE, SAW, SQUARE, TRIANGLE

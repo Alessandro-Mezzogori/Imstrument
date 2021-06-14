@@ -58,7 +58,6 @@ public class Homepage extends JPanel { /* Logic attributes */
             new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    // TODO better method to open new jframe
                     JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor((JComponent) e.getSource());
                     if(topFrame instanceof TopContainer){
                         TopContainer topContainer = (TopContainer) topFrame;

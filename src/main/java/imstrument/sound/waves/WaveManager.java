@@ -20,13 +20,6 @@ public class WaveManager{
      */
     public final ArrayList<Soundwave> soundwaves;
 
-    /* TODO 3 onde a cui verrano passat gli indici a cui si vuole accedere */
-    /* TODO array di index e indexStep per ogni waveCount, quando si cambia ottava si aggiorna indexWaveStep */
-    /* TODO interpolazione quando il numero di onde che sta playing */
-    /* TODO una sola envelope per ogni onda (macro envelope, visibile/modificabile in una tab a parte (tipo keyboard)*/
-
-
-
     /**
      * array of boolean values, if true the corrisponding wave at the same index will generate
      * a sample when asked from the Wavesummer
@@ -108,12 +101,11 @@ public class WaveManager{
     }
 
     public void importMouseWaveSettings(Soundwave soundwave){
-        soundwaves.set(0 ,soundwave); //TODO copy constructor
+        soundwaves.set(0 ,soundwave);
     }
 
     public void importWaveSettings(Soundwave soundwave, KeyboardRows keyboardRows, Octave octave){
         for(int i = 0; i < OCTAVE_KEY_COUNT; i++){
-            //TODO import
             soundwaves.get(i + keyboardRows.getRowNumber()*12 + 1).importFrom(soundwave, NoteFrequencyMapping.getNoteFrequency(Note.values()[i], octave));
         }
     }

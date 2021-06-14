@@ -3,35 +3,64 @@ package imstrument.sound.waves;
 import imstrument.sound.wavetables.Wavetable;
 
 public class Soundwave {
+    /* general */
     private double frequency;
     private int sampleIndex;
 
+    /* wave table sound gen attributes */
     private double waveIndex;
     private double waveIndexStep;
 
+    /* wave table sweep attributes */
     public Wavetable wavetable;
     public Envelope sweepEnvelope;
 
+    /* frequency modulation attributes */
+    Soundwave modulatingWave;
+    double modulatingIndex;
 
-    public Soundwave(Wavetable wavetable, double frequency){
+    public Soundwave(Wavetable wavetable, double frequency, Envelope sweepEnvelope, Soundwave modulatingWave, double modulatingIndex){
+        this.frequency = frequency;
         this.wavetable = wavetable;
-        this.sweepEnvelope = new Envelope();
+        this.sweepEnvelope = sweepEnvelope;
 
-        setFrequency(frequency);
+        this.modulatingWave = modulatingWave;
+
+        this.modulatingIndex = modulatingIndex;
+        /* compute step size */
+        waveIndexStep = Wavetable.getStepSize(frequency);
         reset();
     }
 
-    double modulatingIndex = 0.0;
-    double modulatingIndexStep = 60.0*Wavetable.WAVETABLE_SIZE/Wavetable.SAMPLE_RATE;
-    Wavetable testWavetable = new Wavetable(Wavetable.Type.SIMPLE, 0);
-    Envelope testEnvelope = new Envelope(0.5, 4.0, 1.0, 0.0001, 0.1, 0.5, 0.0, 0.0);
+    public Soundwave(Wavetable wavetable, double frequency) {
+        this(
+                wavetable,
+                frequency,
+                new Envelope(),
+                null,
+                0.0
+        );
+    }
+
+    public Soundwave(){
+        this(
+                new Wavetable(Wavetable.Type.SIMPLE, 0),
+                440,
+                new Envelope(),
+                null,
+                0.0
+        );
+    }
 
     public double getSample(){
-        /* wavetable sweep */
+        /* variables for easier readability */
+        double time = ((double)sampleIndex++)/Wavetable.SAMPLE_RATE;
+
+        /* WAVETABLE SWEEP  */
         int wavetableNumber = wavetable.getWavetableNumber() - wavetable.getWavetableIndex() - 1;
 
-        /* gets the current envelope that drives the sweep */
-        double envelopeAmplitude = sweepEnvelope.getAmplitudeAmplifier((double)sampleIndex++/Wavetable.SAMPLE_RATE)*wavetableNumber;
+        /* gets the current amplitude of the envelope that drives the sweep */
+        double envelopeAmplitude = sweepEnvelope.getAmplitudeAmplifier(time)*wavetableNumber;
 
         /* extracting the wavetable indices to linearly interpolate between them with the envelope amplitude as the driver */
         int wavetableIndex1 = envelopeAmplitude <= 0 ? 0 : (int) Math.floor(envelopeAmplitude);
@@ -39,19 +68,18 @@ public class Soundwave {
         double firstWeight = 1 - (envelopeAmplitude - wavetableIndex1);
         int intWaveIndex = (int)Math.floor(waveIndex); //dummy variable used to approx. the waveIndex
 
-        /* linear interpolation between */
+        /* linear interpolation  */
         double sample = firstWeight*wavetable.getSamples(wavetableIndex1)[intWaveIndex] + (1.0 - firstWeight)*wavetable.getSamples(wavetableIndex2)[intWaveIndex];
 
-        /* frequency modulation */
-        double modulatingSample = testEnvelope.getAmplitudeAmplifier((double)sampleIndex++/Wavetable.SAMPLE_RATE)*testWavetable.getSamples()[(int)Math.floor(modulatingIndex)];
-        //double modulatingSample = envelopeAmplitude*testWavetable.getSamples()[(int)Math.floor(modulatingIndex)];
-        modulatingIndex = (modulatingIndex + modulatingIndexStep) % Wavetable.WAVETABLE_SIZE;
+        /* frequency modulation trough the WaveTable modulatingWavetable and the associated envelope */
+        double modulatingSample = modulatingWave != null ? modulatingWave.getSample() : 0.0;
 
-        /* updating the waveIndex for the next sample */
-        waveIndex = Math.abs(waveIndex + (frequency + 30*modulatingSample)*Wavetable.WAVETABLE_SIZE/Wavetable.SAMPLE_RATE) % Wavetable.WAVETABLE_SIZE;
-        //System.out.println("F: " + frequency + " Fm: " + modulatingSample*30 + " I: " + waveIndex);
+        /* updating the indices
+        *  waveIndex: is modified accordingly to the base wavetable step formula modified to accomodate the frequency modulatino
+        *  modulatingWaveIndex: is modified only accordingly to the base wavetable step formula (implies that there's only one level of modulation )*/
+        waveIndex = Math.abs(waveIndex + waveIndexStep + modulatingIndex*modulatingSample*Wavetable.WAVETABLE_SIZE/Wavetable.SAMPLE_RATE) % Wavetable.WAVETABLE_SIZE;
 
-        return sample;
+        return sample; //TODO add amplitudeEnvelope ?
     }
 
     public void reset(){
@@ -63,20 +91,31 @@ public class Soundwave {
         sweepEnvelope.reset();
 
         /* frequency modulation resets*/
-        testEnvelope.reset();
-        modulatingIndex = 0;
+        if( modulatingWave != null){
+            modulatingWave.reset();
+        }
     }
 
     /* getters and setters */
-    private void setFrequency(double frequency){
-        this.frequency = frequency;
-        this.waveIndexStep = frequency*Wavetable.WAVETABLE_SIZE/Wavetable.SAMPLE_RATE;
-    }
 
     public void importFrom(Soundwave soundwave, double frequency){
         wavetable = soundwave.wavetable;
         sweepEnvelope.importSettings(soundwave.sweepEnvelope);
-        setFrequency(frequency);
+
+        /* calculate step sizes */
+        waveIndexStep = Wavetable.getStepSize(frequency);
+
+        if(soundwave.modulatingWave != null){
+            if(modulatingWave == null){
+                modulatingWave = new Soundwave();
+            }
+            modulatingWave.importFrom(soundwave.modulatingWave, soundwave.modulatingWave.frequency);
+            modulatingIndex = soundwave.modulatingIndex;
+        }
+        else {
+            modulatingWave = null;
+        }
+
         reset();;
     }
 }

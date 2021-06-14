@@ -113,6 +113,22 @@ public class Envelope {
         this(0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0);
     }
 
+    public Envelope(Envelope envelope){
+        attackTime = envelope.attackTime;
+        attackVelocity = envelope.attackVelocity;
+        attackAmplifierPeak = envelope.attackAmplifierPeak;
+        decayTime = envelope.decayTime;
+        decayVelocity = envelope.decayVelocity;
+        sustainAmplifier = envelope.sustainAmplifier;
+        releaseTime = envelope.releaseTime;
+        releaseVelocity = envelope.releaseVelocity;
+
+        computeAttackDenominator();
+        computeDecayDenominator();
+        computeReleaseDenominator();
+        reset();
+    }
+
     /**
      * returns the coefficient at the time of the wave generation
      * @param time time in seconds from the start of the soundwave generation
