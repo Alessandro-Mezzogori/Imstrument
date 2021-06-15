@@ -30,20 +30,22 @@ imstrument/sound/openal/OpenAlException.java
  imstrument.sound.openal.OpenAlException
 imstrument/algorithm/Algorithm.java
  imstrument.algorithm.Algorithm
-imstrument/imagepage/Imagepage.java
- imstrument.imagepage.Imagepage
- imstrument.imagepage.Imagepage$1
- imstrument.imagepage.Imagepage$2
+imstrument/algorithm/operators/AvgLuminance.java
+ imstrument.algorithm.operators.AvgLuminance
+imstrument/sound/wavetables/WaveVisualizer.java
+ imstrument.sound.wavetables.WaveVisualizer
 imstrument/sound/utils/NoteFrequencyMapping.java
  imstrument.sound.utils.NoteFrequencyMapping
 imstrument/sound/wavetables/WavetableTransform.java
  imstrument.sound.wavetables.WavetableTransform
-imstrument/algorithm/Operator.java
- imstrument.algorithm.Operator
+imstrument/algorithm/operators/Red.java
+ imstrument.algorithm.operators.Red
 imstrument/start/StartApp.java
  imstrument.start.StartApp
 imstrument/sound/utils/ImagePanel.java
  imstrument.sound.utils.ImagePanel
+imstrument/algorithm/operators/Operator.java
+ imstrument.algorithm.operators.Operator
 imstrument/algorithm/Importer.java
  imstrument.algorithm.Importer
 imstrument/sound/wavetables/Test.java
@@ -55,14 +57,17 @@ imstrument/sound/utils/SoundImagePanel.java
  imstrument.sound.utils.SoundImagePanel$ImageMouseListener
 imstrument/globals/DimensionComparator.java
  imstrument.globals.DimensionComparator
+imstrument/sound/utils/DatatypeConversion.java
+ imstrument.sound.utils.DatatypeConversion
 imstrument/sound/utils/Octave.java
  imstrument.sound.utils.Octave
-imstrument/algorithm/AvgLuminance.java
- imstrument.algorithm.AvgLuminance
 imstrument/virtualkeyboard/VirtualKeyboardVisualizer.java
  imstrument.virtualkeyboard.VirtualKeyboardVisualizer
  imstrument.virtualkeyboard.VirtualKeyboardVisualizer$PianoKeyAdapter
-imstrument/sound/wavetables/WaveVisualizer.java
- imstrument.sound.wavetables.WaveVisualizer
-imstrument/sound/utils/DatatypeConversion.java
- imstrument.sound.utils.DatatypeConversion
+imstrument/algorithm/ControlWindow.java
+ imstrument.algorithm.ControlWindow
+imstrument/imagepage/Imagepage.java
+ imstrument.imagepage.Imagepage
+ imstrument.imagepage.Imagepage$1
+ imstrument.imagepage.Imagepage$2
+ imstrument.imagepage.Imagepage$3

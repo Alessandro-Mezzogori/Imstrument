@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * extension of ImagePanel class providing audio generation on triggers
@@ -15,7 +16,20 @@ import java.net.URL;
 public class SoundImagePanel extends ImagePanel{
 
     private boolean drawMouse;
-    Algorithm algorithm = new Algorithm("_<10,20,30,40><AVGLUMINANCE>__<10,20,30,40><AVGLUMINANCE>_");
+    Algorithm algorithm = new Algorithm(
+            "_<-9,-9,3,3><RED>_" +
+            "_<-6,-6,3,3><RED>_" +
+            "_<-3,-3,3,3><RED>_" +
+            "_<0,0,3,3><AVGLUMINANCE>_" +
+            "_<3,3,3,3><AVGLUMINANCE>_" +
+            "_<6,6,3,3><AVGLUMINANCE>_" +
+            "_<-9,6,3,3><AVGLUMINANCE>_" +
+            "_<-6,3,3,3><AVGLUMINANCE>_" +
+            "_<0,-3,3,3><AVGLUMINANCE>_" +
+            "_<3,-6,3,3><AVGLUMINANCE>_"
+    );
+    Point mousePoint;
+
 
     public SoundImagePanel(URL url, Dimension margins, Point startingPoint, boolean centerimage) {
         super(url, margins, startingPoint, centerimage);
@@ -37,13 +51,17 @@ public class SoundImagePanel extends ImagePanel{
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-//
-//        if(drawMouse) {
-//            g.setColor(Color.red);
-//            for (Point point : soundAlgorithm.getPoints())
-//                g.fillRect(point.x + currentStartCorner.x, point.y + currentStartCorner.y, 1, 1);
-//        }
-
+        if(drawMouse) {
+            g.setColor(Color.red);
+            for (int[] group : algorithm.getGroups()) {
+                g.fillRect(
+                        mousePoint.x + currentStartCorner.x + group[0],
+                        mousePoint.y + currentStartCorner.y + group[1],
+                        group[2],
+                        group[3]
+                );
+            }
+        }
     }
 
     /**
@@ -71,9 +89,9 @@ public class SoundImagePanel extends ImagePanel{
         @Override
         public void mouseMoved(MouseEvent e) {
             if(drawMouse) {
-                Point p = e.getPoint();
-                p.x -= currentStartCorner.x;
-                p.y -= currentStartCorner.y;
+                mousePoint = e.getPoint();
+                mousePoint.x -= currentStartCorner.x;
+                mousePoint.y -= currentStartCorner.y;
 
                 //soundAlgorithm.computePoints(image, p);
                 ((SoundImagePanel) e.getSource()).repaint();

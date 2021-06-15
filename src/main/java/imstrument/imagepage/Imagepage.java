@@ -2,14 +2,18 @@ package imstrument.imagepage;
 
 /* imstrument packages */
 
+import imstrument.algorithm.ControlWindow;
 import imstrument.sound.utils.SoundImagePanel;
 import imstrument.sound.wavetables.Test;
 import imstrument.start.StartApp;
 import imstrument.start.TopContainer;
 import imstrument.virtualkeyboard.VirtualKeyboardVisualizer;
+import org.lwjgl.system.CallbackI;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.*;
@@ -69,6 +73,15 @@ public class Imagepage extends JPanel {
         /* algorythms menu */
         // TODO lista degli algoritmi
         JMenu algorithmsMenu = new JMenu("Algorithms");
+        JMenuItem algoControlPanel = new JMenuItem("Control panel");
+        algoControlPanel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwingUtilities.invokeLater(ControlWindow::new);
+            }
+        });
+
+        algorithmsMenu.add(algoControlPanel);
         menuBar.add(algorithmsMenu);
 
         /* visualize menu */
@@ -122,7 +135,7 @@ public class Imagepage extends JPanel {
         }
     }
 
-    private void setKeyboardBindings(){ // TODO cambiarlo a key listener
+    private void setKeyboardBindings(){
         InputMap inputMap = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, false), "CT_T");
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_3, 0, false), "C#T_T");

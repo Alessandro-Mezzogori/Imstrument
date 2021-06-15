@@ -1,15 +1,18 @@
 package imstrument.algorithm;
 
+import imstrument.algorithm.operators.AvgLuminance;
+import imstrument.algorithm.operators.Operator;
+import imstrument.algorithm.operators.Red;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Algorithm {
-    private  ArrayList<Operator> operatorMatrix;
+    private  ArrayList<Operator> operatorMatrix; // TODO add multiple operator support
     private  ArrayList<int[]> groups;
 
     private static final int groupElementSize;
@@ -19,9 +22,10 @@ public class Algorithm {
     static
     {
         groupElementSize = 4;
-        pattern = Pattern.compile("_<([\\d]+),([\\d]+),([\\d]+),([\\d]+)><(\\w+)>_");
+        pattern = Pattern.compile("_<(-?[\\d]+),(-?[\\d]+),(-?[\\d]+),(-?[\\d]+)><(\\w+)>_");
         operatorTable = new Hashtable<>();
         operatorTable.put("AVGLUMINANCE", new AvgLuminance());
+        operatorTable.put("RED", new Red());
     }
 
     public Algorithm(String algorithm){
@@ -42,7 +46,7 @@ public class Algorithm {
             int[] group = groups.get(i);
 
             // bound checking
-            int[] pixels = image.getRGB(pressed.x + group[0], pressed.y + group[1], group[2], group[3], null, 0, image.getWidth());
+            int[] pixels = image.getRGB(pressed.x + group[0], pressed.y + group[1], group[2], group[3], null, 0, group[2]);
             Color[] colors = new Color[pixels.length];
 
             for(int j = 0, pixelsLen = pixels.length; j < pixelsLen; j++)
@@ -50,6 +54,7 @@ public class Algorithm {
             values[i] = operatorMatrix.get(i).compute(colors);
         }
 
+        // TODO REMOVE DEBUG PRINT
         System.out.println("VALUES: ");
         for(double value : values)
             System.out.println(value);
@@ -61,8 +66,8 @@ public class Algorithm {
         Matcher matcher = pattern.matcher(algorithm);
 
         /* as long as there are matches read them */
-        int[] group = new int[groupElementSize];
         while(matcher.find()) {
+            int[] group = new int[groupElementSize];
             for(int i = 1, groupCount = matcher.groupCount(); i < groupCount; i++) {
                 group[i - 1] = Integer.parseInt(matcher.group(i));
             }
@@ -74,9 +79,11 @@ public class Algorithm {
         for (int i = 0, groupsSize = groups.size(); i < groupsSize; i++) {
             int[] test = groups.get(i);
             System.out.println("FINISHED: ");
-            System.out.println("FINISHED: ");
-            System.out.println(test[0] + " " + test[1] + " " + test[2] + " " + test[3] + " " + operatorMatrix.get(i));
+            System.out.println(String.valueOf(test[0]) + " " + test[1] + " " + test[2] + " " + test[3] + " " + operatorMatrix.get(i));
         }
     }
-    //TODO add way to get groups to draw shapes on screen
+
+    public ArrayList<int[]> getGroups() {
+        return groups;
+    }
 }

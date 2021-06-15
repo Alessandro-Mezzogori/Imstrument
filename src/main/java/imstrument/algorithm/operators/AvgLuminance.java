@@ -1,4 +1,4 @@
-package imstrument.algorithm;
+package imstrument.algorithm.operators;
 
 import java.awt.*;
 
@@ -10,7 +10,6 @@ public class AvgLuminance implements Operator{
         for (Color pixel : pixels) {
             luminance += pixel.getRed()*0.3 + pixel.getGreen()*0.59 + pixel.getBlue()*0.11;
         }
-
         return luminance/ pixels.length;
     }
 }

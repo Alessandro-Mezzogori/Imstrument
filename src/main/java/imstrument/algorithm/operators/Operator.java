@@ -1,4 +1,4 @@
-package imstrument.algorithm;
+package imstrument.algorithm.operators;
 
 import java.awt.*;
 
