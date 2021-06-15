@@ -1,5 +1,6 @@
 package imstrument.start;
 
+import imstrument.algorithm.Algorithm;
 import imstrument.sound.openal.AudioThread;
 import imstrument.sound.utils.Octave;
 import imstrument.sound.waves.*;

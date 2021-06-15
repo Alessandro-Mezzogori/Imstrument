@@ -1,5 +1,6 @@
 package imstrument.sound.utils;
 
+import imstrument.algorithm.Algorithm;
 import imstrument.sound.waves.WaveManager;
 import imstrument.start.StartApp;
 
@@ -14,7 +15,7 @@ import java.net.URL;
 public class SoundImagePanel extends ImagePanel{
 
     private boolean drawMouse;
-
+    Algorithm algorithm = new Algorithm("_<10,20,30,40><AVGLUMINANCE>__<10,20,30,40><AVGLUMINANCE>_");
 
     public SoundImagePanel(URL url, Dimension margins, Point startingPoint, boolean centerimage) {
         super(url, margins, startingPoint, centerimage);
@@ -55,6 +56,8 @@ public class SoundImagePanel extends ImagePanel{
                 Point p = e.getPoint();
                 p.x -= currentStartCorner.x;
                 p.y -= currentStartCorner.y;
+
+                algorithm.compute(image, p);
 
                 /* stops the audio thread from starting over and over again for performance and quality */
                 StartApp.waveManager.triggerWaveGeneration(WaveManager.MOUSE_SOUNDWAVE_INDEX);
