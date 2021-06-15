@@ -1,6 +1,5 @@
 package imstrument.sound.utils;
 
-import imstrument.algorithm.Algorithm;
 import imstrument.sound.waves.WaveManager;
 import imstrument.start.StartApp;
 
@@ -13,7 +12,6 @@ import java.net.URL;
  * extension of ImagePanel class providing audio generation on triggers
  */
 public class SoundImagePanel extends ImagePanel{
-    private Algorithm soundAlgorithm;
 
     private boolean drawMouse;
 
@@ -35,19 +33,15 @@ public class SoundImagePanel extends ImagePanel{
         this.addMouseMotionListener(listener);
     }
 
-    public void setSoundAlgorithm(Algorithm algorithm){
-        soundAlgorithm = algorithm;
-    }
-
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-        if(drawMouse) {
-            g.setColor(Color.red);
-            for (Point point : soundAlgorithm.getPoints())
-                g.fillRect(point.x + currentStartCorner.x, point.y + currentStartCorner.y, 1, 1);
-        }
+//
+//        if(drawMouse) {
+//            g.setColor(Color.red);
+//            for (Point point : soundAlgorithm.getPoints())
+//                g.fillRect(point.x + currentStartCorner.x, point.y + currentStartCorner.y, 1, 1);
+//        }
 
     }
 
@@ -61,10 +55,6 @@ public class SoundImagePanel extends ImagePanel{
                 Point p = e.getPoint();
                 p.x -= currentStartCorner.x;
                 p.y -= currentStartCorner.y;
-
-                if(soundAlgorithm != null && soundAlgorithm.getPoints().length != 0) {
-                    soundAlgorithm.computeSoundWave(image);
-                }
 
                 /* stops the audio thread from starting over and over again for performance and quality */
                 StartApp.waveManager.triggerWaveGeneration(WaveManager.MOUSE_SOUNDWAVE_INDEX);
@@ -82,7 +72,7 @@ public class SoundImagePanel extends ImagePanel{
                 p.x -= currentStartCorner.x;
                 p.y -= currentStartCorner.y;
 
-                soundAlgorithm.computePoints(image, p);
+                //soundAlgorithm.computePoints(image, p);
                 ((SoundImagePanel) e.getSource()).repaint();
             }
         }

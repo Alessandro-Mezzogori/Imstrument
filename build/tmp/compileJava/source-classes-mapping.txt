@@ -14,8 +14,9 @@ imstrument/sound/waves/WaveManager.java
  imstrument.sound.waves.WaveManager$KeyboardRows
 imstrument/algorithm/HorizontalAlgorithm.java
  imstrument.algorithm.HorizontalAlgorithm
-imstrument/sound/utils/DatatypeConversion.java
- imstrument.sound.utils.DatatypeConversion
+imstrument/start/TopContainer.java
+ imstrument.start.TopContainer
+ imstrument.start.TopContainer$1
 imstrument/sound/wavetables/WaveTableEnum.java
  imstrument.sound.wavetables.WaveTableEnum
 imstrument/sound/openal/AudioThread.java
@@ -31,8 +32,10 @@ imstrument/sound/openal/OpenAlException.java
  imstrument.sound.openal.OpenAlException
 imstrument/algorithm/Algorithm.java
  imstrument.algorithm.Algorithm
-imstrument/sound/wavetables/WaveVisualizer.java
- imstrument.sound.wavetables.WaveVisualizer
+imstrument/imagepage/Imagepage.java
+ imstrument.imagepage.Imagepage
+ imstrument.imagepage.Imagepage$1
+ imstrument.imagepage.Imagepage$2
 imstrument/sound/utils/NoteFrequencyMapping.java
  imstrument.sound.utils.NoteFrequencyMapping
 imstrument/sound/wavetables/WavetableTransform.java
@@ -52,13 +55,10 @@ imstrument/globals/DimensionComparator.java
  imstrument.globals.DimensionComparator
 imstrument/sound/utils/Octave.java
  imstrument.sound.utils.Octave
-imstrument/start/TopContainer.java
- imstrument.start.TopContainer
- imstrument.start.TopContainer$1
 imstrument/virtualkeyboard/VirtualKeyboardVisualizer.java
  imstrument.virtualkeyboard.VirtualKeyboardVisualizer
  imstrument.virtualkeyboard.VirtualKeyboardVisualizer$PianoKeyAdapter
-imstrument/imagepage/Imagepage.java
- imstrument.imagepage.Imagepage
- imstrument.imagepage.Imagepage$1
- imstrument.imagepage.Imagepage$2
+imstrument/sound/wavetables/WaveVisualizer.java
+ imstrument.sound.wavetables.WaveVisualizer
+imstrument/sound/utils/DatatypeConversion.java
+ imstrument.sound.utils.DatatypeConversion
