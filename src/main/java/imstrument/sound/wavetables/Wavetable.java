@@ -2,23 +2,23 @@ package imstrument.sound.wavetables;
 
 import imstrument.sound.utils.DatatypeConversion;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import java.io.FileInputStream;
 
 public class Wavetable {
     private float[][] wavetables;
     private Type type;
     private int wavetableIndex;
 
-    public static int WAVETABLE_SIZE = 4096;
+    public static int WAVETABLE_SIZE = 2048;
     public static int SAMPLE_RATE = 48000;
-    public static double FUNDAMENTAL_FREQUENCY = ((double)WAVETABLE_SIZE)/SAMPLE_RATE;
-    private static final double fundamentalFrequency = ((double) SAMPLE_RATE/WAVETABLE_SIZE);
+    public static double FUNDAMENTAL_FREQUENCY = ((double) WAVETABLE_SIZE) / SAMPLE_RATE;
+    private static final double fundamentalFrequency = ((double) SAMPLE_RATE / WAVETABLE_SIZE);
 
-    public Wavetable(Type type, int wavetableIndex){
+    public Wavetable(Type type, int wavetableIndex) {
         this.type = type;
         this.wavetableIndex = wavetableIndex;
 
@@ -38,33 +38,37 @@ public class Wavetable {
 //        }
 
 
-
         //TODO switch type
     }
 
-    public Wavetable(float[] wavetable){
+    public Wavetable(float[] wavetable) {
         this.wavetables = new float[][]{wavetable};
         this.type = Type.CUSTOM;
         this.wavetableIndex = 0;
     }
 
-    public float[] getSamples(int wavetableIndex){
+    public float[] getSamples(int wavetableIndex) {
         return wavetables[wavetableIndex];
     }
 
-    public float[] getSamples(){
+    public float[] getSamples() {
         return wavetables[this.wavetableIndex];
     }
 
-    public int getWavetableNumber(){ return wavetables.length; }
-    public int getWavetableIndex(){return wavetableIndex; }
-
-    /* static helper functions */
-    public static double getStepSize(double frequency){
-        return frequency*FUNDAMENTAL_FREQUENCY;
+    public int getWavetableNumber() {
+        return wavetables.length;
     }
 
-    public enum Type{
+    public int getWavetableIndex() {
+        return wavetableIndex;
+    }
+
+    /* static helper functions */
+    public static double getStepSize(double frequency) {
+        return frequency * FUNDAMENTAL_FREQUENCY;
+    }
+
+    public enum Type {
         SIMPLE, //SINE, SAW, SQUARE, TRIANGLE
         CUSTOM, //WAVETABLE CREATED FROM OTHER WAVETABLES
     }
@@ -72,14 +76,14 @@ public class Wavetable {
     /* import / export to file */
 
 
-    public void writeToFile(){
+    public void writeToFile() {
         //todo generalize
         try {
             //TODO se file non è trovato crearlo
             FileOutputStream fileOutputStream = new FileOutputStream(this.getClass().getResource("/imstrument/wavetables/simple").getPath());
 
             int offset = 0;
-            for(int i = 0; i < wavetables.length; i++) {
+            for (int i = 0; i < wavetables.length; i++) {
                 byte[] byteArray = DatatypeConversion.FloatArray2ByteArray(wavetables[i]);
                 fileOutputStream.write(byteArray, 0, byteArray.length);
                 fileOutputStream.flush();
@@ -93,27 +97,39 @@ public class Wavetable {
         }
     }
 
-    public void readFromFile(){
+    public void readFromFile() {
         //todo generalize
         try {
-            FileInputStream fileInputStream = new FileInputStream(this.getClass().getResource("/imstrument/wavetables/simple").getPath());
-            //TODO import from file
-            ArrayList<byte[]> byteArray = new ArrayList<>();
-            while(true){
-                byte[] inputBuffer = new byte[Wavetable.WAVETABLE_SIZE*4];
-                if(fileInputStream.read(inputBuffer, 0, inputBuffer.length) == -1)
-                    break;
+            /* Generates the file that contains the audio*/
+            File fileAudio = new File(this.getClass().getResource("/imstrument/wavetables/Classic.wav").getPath());
 
-                byteArray.add(inputBuffer);
+            try {
+
+                /* Creating the audioinputstream for working with the bytes of the file*/
+                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(fileAudio);
+                int bytesPerFrame = audioInputStream.getFormat().getFrameSize();
+                ArrayList<byte[]> byteArray = new ArrayList<>();
+
+                /* Creating a buffer header because the wav file has 4 bytes as descriptions */
+                byte[] bufferHeader = new byte[4];
+                audioInputStream.read(bufferHeader);
+                while (true) {
+                    byte[] inputBuffer = new byte[Wavetable.WAVETABLE_SIZE * 3];
+                    if (audioInputStream.read(inputBuffer, 0, inputBuffer.length) == -1)
+                        break;
+
+                    byteArray.add(inputBuffer);
+                }
+                wavetables = new float[byteArray.size()][];
+                for (int i = 0; i < wavetables.length; i++)
+                    wavetables[i] = DatatypeConversion.ByteArray2FloatArray(byteArray.get(i));
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
-
-            wavetables = new float[byteArray.size()][];
-            for(int i = 0; i < wavetables.length; i++)
-                wavetables[i] = DatatypeConversion.ByteArray2FloatArray(byteArray.get(i));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
         }
     }
 }

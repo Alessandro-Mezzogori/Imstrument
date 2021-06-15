@@ -13,7 +13,7 @@ public class StartApp {
 
     public static void main(String[] args){
         Wavetable wavetable = new Wavetable(Wavetable.Type.SIMPLE, 0);
-        wavetable.readFromFile();
+        //wavetable.readFromFile();
 
         Soundwave carrier = new Soundwave(
                 new Wavetable(Wavetable.Type.SIMPLE, 0),
