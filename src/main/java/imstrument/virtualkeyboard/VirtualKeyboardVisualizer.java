@@ -24,9 +24,9 @@ public class VirtualKeyboardVisualizer extends JFrame {
      *  must be the same lenght as WaveManager.OCTAVE_KEY_COUNT
      */
     private final boolean[] isWhite = new boolean[]{true, false, true, false, true, true, false, true, false, true, false, true};
-    private JLabel[] entryBox;
+    private final JLabel[] entryBox;
 
-    private final String[] noteNameLookup = new String[]{"c", "c#", "d", "d#", "e", "f", "f#", "g", "g#", "a", "a#", "b", "" };
+    private final String[] noteNameLookup = new String[]{"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
 
     public VirtualKeyboardVisualizer() {
         //Create the GUI
@@ -212,8 +212,8 @@ public class VirtualKeyboardVisualizer extends JFrame {
             keys[index].setPressed(value);
             setEntryText(index);
         }
-
     }
+
     public void setEntryText(int index){
         entryBox[index/isWhite.length].setText(noteNameLookup[index%isWhite.length]);
     }

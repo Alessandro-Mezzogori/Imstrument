@@ -18,10 +18,10 @@ imstrument/sound/utils/DatatypeConversion.java
  imstrument.sound.utils.DatatypeConversion
 imstrument/sound/wavetables/WaveTableEnum.java
  imstrument.sound.wavetables.WaveTableEnum
-imstrument/sound/utils/Note.java
- imstrument.sound.utils.Note
 imstrument/sound/openal/AudioThread.java
  imstrument.sound.openal.AudioThread
+imstrument/sound/utils/Note.java
+ imstrument.sound.utils.Note
 imstrument/virtualkeyboard/PianoKey.java
  imstrument.virtualkeyboard.PianoKey
  imstrument.virtualkeyboard.PianoKey$KeyColor
