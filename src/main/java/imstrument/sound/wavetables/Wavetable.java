@@ -114,7 +114,7 @@ public class Wavetable {
                 byte[] bufferHeader = new byte[4];
                 audioInputStream.read(bufferHeader);
                 while (true) {
-                    byte[] inputBuffer = new byte[Wavetable.WAVETABLE_SIZE * 3];
+                    byte[] inputBuffer = new byte[Wavetable.WAVETABLE_SIZE * 4];
                     if (audioInputStream.read(inputBuffer, 0, inputBuffer.length) == -1)
                         break;
 

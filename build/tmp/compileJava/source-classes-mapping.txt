@@ -1,22 +1,22 @@
 imstrument/homepage/Homepage.java
  imstrument.homepage.Homepage
  imstrument.homepage.Homepage$1
-imstrument/imagepage/Imagepage.java
- imstrument.imagepage.Imagepage
- imstrument.imagepage.Imagepage$1
- imstrument.imagepage.Imagepage$2
-imstrument/start/TopContainer.java
- imstrument.start.TopContainer
- imstrument.start.TopContainer$1
-imstrument/globals/GlobalSetting.java
- imstrument.globals.GlobalSetting
+imstrument/sound/utils/SoundImagePanel.java
+ imstrument.sound.utils.SoundImagePanel
+ imstrument.sound.utils.SoundImagePanel$ImageMouseListener
+imstrument/virtualkeyboard/VirtualKeyboardVisualizer.java
+ imstrument.virtualkeyboard.VirtualKeyboardVisualizer
+ imstrument.virtualkeyboard.VirtualKeyboardVisualizer$PianoKeyAdapter
+imstrument/sound/utils/Octave.java
+ imstrument.sound.utils.Octave
 imstrument/sound/waves/Envelope.java
  imstrument.sound.waves.Envelope
  imstrument.sound.waves.Envelope$1
+imstrument/start/TopContainer.java
+ imstrument.start.TopContainer
+ imstrument.start.TopContainer$1
 imstrument/globals/DimensionComparator.java
  imstrument.globals.DimensionComparator
-imstrument/sound/utils/Octave.java
- imstrument.sound.utils.Octave
 imstrument/sound/wavetables/WaveTableEnum.java
  imstrument.sound.wavetables.WaveTableEnum
 imstrument/sound/openal/AudioThread.java
@@ -32,8 +32,10 @@ imstrument/sound/openal/OpenAlException.java
  imstrument.sound.openal.OpenAlException
 imstrument/algorithm/Algorithm.java
  imstrument.algorithm.Algorithm
-imstrument/sound/wavetables/Test.java
- imstrument.sound.wavetables.Test
+imstrument/imagepage/Imagepage.java
+ imstrument.imagepage.Imagepage
+ imstrument.imagepage.Imagepage$1
+ imstrument.imagepage.Imagepage$2
 imstrument/sound/wavetables/WavetableTransform.java
  imstrument.sound.wavetables.WavetableTransform
 imstrument/sound/utils/NoteFrequencyMapping.java
@@ -42,12 +44,10 @@ imstrument/sound/utils/DatatypeConversion.java
  imstrument.sound.utils.DatatypeConversion
 imstrument/sound/utils/ImagePanel.java
  imstrument.sound.utils.ImagePanel
-imstrument/sound/utils/SoundImagePanel.java
- imstrument.sound.utils.SoundImagePanel
- imstrument.sound.utils.SoundImagePanel$ImageMouseListener
-imstrument/virtualkeyboard/VirtualKeyboardVisualizer.java
- imstrument.virtualkeyboard.VirtualKeyboardVisualizer
- imstrument.virtualkeyboard.VirtualKeyboardVisualizer$PianoKeyAdapter
+imstrument/sound/wavetables/Test.java
+ imstrument.sound.wavetables.Test
+imstrument/globals/GlobalSetting.java
+ imstrument.globals.GlobalSetting
 imstrument/start/StartApp.java
  imstrument.start.StartApp
 imstrument/sound/waves/Soundwave.java
