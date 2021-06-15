@@ -80,7 +80,7 @@ public class Wavetable {
         //todo generalize
         try {
             //TODO se file non è trovato crearlo
-            FileOutputStream fileOutputStream = new FileOutputStream(this.getClass().getResource("/imstrument/wavetables/simple").getPath());
+            FileOutputStream fileOutputStream = new FileOutputStream(this.getClass().getResource("/imstrument/wavetables/14-SinFormant.wav").getPath());
 
             int offset = 0;
             for (int i = 0; i < wavetables.length; i++) {
@@ -101,7 +101,7 @@ public class Wavetable {
         //todo generalize
         try {
             /* Generates the file that contains the audio*/
-            File fileAudio = new File(this.getClass().getResource("/imstrument/wavetables/Classic.wav").getPath());
+            File fileAudio = new File(this.getClass().getResource("/imstrument/wavetables/14-SinFormant.wav").getPath());
 
             try {
 
@@ -114,7 +114,7 @@ public class Wavetable {
                 byte[] bufferHeader = new byte[4];
                 audioInputStream.read(bufferHeader);
                 while (true) {
-                    byte[] inputBuffer = new byte[Wavetable.WAVETABLE_SIZE * 4];
+                    byte[] inputBuffer = new byte[Wavetable.WAVETABLE_SIZE * 3];
                     if (audioInputStream.read(inputBuffer, 0, inputBuffer.length) == -1)
                         break;
 

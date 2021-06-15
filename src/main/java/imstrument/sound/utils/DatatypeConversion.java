@@ -14,11 +14,21 @@ public class DatatypeConversion {
     }
 
     public static float[] ByteArray2FloatArray(byte[] values){
-        ByteBuffer byteBuffer = ByteBuffer.wrap(values);
-        float[] floatBuffer = new float[values.length / Float.BYTES];
+
+        float[] floatBuffer = new float[values.length/3*4 / Float.BYTES];
+        byte[] buffer = new byte[4];
+
         for(int i = 0; i < floatBuffer.length; i++){
-            floatBuffer[i] = byteBuffer.getFloat(i*Float.BYTES);
+            System.arraycopy(values, i, buffer, 1, buffer.length - 1);
+            buffer[0] = 0x000000;
+            ByteBuffer byteBuffer = ByteBuffer.wrap(buffer);
+
+            floatBuffer[i] = byteBuffer.getFloat();
+
+            //System.out.println(floatBuffer[i]);
         }
+
+        System.out.println(floatBuffer.length);
         return floatBuffer;
     }
 }
