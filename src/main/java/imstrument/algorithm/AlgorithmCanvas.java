@@ -3,7 +3,9 @@ package imstrument.algorithm;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class AlgorithmCanvas extends JComponent implements MouseListener, MouseMotionListener
 {
@@ -122,7 +124,7 @@ public class AlgorithmCanvas extends JComponent implements MouseListener, MouseM
             currentGroup[3] = Math.abs(currentGroup[3]);
 
             /* add to the group and repaint */
-            groups.add(currentGroup.clone());
+            groups.add(Arrays.copyOf(currentGroup, currentGroup.length));
             currentGroup[2] = 0;
             currentGroup[3] = 0;
             repaint();
@@ -155,6 +157,18 @@ public class AlgorithmCanvas extends JComponent implements MouseListener, MouseM
 
     private void printGroup(int[] group){
         System.out.println("X: " + group[0] + " Y: " + group[1] + " W: " + group[2] + " H: " + group[3]);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public ArrayList<int[]> saveGroups(){
+        /* save the references to the int arrays then clear the groups */
+        ArrayList<int[]> clone = new ArrayList<>(groups.size());
+        for(int[])
+
+        return clone;
     }
 
 }
