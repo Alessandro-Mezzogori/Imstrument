@@ -61,6 +61,7 @@ public class Algorithm {
     }
 
     public void decode(String algorithm){
+        //TODO error messages
         groups.clear();
         operatorMatrix.clear();
         Matcher matcher = pattern.matcher(algorithm);

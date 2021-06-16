@@ -21,6 +21,8 @@ imstrument/sound/openal/AudioThread.java
  imstrument.sound.openal.AudioThread
 imstrument/sound/utils/Note.java
  imstrument.sound.utils.Note
+imstrument/sound/wavetables/WaveVisualizer.java
+ imstrument.sound.wavetables.WaveVisualizer
 imstrument/virtualkeyboard/PianoKey.java
  imstrument.virtualkeyboard.PianoKey
  imstrument.virtualkeyboard.PianoKey$KeyColor
@@ -32,8 +34,8 @@ imstrument/algorithm/Algorithm.java
  imstrument.algorithm.Algorithm
 imstrument/algorithm/operators/AvgLuminance.java
  imstrument.algorithm.operators.AvgLuminance
-imstrument/sound/wavetables/WaveVisualizer.java
- imstrument.sound.wavetables.WaveVisualizer
+imstrument/sound/utils/Octave.java
+ imstrument.sound.utils.Octave
 imstrument/sound/utils/NoteFrequencyMapping.java
  imstrument.sound.utils.NoteFrequencyMapping
 imstrument/sound/wavetables/WavetableTransform.java
@@ -46,8 +48,6 @@ imstrument/sound/utils/ImagePanel.java
  imstrument.sound.utils.ImagePanel
 imstrument/algorithm/operators/Operator.java
  imstrument.algorithm.operators.Operator
-imstrument/algorithm/Importer.java
- imstrument.algorithm.Importer
 imstrument/sound/wavetables/Test.java
  imstrument.sound.wavetables.Test
 imstrument/globals/GlobalSetting.java
@@ -59,8 +59,6 @@ imstrument/globals/DimensionComparator.java
  imstrument.globals.DimensionComparator
 imstrument/sound/utils/DatatypeConversion.java
  imstrument.sound.utils.DatatypeConversion
-imstrument/sound/utils/Octave.java
- imstrument.sound.utils.Octave
 imstrument/virtualkeyboard/VirtualKeyboardVisualizer.java
  imstrument.virtualkeyboard.VirtualKeyboardVisualizer
  imstrument.virtualkeyboard.VirtualKeyboardVisualizer$PianoKeyAdapter
@@ -71,3 +69,8 @@ imstrument/imagepage/Imagepage.java
  imstrument.imagepage.Imagepage$1
  imstrument.imagepage.Imagepage$2
  imstrument.imagepage.Imagepage$3
+imstrument/algorithm/CustomAlgorithmCreator.java
+ imstrument.algorithm.CustomAlgorithmCreator
+imstrument/algorithm/AlgorithmCanvas.java
+ imstrument.algorithm.AlgorithmCanvas
+ imstrument.algorithm.AlgorithmCanvas$1

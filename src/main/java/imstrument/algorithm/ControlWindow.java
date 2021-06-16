@@ -1,18 +1,21 @@
 package imstrument.algorithm;
 
 import imstrument.globals.GlobalSetting;
-import org.lwjgl.system.CallbackI;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class ControlWindow extends JFrame {
+    public final static String CREATE_ALGORITHM = "CREATE_ALGORITHM";
+    public final static String LIST_ALGORITHM = "LIST_ALGORITHM";
+
     JPanel cards;
     JButton createButton;
     JButton selectButton;
 
     public ControlWindow(){
         cards = new JPanel(new CardLayout());
+        cards.add(new CustomAlgorithmCreator(), CREATE_ALGORITHM);
 
         createButton = new JButton("Create");
         selectButton = new JButton("Select");
@@ -29,7 +32,7 @@ public class ControlWindow extends JFrame {
 
         setLayout(new BorderLayout());
         add(buttonContainer, BorderLayout.LINE_START);
-        add(Box.createRigidArea(new Dimension(300, 300)), BorderLayout.CENTER);
+        add(cards, BorderLayout.CENTER);
 
         setMinimumSize(GlobalSetting.MINIMUM_WINDOW_SIZE);
         pack();
