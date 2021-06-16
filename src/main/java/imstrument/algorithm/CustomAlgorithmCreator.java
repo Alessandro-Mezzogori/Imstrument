@@ -1,15 +1,36 @@
 package imstrument.algorithm;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class CustomAlgorithmCreator extends JPanel {
     AlgorithmCanvas drawingAlgorithmCanvas;
+    UnitWindow unitWindow;
+    ArrayList<AlgorithmUnit> groups;
+
 
     public CustomAlgorithmCreator(){
         /* create custom algorithm canvas */
-        drawingAlgorithmCanvas = new AlgorithmCanvas();
+        groups = new ArrayList<>();
+        drawingAlgorithmCanvas = new AlgorithmCanvas(
+                groups,
+                () -> {
+                    unitWindow.updateList();
+                }
+        );
+        unitWindow = new UnitWindow(
+                groups,
+                () -> {
+                    drawingAlgorithmCanvas.repaint();
+                }
+        );
+
+        JPanel container = new JPanel();
+        container.setLayout(new BoxLayout(container, BoxLayout.LINE_AXIS));
+        container.add(drawingAlgorithmCanvas);
+        container.add(unitWindow);
+
         /* create custom algorithm buttons */
         JButton saveButton = new JButton("Save");
         JButton cancelButton = new JButton("Cancel");
@@ -17,8 +38,14 @@ public class CustomAlgorithmCreator extends JPanel {
         buttonContainer.add(saveButton);
         buttonContainer.add(cancelButton);
 
+
         setLayout(new BorderLayout());
         add(buttonContainer, BorderLayout.SOUTH);
-        add(drawingAlgorithmCanvas, BorderLayout.CENTER);
+//        add(drawingAlgorithmCanvas, BorderLayout.CENTER);
+        add(container, BorderLayout.CENTER);
+    }
+
+    public interface CreatorController{
+        void update();
     }
 }

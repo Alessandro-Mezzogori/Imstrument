@@ -1,9 +1,6 @@
 package imstrument.algorithm;
 
-import imstrument.algorithm.operators.AvgLuminance;
-import imstrument.algorithm.operators.Operator;
-import imstrument.algorithm.operators.Red;
-
+import imstrument.algorithm.operators.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;

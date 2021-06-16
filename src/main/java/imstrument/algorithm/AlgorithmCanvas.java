@@ -7,57 +7,60 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import imstrument.algorithm.operators.*;
+
 public class AlgorithmCanvas extends JComponent implements MouseListener, MouseMotionListener
 {
     /* canvas params */
     Dimension preferredDimension;
 
     /* drawing params */
-    ArrayList<int[]> groups;  // rectangles
+    ArrayList<AlgorithmUnit> groups;
     int[] currentGroup;
     boolean drawingRectangle;
 
     Point centerPoint;
     Point rightClick;
     JPopupMenu rightClickOptions;
-    JMenuItem delete;
 
-    public AlgorithmCanvas(){
+    CustomAlgorithmCreator.CreatorController controller;
+
+    int currentlySelected; // index of the latest created rectangle that contains the point where it was rightClicked
+
+    /**
+     * creates a canvas to draw/add algo units to the passed arraylist
+     * @param groups
+     */
+    public AlgorithmCanvas(ArrayList<AlgorithmUnit> groups, CustomAlgorithmCreator.CreatorController controller){
+        this.controller = controller;
         /* set dimensions */
         preferredDimension = new Dimension(300, 300);
         setMinimumSize(preferredDimension);
         setPreferredSize(preferredDimension);
         setMaximumSize(preferredDimension);
 
-
         /* initialize values */
-        groups = new ArrayList<>();
-        currentGroup = new int[4];
+        this.groups = groups;
+        currentGroup = new int[AlgorithmUnit.RECT_SIZE];
         drawingRectangle = false;
         centerPoint = new Point();
 
         /* create popup menu on right click*/
         rightClickOptions = new JPopupMenu();
-        delete = new JMenuItem("Delete");
-        delete.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int i; // index of the latest created rectangle that contains the point where it was rightClicked
-                /* find if it exists a rectangle that contains the right click point */
-                for(i = groups.size() - 1; i >= 0; i--){
-                    int[] group = groups.get(i);
-                    if( rightClick.x >= group[0] && rightClick.y >= group[1]  && rightClick.x <= group[0] + group[3] && rightClick.y <= group[1] + group[3]){
-                        break;
-                    }
-                }
-                /* remove the rectangle if found */
-                if(i >= 0) {
-                    groups.remove(i);
-                    AlgorithmCanvas.this.repaint();
-                }
-            }
+//        JMenuItem setGroup = new JMenuItem("Operators");
+//        setGroup.addActionListener(e -> {
+//            groups.remove(currentlySelected);
+//            AlgorithmCanvas.this.repaint();
+//        });
+//        rightClickOptions.add(setGroup);
+
+        JMenuItem deleteGroup = new JMenuItem("Delete");
+        deleteGroup.addActionListener(e -> {
+            groups.remove(currentlySelected);
+            controller.update();
+            AlgorithmCanvas.this.repaint();
         });
-        rightClickOptions.add(delete);
+        rightClickOptions.add(deleteGroup);
 
         /* add listeners */
         addMouseListener(this);
@@ -78,14 +81,14 @@ public class AlgorithmCanvas extends JComponent implements MouseListener, MouseM
 
         /* draw saved groups */
         g.setColor(Color.cyan);
-        for(int[] group : groups){
-            g.fillRect(group[0],group[1],group[2],group[3]);
+        for(AlgorithmUnit group : groups){
+            g.drawRect(group.rect[0],group.rect[1],group.rect[2],group.rect[3]);
         }
 
         /* draw current drawing group */
         if(drawingRectangle) {
             /* have the starting drawing corner to be the top-left corner just for drawing */
-            g.fillRect(
+            g.drawRect(
                 (currentGroup[2] > 0) ? currentGroup[0] : currentGroup[0] + currentGroup[2],
                 (currentGroup[3] > 0) ? currentGroup[1] : currentGroup[1] + currentGroup[3],
                 Math.abs(currentGroup[2]),
@@ -101,10 +104,18 @@ public class AlgorithmCanvas extends JComponent implements MouseListener, MouseM
     @Override
     public void mousePressed(MouseEvent e) {
         if(SwingUtilities.isRightMouseButton(e)) {
+            int x = e.getX(), y = e.getY();
             drawingRectangle = false;
-            rightClick = e.getPoint();
+            for(currentlySelected = groups.size() - 1; currentlySelected >= 0; currentlySelected--) {
+                int[] rect = groups.get(currentlySelected).rect;
+                if (x >= rect[0] && y >= rect[1]  && x <= rect[0] + rect[2]&& y <= rect[1] + rect[3]) {
+                    break;
+                }
+            }
 
-            rightClickOptions.show(e.getComponent(), rightClick.x, rightClick.y);
+            if( currentlySelected >= 0 ) {
+                rightClickOptions.show(e.getComponent(), x, y);
+            }
         }
         else if(SwingUtilities.isLeftMouseButton(e)){
             drawingRectangle = true;
@@ -118,13 +129,11 @@ public class AlgorithmCanvas extends JComponent implements MouseListener, MouseM
     public void mouseReleased(MouseEvent e) {
         if(SwingUtilities.isLeftMouseButton(e) && drawingRectangle && currentGroup[2] != 0 && currentGroup[3] != 0) {
             /* have the starting drawing corner to the top-left */
-            currentGroup[0] = (currentGroup[2] > 0) ? currentGroup[0] : currentGroup[0] + currentGroup[2];
-            currentGroup[1] = (currentGroup[3] > 0) ? currentGroup[1] : currentGroup[1] + currentGroup[3];
-            currentGroup[2] = Math.abs(currentGroup[2]);
-            currentGroup[3] = Math.abs(currentGroup[3]);
-
             /* add to the group and repaint */
-            groups.add(Arrays.copyOf(currentGroup, currentGroup.length));
+            groups.add(new AlgorithmUnit(currentGroup));
+            controller.update();
+
+            /* reset */
             currentGroup[2] = 0;
             currentGroup[3] = 0;
             repaint();
@@ -158,17 +167,4 @@ public class AlgorithmCanvas extends JComponent implements MouseListener, MouseM
     private void printGroup(int[] group){
         System.out.println("X: " + group[0] + " Y: " + group[1] + " W: " + group[2] + " H: " + group[3]);
     }
-
-    /**
-     *
-     * @return
-     */
-    public ArrayList<int[]> saveGroups(){
-        /* save the references to the int arrays then clear the groups */
-        ArrayList<int[]> clone = new ArrayList<>(groups.size());
-        for(int[])
-
-        return clone;
-    }
-
 }

@@ -180,7 +180,7 @@ public class VirtualKeyboardVisualizer extends JFrame {
         return notesPanel;
     }
 
-    private JButton createSwitch(char c){
+    private JButton createSwitch(char c){ //TODO ADD switching of octaves
         JButton switchOctave = new JButton();
         if (c == 'r') {
             try {
