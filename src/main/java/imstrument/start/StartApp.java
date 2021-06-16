@@ -19,15 +19,18 @@ public class StartApp {
                 new Wavetable(Wavetable.Type.SIMPLE, 0),
                 440.0,
                 new Envelope(1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.5, 1.0),
-                new Soundwave(
+                null,
+                1000.0
+        );
+        /*
+            new Soundwave(
                         new Wavetable(Wavetable.Type.SIMPLE, 0),
                         10.0,
                         new Envelope(1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.5, 1.0),
                         null,
                         0.0
-                ),
-                1000.0
-        );
+                )
+        */
         //carrier.sweepEnvelope = new Envelope(1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.5, 1.0);
 
         /* initialize audio thread and WaveManager*/

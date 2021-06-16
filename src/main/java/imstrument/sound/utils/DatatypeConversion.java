@@ -1,6 +1,7 @@
 package imstrument.sound.utils;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 public class DatatypeConversion {
     public static byte[] FloatArray2ByteArray(float[] values){
@@ -13,22 +14,30 @@ public class DatatypeConversion {
         return buffer.array();
     }
 
-    public static float[] ByteArray2FloatArray(byte[] values){
-
-        float[] floatBuffer = new float[values.length/3*4 / Float.BYTES];
+    /**
+     * converts an array of bytes to a float array
+     * @param values byte array
+     * @param sampleLen lenght in byte of a single sample
+     * @return
+     */
+    public static float[] ByteArray2FloatArray(byte[] values, int sampleLen){
+        float[] floatBuffer = new float[values.length/sampleLen];
         byte[] buffer = new byte[4];
-
+        int startingIndex = 4 - sampleLen;
         for(int i = 0; i < floatBuffer.length; i++){
-            System.arraycopy(values, i, buffer, 1, buffer.length - 1);
-            buffer[0] = 0x000000;
+            try {
+                System.arraycopy(values, i * buffer.length, buffer, startingIndex, buffer.length - startingIndex);
+            }catch (Exception e){ e.printStackTrace();}
+
+            /* pad left with zero's */
+            for(int j = 0; j < startingIndex; j++){
+                buffer[j] = 0;
+            }
+
             ByteBuffer byteBuffer = ByteBuffer.wrap(buffer);
-
+            byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
             floatBuffer[i] = byteBuffer.getFloat();
-
-            //System.out.println(floatBuffer[i]);
         }
-
-        System.out.println(floatBuffer.length);
         return floatBuffer;
     }
 }
