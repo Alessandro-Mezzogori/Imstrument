@@ -1,6 +1,7 @@
 package imstrument.sound.utils;
 
 import imstrument.algorithm.Algorithm;
+import imstrument.algorithm.AlgorithmUnit;
 import imstrument.sound.waves.WaveManager;
 import imstrument.start.StartApp;
 
@@ -53,12 +54,13 @@ public class SoundImagePanel extends ImagePanel{
         super.paintComponent(g);
         if(drawMouse) {
             g.setColor(Color.red);
-            for (int[] group : algorithm.getGroups()) {
+            for (AlgorithmUnit unit : algorithm.getGroups()) {
+                int[] rect = unit.getRect();
                 g.fillRect(
-                        mousePoint.x + currentStartCorner.x + group[0],
-                        mousePoint.y + currentStartCorner.y + group[1],
-                        group[2],
-                        group[3]
+                        mousePoint.x + currentStartCorner.x + rect[0],
+                        mousePoint.y + currentStartCorner.y + rect[1],
+                        rect[2],
+                        rect[3]
                 );
             }
         }

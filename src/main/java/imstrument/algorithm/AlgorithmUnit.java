@@ -7,11 +7,11 @@ import java.util.Arrays;
 
 public class AlgorithmUnit {
     int[] rect;
-    ArrayList<Operator> operators;
+    Operator operator; //TODO add multiple operators ??
 
     public static int RECT_SIZE = 4;
 
-    public AlgorithmUnit(int[] rect, ArrayList<Operator> operators){
+    public AlgorithmUnit(int[] rect, Operator operator){
         this.rect = new int[RECT_SIZE];
         /* put the starting corner to the top-left*/
         this.rect[0] = (rect[2] > 0) ? rect[0] : rect[0] + rect[2];
@@ -19,19 +19,23 @@ public class AlgorithmUnit {
         this.rect[2] = Math.abs(rect[2]);
         this.rect[3] = Math.abs(rect[3]);
 
-        this.operators = operators;
+        this.operator = operator;
     }
 
     public AlgorithmUnit(int[] rect){
-        this(rect, new ArrayList<>());
+        this(rect, null);
     }
 
     public AlgorithmUnit(){
         rect = new int[RECT_SIZE];
-        operators = new ArrayList<>();
+        operator = null;
     }
 
-//    void standardizeRectangle(){
-//
-//    }
+    public int[] getRect() {
+        return rect;
+    }
+
+    public Operator getOperator() {
+        return operator;
+    }
 }

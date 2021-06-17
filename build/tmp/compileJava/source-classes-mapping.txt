@@ -15,6 +15,8 @@ imstrument/sound/waves/WaveManager.java
 imstrument/start/TopContainer.java
  imstrument.start.TopContainer
  imstrument.start.TopContainer$1
+imstrument/algorithm/operators/DummyOperator.java
+ imstrument.algorithm.operators.DummyOperator
 imstrument/sound/wavetables/WaveTableEnum.java
  imstrument.sound.wavetables.WaveTableEnum
 imstrument/algorithm/AlgorithmCanvas.java
@@ -55,6 +57,8 @@ imstrument/algorithm/AlgorithmUnit.java
  imstrument.algorithm.AlgorithmUnit
 imstrument/algorithm/operators/Operator.java
  imstrument.algorithm.operators.Operator
+imstrument/algorithm/AlgoUnitTableModel.java
+ imstrument.algorithm.AlgoUnitTableModel
 imstrument/sound/wavetables/Test.java
  imstrument.sound.wavetables.Test
 imstrument/globals/GlobalSetting.java
@@ -75,9 +79,9 @@ imstrument/virtualkeyboard/VirtualKeyboardVisualizer.java
  imstrument.virtualkeyboard.VirtualKeyboardVisualizer$PianoKeyAdapter
 imstrument/algorithm/CustomAlgorithmCreator.java
  imstrument.algorithm.CustomAlgorithmCreator
- imstrument.algorithm.CustomAlgorithmCreator$CreatorController
+ imstrument.algorithm.CustomAlgorithmCreator$AlgorithmCreationSynchronizer
 imstrument/algorithm/UnitWindow.java
  imstrument.algorithm.UnitWindow
- imstrument.algorithm.UnitWindow$AlgoUnitTableModel
+ imstrument.algorithm.UnitWindow$1
  imstrument.algorithm.UnitWindow$JTableButtonMouseListener
  imstrument.algorithm.UnitWindow$JTableButtonRenderer

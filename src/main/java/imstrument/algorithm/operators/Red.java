@@ -3,6 +3,8 @@ package imstrument.algorithm.operators;
 import java.awt.*;
 
 public class Red implements Operator{
+    public static String name = "RED";
+
     @Override
     public double compute(Color[] pixels) {
         // luminance = (r * 0.3) + (g * 0.59) + (b * 0.11)
@@ -13,4 +15,7 @@ public class Red implements Operator{
         System.out.println("L: " + pixels.length);
         return red / pixels.length;
     }
+
+    @Override
+    public String getName(){return name;}
 }

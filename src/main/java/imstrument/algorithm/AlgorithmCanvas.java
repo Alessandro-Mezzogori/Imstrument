@@ -3,11 +3,7 @@ package imstrument.algorithm;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import imstrument.algorithm.operators.*;
 
 public class AlgorithmCanvas extends JComponent implements MouseListener, MouseMotionListener
 {
@@ -23,7 +19,7 @@ public class AlgorithmCanvas extends JComponent implements MouseListener, MouseM
     Point rightClick;
     JPopupMenu rightClickOptions;
 
-    CustomAlgorithmCreator.CreatorController controller;
+    CustomAlgorithmCreator.AlgorithmCreationSynchronizer controller;
 
     int currentlySelected; // index of the latest created rectangle that contains the point where it was rightClicked
 
@@ -31,7 +27,7 @@ public class AlgorithmCanvas extends JComponent implements MouseListener, MouseM
      * creates a canvas to draw/add algo units to the passed arraylist
      * @param groups
      */
-    public AlgorithmCanvas(ArrayList<AlgorithmUnit> groups, CustomAlgorithmCreator.CreatorController controller){
+    public AlgorithmCanvas(ArrayList<AlgorithmUnit> groups, CustomAlgorithmCreator.AlgorithmCreationSynchronizer controller){
         this.controller = controller;
         /* set dimensions */
         preferredDimension = new Dimension(300, 300);

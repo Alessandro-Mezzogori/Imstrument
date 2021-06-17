@@ -4,25 +4,27 @@ import imstrument.algorithm.operators.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Algorithm {
-    private  ArrayList<Operator> operatorMatrix; // TODO add multiple operator support
-    private  ArrayList<int[]> groups;
+    private  ArrayList<AlgorithmUnit> groups;
 
     private static final int groupElementSize;
     private static final Pattern pattern;
-    private static final Hashtable<String, Operator> operatorTable;
+    protected static final TreeMap<String, Operator> operatorTable;
 
     static
     {
         groupElementSize = 4;
         pattern = Pattern.compile("_<(-?[\\d]+),(-?[\\d]+),(-?[\\d]+),(-?[\\d]+)><(\\w+)>_");
-        operatorTable = new Hashtable<>();
-        operatorTable.put("AVGLUMINANCE", new AvgLuminance());
-        operatorTable.put("RED", new Red());
+
+        operatorTable = new TreeMap<>();
+
+        Operator[] operators = {new AvgLuminance(), new Red(), new DummyOperator()};
+        for(Operator operator : operators)
+            operatorTable.put(operator.getName(), operator);
     }
 
     public Algorithm(String algorithm){
@@ -31,7 +33,6 @@ public class Algorithm {
     }
 
     public Algorithm(){
-        operatorMatrix = new ArrayList<>();
         groups = new ArrayList<>();
     }
 
@@ -39,16 +40,17 @@ public class Algorithm {
         System.out.println(image.getWidth() + " " + image.getHeight());
 
         double[] values = new double[groups.size()];
-        for(int i = 0, groupsLen = groups.size(); i < groupsLen; i++){
-            int[] group = groups.get(i);
+        for(int i = 0, groupSize = groups.size(); i < groupSize; i++){
+            AlgorithmUnit unit = groups.get(i);
+            int[] rect = unit.rect;
 
             // bound checking
-            int[] pixels = image.getRGB(pressed.x + group[0], pressed.y + group[1], group[2], group[3], null, 0, group[2]);
+            int[] pixels = image.getRGB(pressed.x + rect[0], pressed.y + rect[1], rect[2], rect[3], null, 0, rect[2]);
             Color[] colors = new Color[pixels.length];
 
             for(int j = 0, pixelsLen = pixels.length; j < pixelsLen; j++)
                 colors[j] = new Color(pixels[j]);
-            values[i] = operatorMatrix.get(i).compute(colors);
+            values[i] = unit.operator.compute(colors);
         }
 
         // TODO REMOVE DEBUG PRINT
@@ -60,7 +62,7 @@ public class Algorithm {
     public void decode(String algorithm){
         //TODO error messages
         groups.clear();
-        operatorMatrix.clear();
+        //operatorMatrix.clear();
         Matcher matcher = pattern.matcher(algorithm);
 
         /* as long as there are matches read them */
@@ -70,18 +72,11 @@ public class Algorithm {
                 group[i - 1] = Integer.parseInt(matcher.group(i));
             }
 
-            groups.add(group);
-            operatorMatrix.add(operatorTable.get(matcher.group(matcher.groupCount())));
-        }
-
-        for (int i = 0, groupsSize = groups.size(); i < groupsSize; i++) {
-            int[] test = groups.get(i);
-            System.out.println("FINISHED: ");
-            System.out.println(String.valueOf(test[0]) + " " + test[1] + " " + test[2] + " " + test[3] + " " + operatorMatrix.get(i));
+            groups.add(new AlgorithmUnit(group, operatorTable.get(matcher.group(matcher.groupCount()))));
         }
     }
 
-    public ArrayList<int[]> getGroups() {
+    public ArrayList<AlgorithmUnit> getGroups() {
         return groups;
     }
 }

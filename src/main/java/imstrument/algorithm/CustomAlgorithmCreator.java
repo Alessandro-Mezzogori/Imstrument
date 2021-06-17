@@ -45,7 +45,7 @@ public class CustomAlgorithmCreator extends JPanel {
         add(container, BorderLayout.CENTER);
     }
 
-    public interface CreatorController{
+    public interface AlgorithmCreationSynchronizer {
         void update();
     }
 }

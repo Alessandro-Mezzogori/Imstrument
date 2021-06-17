@@ -4,4 +4,5 @@ import java.awt.*;
 
 public interface Operator {
     double compute(Color[] pixels);
+    String getName();
 }
