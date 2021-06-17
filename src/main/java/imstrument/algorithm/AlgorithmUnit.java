@@ -38,4 +38,16 @@ public class AlgorithmUnit {
     public Operator getOperator() {
         return operator;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("_<");
+        for(int i = 0; i < RECT_SIZE; i++){
+            stringBuilder.append(rect[i]);
+            if( i != RECT_SIZE - 1) stringBuilder.append(",");
+        }
+        stringBuilder.append("><").append(operator.getName()).append(">_");
+        return stringBuilder.toString();
+    }
 }

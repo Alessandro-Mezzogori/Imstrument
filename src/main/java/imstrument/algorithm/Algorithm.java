@@ -1,8 +1,12 @@
 package imstrument.algorithm;
 
 import imstrument.algorithm.operators.*;
+import imstrument.start.StartApp;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
@@ -14,17 +18,22 @@ public class Algorithm {
     private static final int groupElementSize;
     private static final Pattern pattern;
     protected static final TreeMap<String, Operator> operatorTable;
+    public static final File algorithmFolder = new File(StartApp.defaultFolder.toString() + "/algorithm/");
 
     static
     {
         groupElementSize = 4;
-        pattern = Pattern.compile("_<(-?[\\d]+),(-?[\\d]+),(-?[\\d]+),(-?[\\d]+)><(\\w+)>_");
+        pattern = Pattern.compile("_<(-?[\\d]+),(-?[\\d]+),(-?[\\d]+),(-?[\\d]+)><(.*?)>_");
 
         operatorTable = new TreeMap<>();
 
         Operator[] operators = {new AvgLuminance(), new Red(), new DummyOperator()};
         for(Operator operator : operators)
             operatorTable.put(operator.getName(), operator);
+
+        if(!algorithmFolder.exists()){
+            boolean mkdir = algorithmFolder.mkdir(); // TODO notify user if default folder is not created
+        }
     }
 
     public Algorithm(String algorithm){

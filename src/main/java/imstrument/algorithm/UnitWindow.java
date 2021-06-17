@@ -63,7 +63,7 @@ public class UnitWindow extends JPanel {
         add(unitsTableWrapper, BorderLayout.CENTER);
     }
 
-    void updateList(){
+    void updateTable(){
         unitsTableModel.fireTableDataChanged();
         resizeColumnWidth(unitsTable);
         repaint();
