@@ -28,7 +28,7 @@ public class Wavetable {
 
         readFromFile();
 
-//        wavetables = new float[testLength][];
+//        wavetables = new float[testLengt.h][];
 //        for(int i = 0; i < testLength; i++)
 //            wavetables[i] = new float[WAVETABLE_SIZE];
 //

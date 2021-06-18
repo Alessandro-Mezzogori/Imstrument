@@ -1,5 +1,6 @@
 package imstrument.virtualkeyboard;
 
+import imstrument.sound.utils.Octave;
 import imstrument.sound.waves.WaveManager;
 import imstrument.start.StartApp;
 import imstrument.sound.utils.Note;
@@ -12,10 +13,6 @@ import java.awt.event.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Hashtable;
-import imstrument.sound.utils.Octave;
-import imstrument.sound.utils.Note;
-import imstrument.sound.utils.NoteFrequencyMapping;
-
 
 public class VirtualKeyboardVisualizer extends JFrame {
     /**
@@ -28,9 +25,9 @@ public class VirtualKeyboardVisualizer extends JFrame {
      *  must be the same lenght as WaveManager.OCTAVE_KEY_COUNT
      */
     private final boolean[] isWhite = new boolean[]{true, false, true, false, true, true, false, true, false, true, false, true};
-    private JLabel[] entryBox;
+    private final JLabel[] entryBox;
 
-    private final String[] noteNameLookup = new String[]{"c", "c#", "d", "d#", "e", "f", "f#", "g", "g#", "a", "a#", "b", "" };
+    private final String[] noteNameLookup = new String[]{"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
 
     public VirtualKeyboardVisualizer() {
         //Create the GUI
@@ -46,8 +43,7 @@ public class VirtualKeyboardVisualizer extends JFrame {
         mainPanel.setForeground(Color.WHITE);
         mainPanel.setBackground(Color.GRAY);
         mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        JButton switchRight;
-        JButton switchLeft;
+
         final int numberOfKeyboards = 2;
         entryBox= new JLabel[numberOfKeyboards];
         for (int keyboardIndex = 0; keyboardIndex < numberOfKeyboards; keyboardIndex++) {
@@ -59,11 +55,8 @@ public class VirtualKeyboardVisualizer extends JFrame {
             mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
             /* Creating the button for switching octaves*/
-            switchRight = new SwitchButton('r',1,keyboardIndex+1);
-            switchLeft  = new SwitchButton('l',2,keyboardIndex+2);
-
-            switchLeft.addActionListener(new KeySwitchOctave());
-            switchRight.addActionListener(new KeySwitchOctave());
+            JButton switchRight = createSwitch('r');
+            JButton switchLeft  = createSwitch('l');
 
             /* Creating the pianokeyboard */
             JLayeredPane pianoKeyboard = createKeyboard(keyboardIndex);
@@ -188,6 +181,31 @@ public class VirtualKeyboardVisualizer extends JFrame {
         return notesPanel;
     }
 
+    private JButton createSwitch(char c){ //TODO ADD switching of octaves
+        JButton switchOctave = new JButton();
+        if (c == 'r') {
+            try {
+                Image img = ImageIO.read(getClass().getResource("/imstrument/globals/imstrument_rightarrow.jpg"));
+                img.getScaledInstance(35,10, java.awt.Image.SCALE_SMOOTH);
+                switchOctave.setIcon(new ImageIcon(img));
+            } catch (IOException e) {
+                e.printStackTrace(); //TODO aggiungi alternative
+            }
+        }
+        else {
+            try {
+                Image img = ImageIO.read(getClass().getResource("/imstrument/globals/imstrument_leftarrow.jpg"));
+                img.getScaledInstance(35,10, java.awt.Image.SCALE_SMOOTH);
+                switchOctave.setIcon(new ImageIcon(img));
+            } catch (IOException e) {
+                e.printStackTrace(); //TODO aggiungi alternative
+            }
+        }
+        switchOctave.setForeground(Color.WHITE);
+        switchOctave.setBackground(Color.BLACK);
+
+        return switchOctave;
+    }
 
     public void setPressed(int index, boolean value){
         index -= 1;
@@ -195,8 +213,8 @@ public class VirtualKeyboardVisualizer extends JFrame {
             keys[index].setPressed(value);
             setEntryText(index);
         }
-
     }
+
     public void setEntryText(int index){
         entryBox[index/isWhite.length].setText(noteNameLookup[index%isWhite.length]);
     }
@@ -214,37 +232,6 @@ public class VirtualKeyboardVisualizer extends JFrame {
             PianoKey pianoKey = (PianoKey) e.getSource();
             setPressed(pianoKey.getId(),false);
             StartApp.waveManager.setShouldGenerate(false, pianoKey.getId());
-        }
-    }
-
-    private class KeySwitchOctave implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            SwitchButton switchButton = (SwitchButton) e.getSource();
-            Octave o;
-            if (switchButton.getId()==1)
-            {
-                if (switchButton.getRefKey()==1)
-                {
-
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-                if(switchButton.getRefKey()==1)
-                {
-
-                }
-                else
-                {
-
-                }
-            }
         }
     }
 }
