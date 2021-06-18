@@ -1,6 +1,7 @@
 package imstrument.start;
 
 import imstrument.sound.openal.AudioThread;
+import imstrument.sound.openal.Recording;
 import imstrument.sound.waves.*;
 import imstrument.sound.wavetables.Wavetable;
 
@@ -10,7 +11,7 @@ import java.io.File;
 public class StartApp {
     public static WaveManager waveManager;
     public static AudioThread audioThread;
-
+    public static Recording recording;
     public static final File defaultFolder = new File(new JFileChooser().getFileSystemView().getDefaultDirectory().toString() + "/imstrument/");
 
     public static void main(String[] args){
@@ -40,6 +41,7 @@ public class StartApp {
 
         /* initialize audio thread and WaveManager*/
         waveManager = new WaveManager();
+        recording = new Recording();
        //waveManager.importWaveSettings(carrier, WaveManager.KeyboardRows.TOP_ROW, waveManager.currentOctaves[0]);
        //waveManager.importWaveSettings(carrier, WaveManager.KeyboardRows.BOTTOM_ROW, waveManager.currentOctaves[1]);
         audioThread = new AudioThread(() -> {
@@ -50,6 +52,8 @@ public class StartApp {
                 for (int i = 0; i < AudioThread.BUFFER_SIZE; i++) {
                     samples[i] = waveManager.generateSample();
                 }
+                if (recording.isRecording)  recording.record(samples);
+
                 return samples;
             }
             return null;
