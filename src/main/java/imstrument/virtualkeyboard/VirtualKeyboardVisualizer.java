@@ -12,6 +12,10 @@ import java.awt.event.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Hashtable;
+import imstrument.sound.utils.Octave;
+import imstrument.sound.utils.Note;
+import imstrument.sound.utils.NoteFrequencyMapping;
+
 
 public class VirtualKeyboardVisualizer extends JFrame {
     /**
@@ -42,7 +46,8 @@ public class VirtualKeyboardVisualizer extends JFrame {
         mainPanel.setForeground(Color.WHITE);
         mainPanel.setBackground(Color.GRAY);
         mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-
+        JButton switchRight;
+        JButton switchLeft;
         final int numberOfKeyboards = 2;
         entryBox= new JLabel[numberOfKeyboards];
         for (int keyboardIndex = 0; keyboardIndex < numberOfKeyboards; keyboardIndex++) {
@@ -54,8 +59,11 @@ public class VirtualKeyboardVisualizer extends JFrame {
             mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
             /* Creating the button for switching octaves*/
-            JButton switchRight = createSwitch('r');
-            JButton switchLeft  = createSwitch('l');
+            switchRight = new SwitchButton('r',1,keyboardIndex+1);
+            switchLeft  = new SwitchButton('l',2,keyboardIndex+2);
+
+            switchLeft.addActionListener(new KeySwitchOctave());
+            switchRight.addActionListener(new KeySwitchOctave());
 
             /* Creating the pianokeyboard */
             JLayeredPane pianoKeyboard = createKeyboard(keyboardIndex);
@@ -180,31 +188,6 @@ public class VirtualKeyboardVisualizer extends JFrame {
         return notesPanel;
     }
 
-    private JButton createSwitch(char c){
-        JButton switchOctave = new JButton();
-        if (c == 'r') {
-            try {
-                Image img = ImageIO.read(getClass().getResource("/imstrument/globals/imstrument_rightarrow.jpg"));
-                img.getScaledInstance(35,10, java.awt.Image.SCALE_SMOOTH);
-                switchOctave.setIcon(new ImageIcon(img));
-            } catch (IOException e) {
-                e.printStackTrace(); //TODO aggiungi alternative
-            }
-        }
-        else {
-            try {
-                Image img = ImageIO.read(getClass().getResource("/imstrument/globals/imstrument_leftarrow.jpg"));
-                img.getScaledInstance(35,10, java.awt.Image.SCALE_SMOOTH);
-                switchOctave.setIcon(new ImageIcon(img));
-            } catch (IOException e) {
-                e.printStackTrace(); //TODO aggiungi alternative
-            }
-        }
-        switchOctave.setForeground(Color.WHITE);
-        switchOctave.setBackground(Color.BLACK);
-
-        return switchOctave;
-    }
 
     public void setPressed(int index, boolean value){
         index -= 1;
@@ -231,6 +214,37 @@ public class VirtualKeyboardVisualizer extends JFrame {
             PianoKey pianoKey = (PianoKey) e.getSource();
             setPressed(pianoKey.getId(),false);
             StartApp.waveManager.setShouldGenerate(false, pianoKey.getId());
+        }
+    }
+
+    private class KeySwitchOctave implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            SwitchButton switchButton = (SwitchButton) e.getSource();
+            Octave o;
+            if (switchButton.getId()==1)
+            {
+                if (switchButton.getRefKey()==1)
+                {
+
+                }
+                else
+                {
+
+                }
+            }
+            else
+            {
+                if(switchButton.getRefKey()==1)
+                {
+
+                }
+                else
+                {
+
+                }
+            }
         }
     }
 }
