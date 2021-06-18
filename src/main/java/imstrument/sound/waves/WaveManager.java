@@ -21,6 +21,10 @@ public class WaveManager{
     public final ArrayList<Soundwave> soundwaves;
 
     /**
+     * TODO
+     */
+    public Octave[] currentOctaves;
+    /**
      * array of boolean values, if true the corrisponding wave at the same index will generate
      * a sample when asked from the Wavesummer
      */
@@ -43,6 +47,7 @@ public class WaveManager{
 
     public WaveManager(){
         this.soundwaves = new ArrayList<>();
+        this.currentOctaves = new Octave[KeyboardRows.values().length];
         // 0 -> click wave, 1-24 -> keyboard triggered waves
         int waveCount = 25;
         for(int i = 0; i < waveCount; i++)
@@ -105,8 +110,22 @@ public class WaveManager{
     }
 
     public void importWaveSettings(Soundwave soundwave, KeyboardRows keyboardRows, Octave octave){
+        currentOctaves[keyboardRows.getRowNumber()] = octave;
+
         for(int i = 0; i < OCTAVE_KEY_COUNT; i++){
             soundwaves.get(i + keyboardRows.getRowNumber()*12 + 1).importFrom(soundwave, NoteFrequencyMapping.getNoteFrequency(Note.values()[i], octave));
+        }
+    }
+
+    public void setOctave(KeyboardRows keyboardRows, Octave octave){
+        currentOctaves[keyboardRows.getRowNumber()] = octave;
+
+        for(int i = 0; i < OCTAVE_KEY_COUNT + 12* keyboardRows.getRowNumber(); i++){
+            soundwaves.get(i).setFrequency(
+                    NoteFrequencyMapping.getNoteFrequency(
+                            Note.values()[i], octave
+                    )
+            );
         }
     }
 

@@ -118,4 +118,8 @@ public class Soundwave {
 
         reset();
     }
+
+    public void setFrequency(double frequency){
+        waveIndexStep = Wavetable.getStepSize(frequency);
+    }
 }

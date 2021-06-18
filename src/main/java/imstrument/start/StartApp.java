@@ -22,6 +22,7 @@ public class StartApp {
             boolean mkdir = defaultFolder.mkdir();//TODO notify user if default folder is not created  (mkdir = false)
         }
 
+
         Wavetable wavetable = new Wavetable(Wavetable.Type.SIMPLE, 0);
         wavetable.readFromFile();
 
@@ -38,12 +39,9 @@ public class StartApp {
                 ),
                 1000.0
         );
-        //carrier.sweepEnvelope = new Envelope(1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.5, 1.0);
-
         /* check if folder exists */
 
         /* initialize audio thread and WaveManager*/
-
         waveManager = new WaveManager();
         waveManager.importWaveSettings(carrier, WaveManager.KeyboardRows.TOP_ROW, Octave._3);
         waveManager.importWaveSettings(carrier, WaveManager.KeyboardRows.BOTTOM_ROW, Octave._4);
