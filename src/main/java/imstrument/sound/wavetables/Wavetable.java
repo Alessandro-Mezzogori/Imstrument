@@ -75,9 +75,7 @@ public class Wavetable {
         CUSTOM, //WAVETABLE CREATED FROM OTHER WAVETABLES
     }
 
-    /* import / export to file */
-
-
+    /* import export to file */
     public void writeToFile() {
         //todo generalize
         try {
