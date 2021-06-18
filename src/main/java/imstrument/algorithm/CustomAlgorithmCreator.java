@@ -21,7 +21,6 @@ public class CustomAlgorithmCreator extends JFrame {
     UnitWindow unitWindow;
     ArrayList<AlgorithmUnit> groups;
 
-
     public CustomAlgorithmCreator(){
         /* params */
         final int algorithmNameFieldWidth = 20;
@@ -55,7 +54,7 @@ public class CustomAlgorithmCreator extends JFrame {
         saveButton.addActionListener(e ->{
             //TODO check that there's no other algorithm with the same name
             //TODO check that all groups have an operator
-            File newFile = new File(Algorithm.algorithmFolder.toString() + "/" + algorithmNameField.getText());
+            File newFile = new File(Algorithm.algorithmFolder.toString() + "/" + algorithmNameField.getText() + "." + Algorithm.fileExtension) ;
             try {
                 boolean isCreated = newFile.createNewFile(); // TODO notify user if it doesn't go well
                 StringBuilder stringBuilder = new StringBuilder();

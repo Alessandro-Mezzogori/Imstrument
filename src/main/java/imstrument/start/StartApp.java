@@ -1,5 +1,6 @@
 package imstrument.start;
 
+import imstrument.algorithm.Algorithm;
 import imstrument.sound.openal.AudioThread;
 import imstrument.sound.waves.*;
 import imstrument.sound.wavetables.Wavetable;
@@ -10,6 +11,7 @@ import java.io.File;
 public class StartApp {
     public static WaveManager waveManager;
     public static AudioThread audioThread;
+    public static Algorithm algorithm;
 
     public static final File defaultFolder = new File(new JFileChooser().getFileSystemView().getDefaultDirectory().toString() + "/imstrument/");
 

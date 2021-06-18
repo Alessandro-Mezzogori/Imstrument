@@ -5,15 +5,17 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class AlgorithmDisplay extends JComponent {
-    protected static final Dimension STANDARD_ALGO_DISPLAY_SIZE = new Dimension(100, 100);
+    protected static final Dimension STANDARD_USAGE_SIZE = new Dimension(100, 100);
+    protected static final Dimension ALGORITHM_DISPLAY_SIZE = new Dimension(300, 300);
+
     protected ArrayList<AlgorithmUnit> groups;
     protected Point centerPoint;
 
     public AlgorithmDisplay(ArrayList<AlgorithmUnit> groups){
         /* set dimensions */
-        setMinimumSize(STANDARD_ALGO_DISPLAY_SIZE);
-        setPreferredSize(STANDARD_ALGO_DISPLAY_SIZE);
-        setMaximumSize(STANDARD_ALGO_DISPLAY_SIZE);
+        setMinimumSize(ALGORITHM_DISPLAY_SIZE);
+        setPreferredSize(ALGORITHM_DISPLAY_SIZE);
+        setMaximumSize(ALGORITHM_DISPLAY_SIZE);
 
         /* initialize values */
         this.groups = groups;

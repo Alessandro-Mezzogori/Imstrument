@@ -15,16 +15,15 @@ import java.util.regex.Pattern;
 public class Algorithm {
     private  ArrayList<AlgorithmUnit> groups;
 
-    private static final int groupElementSize;
-    private static final Pattern pattern;
+    private static final int groupElementSize = 4;
+    private static final Pattern pattern = Pattern.compile("_<(-?[\\d]+),(-?[\\d]+),(-?[\\d]+),(-?[\\d]+)><(.*?)>_");
     protected static final TreeMap<String, Operator> operatorTable;
+
+    public static final String fileExtension = "imalg";
     public static final File algorithmFolder = new File(StartApp.defaultFolder.toString() + "/algorithm/");
 
     static
     {
-        groupElementSize = 4;
-        pattern = Pattern.compile("_<(-?[\\d]+),(-?[\\d]+),(-?[\\d]+),(-?[\\d]+)><(.*?)>_");
-
         operatorTable = new TreeMap<>();
 
         Operator[] operators = {new AvgLuminance(), new Red(), new DummyOperator()};

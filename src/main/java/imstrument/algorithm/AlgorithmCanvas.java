@@ -7,9 +7,8 @@ import java.util.ArrayList;
 
 public class AlgorithmCanvas extends AlgorithmDisplay implements MouseListener, MouseMotionListener
 {
-    private static final Dimension preferredDimension = new Dimension(300, 300);
     /* amount to divide the components of currentGroup to have it inside a 100x100 square +- approximations*/
-    final int standardizingRatio = (int) Math.round(((double)(preferredDimension.width)/AlgorithmDisplay.STANDARD_ALGO_DISPLAY_SIZE.width));
+    final int standardizingRatio = (int) Math.round(((double)(AlgorithmDisplay.ALGORITHM_DISPLAY_SIZE.width)/AlgorithmDisplay.STANDARD_USAGE_SIZE.width));
 
     /* drawing params */
     int[] currentGroup;
@@ -26,9 +25,6 @@ public class AlgorithmCanvas extends AlgorithmDisplay implements MouseListener, 
         super(groups);
         this.controller = controller;
         /* set dimensions */
-        setMinimumSize(preferredDimension);
-        setPreferredSize(preferredDimension);
-        setMaximumSize(preferredDimension);
 
         /* initialize values */
         currentGroup = new int[AlgorithmUnit.RECT_SIZE];
@@ -52,7 +48,7 @@ public class AlgorithmCanvas extends AlgorithmDisplay implements MouseListener, 
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+//        super.paintComponent(g);
         Dimension currentSize = getSize();
         centerPoint.x = currentSize.width/2;
         centerPoint.y = currentSize.height/2;
@@ -90,21 +86,7 @@ public class AlgorithmCanvas extends AlgorithmDisplay implements MouseListener, 
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if(SwingUtilities.isRightMouseButton(e)) {
-            int x = e.getX(), y = e.getY();
-            drawingRectangle = false;
-            for(currentlySelected = groups.size() - 1; currentlySelected >= 0; currentlySelected--) {
-                int[] rect = groups.get(currentlySelected).rect;
-                if (x >= rect[0] && y >= rect[1]  && x <= rect[0] + rect[2]&& y <= rect[1] + rect[3]) {
-                    break;
-                }
-            }
-
-            if( currentlySelected >= 0 ) {
-                rightClickOptions.show(e.getComponent(), x, y);
-            }
-        }
-        else if(SwingUtilities.isLeftMouseButton(e)){
+        if(SwingUtilities.isLeftMouseButton(e)){
             drawingRectangle = true;
             currentGroup[0] = e.getX();
             currentGroup[1] = e.getY();
