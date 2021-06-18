@@ -2,7 +2,6 @@ package imstrument.sound.waves;
 
 import imstrument.sound.utils.Note;
 import imstrument.sound.utils.NoteFrequencyMapping;
-import imstrument.sound.utils.Octave;
 import imstrument.sound.wavetables.Wavetable;
 import imstrument.start.StartApp;
 
@@ -23,7 +22,7 @@ public class WaveManager{
     /**
      * TODO
      */
-    public Octave[] currentOctaves;
+    public int[] currentOctaves;
     /**
      * array of boolean values, if true the corrisponding wave at the same index will generate
      * a sample when asked from the Wavesummer
@@ -47,7 +46,9 @@ public class WaveManager{
 
     public WaveManager(){
         this.soundwaves = new ArrayList<>();
-        this.currentOctaves = new Octave[KeyboardRows.values().length];
+        this.currentOctaves = new int[KeyboardRows.values().length];
+        currentOctaves[0]=3;
+        currentOctaves[1]=4;
         // 0 -> click wave, 1-24 -> keyboard triggered waves
         int waveCount = 25;
         for(int i = 0; i < waveCount; i++)
@@ -109,21 +110,21 @@ public class WaveManager{
         soundwaves.set(0 ,soundwave);
     }
 
-    public void importWaveSettings(Soundwave soundwave, KeyboardRows keyboardRows, Octave octave){
-        currentOctaves[keyboardRows.getRowNumber()] = octave;
+    public void importWaveSettings(Soundwave soundwave, KeyboardRows keyboardRows, int currentOctave){
+        currentOctaves[keyboardRows.getRowNumber()] = currentOctave;
 
         for(int i = 0; i < OCTAVE_KEY_COUNT; i++){
-            soundwaves.get(i + keyboardRows.getRowNumber()*12 + 1).importFrom(soundwave, NoteFrequencyMapping.getNoteFrequency(Note.values()[i], octave));
+            soundwaves.get(i + keyboardRows.getRowNumber()*12 + 1).importFrom(soundwave, NoteFrequencyMapping.getNoteFrequency(Note.values()[i], currentOctave));
         }
     }
 
-    public void setOctave(KeyboardRows keyboardRows, Octave octave){
-        currentOctaves[keyboardRows.getRowNumber()] = octave;
+    public void setOctave(KeyboardRows keyboardRows, int currentOctave){
+        currentOctaves[keyboardRows.getRowNumber()] = currentOctave;
 
         for(int i = 0; i < OCTAVE_KEY_COUNT + 12* keyboardRows.getRowNumber(); i++){
             soundwaves.get(i).setFrequency(
                     NoteFrequencyMapping.getNoteFrequency(
-                            Note.values()[i], octave
+                            Note.values()[i], currentOctave
                     )
             );
         }

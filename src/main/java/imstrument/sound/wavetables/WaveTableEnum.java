@@ -1,14 +1,5 @@
 package imstrument.sound.wavetables;
 
-import imstrument.sound.utils.Note;
-import imstrument.sound.utils.NoteFrequencyMapping;
-import imstrument.sound.utils.Octave;
-
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.sql.SQLInvalidAuthorizationSpecException;
-
 public enum WaveTableEnum {
     SINE, SAW, TRIANGLE, SQUARE;
 

@@ -12,11 +12,11 @@ public class NoteFrequencyMapping {
     /**
      * returns the frequency matching the passed note in the octave
      * @param note note to be converted
-     * @param octave octave to be converted
+     * @param int octave to be converted
      * @return frequency of the passed note
      */
-    public static double getNoteFrequency(Note note, Octave octave){
-        return Math.pow(2, (note.getNoteNumber() + 12*octave.getOctaveNumber())/12.0)*C0;
+    public static double getNoteFrequency(Note note, int currentOctave){
+        return Math.pow(2, (note.getNoteNumber() + 12*currentOctave)/12.0)*C0;
     }
 }
 

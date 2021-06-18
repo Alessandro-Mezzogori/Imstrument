@@ -1,14 +1,11 @@
 package imstrument.start;
 
-import imstrument.algorithm.Algorithm;
 import imstrument.sound.openal.AudioThread;
-import imstrument.sound.utils.Octave;
 import imstrument.sound.waves.*;
 import imstrument.sound.wavetables.Wavetable;
 
 import javax.swing.*;
 import java.io.File;
-import java.io.IOException;
 
 public class StartApp {
     public static WaveManager waveManager;
@@ -43,9 +40,8 @@ public class StartApp {
 
         /* initialize audio thread and WaveManager*/
         waveManager = new WaveManager();
-        waveManager.importWaveSettings(carrier, WaveManager.KeyboardRows.TOP_ROW, Octave._3);
-        waveManager.importWaveSettings(carrier, WaveManager.KeyboardRows.BOTTOM_ROW, Octave._4);
-
+       //waveManager.importWaveSettings(carrier, WaveManager.KeyboardRows.TOP_ROW, waveManager.currentOctaves[0]);
+       //waveManager.importWaveSettings(carrier, WaveManager.KeyboardRows.BOTTOM_ROW, waveManager.currentOctaves[1]);
         audioThread = new AudioThread(() -> {
             boolean isGenerating = false;
 
