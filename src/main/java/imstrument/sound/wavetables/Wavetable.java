@@ -107,17 +107,11 @@ public class Wavetable {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(fileIn);
             int bytesPerFrame = audioInputStream.getFormat().getFrameSize();
             // Set an arbitrary buffer size of 1024 frames.
-            System.out.println("Bytes per frame: " + bytesPerFrame);
-            System.out.println("Bits in sample:" + audioInputStream.getFormat().getSampleSizeInBits());
-            System.out.println("Channels number: " + audioInputStream.getFormat().getChannels());
-            System.out.println("Big Endian: " + audioInputStream.getFormat().isBigEndian());
 
             int numBytes = 2048 * bytesPerFrame;
             ArrayList<byte[]> test = new ArrayList<>();
             byte[] audioBytes = new byte[numBytes];
-//            byte[] header = new byte[44];
             try {
-//                audioInputStream.read(header);
                 // Try to read numBytes bytes from the file.
                 while (audioInputStream.read(audioBytes) != -1) {
                     // Calculate the number of frames actually read.
@@ -130,38 +124,8 @@ public class Wavetable {
             wavetables = new float[test.size()][];
             for(int i = 0; i < wavetables.length; i++)
                 wavetables[i] = DatatypeConversion.ByteArray2FloatArray(test.get(i), audioInputStream.getFormat().getSampleSizeInBits()/8);
-//
         } catch (Exception e) {
             // Handle the error...
         }
-//            /* Generates the file that contains the audio*/
-//            File fileAudio = new File(this.getClass().getResource("/imstrument/wavetables/14-SinFormant.wav").getPath());
-//            try {
-//                /* Creating the audioinputstream for working with the bytes of the file*/
-//                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(fileAudio);
-//                int bytesPerFrame = audioInputStream.getFormat().getFrameSize();
-//                ArrayList<byte[]> byteArray = new ArrayList<>();
-//
-//                /* Creating a buffer header because the wav file has 4 bytes as descriptions */
-//                byte[] bufferHeader = new byte[4];
-//                audioInputStream.read(bufferHeader);
-//                while (true) {
-//                    byte[] inputBuffer = new byte[Wavetable.WAVETABLE_SIZE * 3];
-//                    if (audioInputStream.read(inputBuffer, 0, inputBuffer.length) == -1)
-//                        break;
-//
-//                    byteArray.add(inputBuffer);
-//                }
-//                wavetables = new float[byteArray.size()][];
-//                for (int i = 0; i < wavetables.length; i++)
-//                    wavetables[i] = DatatypeConversion.ByteArray2FloatArray(byteArray.get(i));
-//            } catch (Exception ex) {
-//                ex.printStackTrace();
-//            }
-//        }
-//        catch (Exception ex)
-//        {
-//            ex.printStackTrace();
-//        }
     }
 }
