@@ -119,7 +119,7 @@ public class Wavetable {
             } catch (Exception ex) {
                 // Handle the error...
             }
-            System.out.println(test.size());
+
             wavetables = new float[test.size()][];
             for(int i = 0; i < wavetables.length; i++)
                 wavetables[i] = DatatypeConversion.ByteArray2FloatArray(test.get(i), audioInputStream.getFormat().getSampleSizeInBits()/8);
