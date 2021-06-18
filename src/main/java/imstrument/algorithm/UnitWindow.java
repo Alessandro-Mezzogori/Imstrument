@@ -35,8 +35,8 @@ public class UnitWindow extends JPanel {
 
         JButton saveSelection = new JButton("Save"); // save selected operators to current selected group
         saveSelection.addActionListener(e -> {
-            AlgorithmUnit group = groups.get(unitsTable.getSelectedRow());
-            group.operator = Algorithm.operatorTable.get(operatorsList.getSelectedValue());
+            for(int row : unitsTable.getSelectedRows())
+                groups.get(row).operator = Algorithm.operatorTable.get(operatorsList.getSelectedValue());
 
             /* clean up */
             resizeColumnWidth(unitsTable);
@@ -83,8 +83,6 @@ public class UnitWindow extends JPanel {
             columnModel.getColumn(column).setPreferredWidth(width);
         }
     }
-
-
 
     private static class JTableButtonMouseListener extends MouseAdapter {
         private final JTable table;

@@ -44,12 +44,6 @@ public class AlgorithmCanvas extends JComponent implements MouseListener, MouseM
 
         /* create popup menu on right click*/
         rightClickOptions = new JPopupMenu();
-//        JMenuItem setGroup = new JMenuItem("Operators");
-//        setGroup.addActionListener(e -> {
-//            groups.remove(currentlySelected);
-//            AlgorithmCanvas.this.repaint();
-//        });
-//        rightClickOptions.add(setGroup);
 
         JMenuItem deleteGroup = new JMenuItem("Delete");
         deleteGroup.addActionListener(e -> {
