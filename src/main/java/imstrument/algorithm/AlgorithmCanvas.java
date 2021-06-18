@@ -1,24 +1,19 @@
 package imstrument.algorithm;
 
-import org.lwjgl.system.CallbackI;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class AlgorithmCanvas extends JComponent implements MouseListener, MouseMotionListener
+public class AlgorithmCanvas extends AlgorithmDisplay implements MouseListener, MouseMotionListener
 {
     private static final Dimension preferredDimension = new Dimension(300, 300);
-    private static final Dimension standardSquareDimension = new Dimension(100, 100);
     /* amount to divide the components of currentGroup to have it inside a 100x100 square +- approximations*/
-    final int standardizingRatio = (int) Math.round(((double)(preferredDimension.width)/standardSquareDimension.width));
+    final int standardizingRatio = (int) Math.round(((double)(preferredDimension.width)/AlgorithmDisplay.STANDARD_ALGO_DISPLAY_SIZE.width));
 
     /* drawing params */
-    ArrayList<AlgorithmUnit> groups;
     int[] currentGroup;
     boolean drawingRectangle;
-    Point centerPoint;
     JPopupMenu rightClickOptions;
     CustomAlgorithmCreator.AlgorithmCreationSynchronizer controller;
     int currentlySelected; // index of the latest created rectangle that contains the point where it was rightClicked
@@ -28,6 +23,7 @@ public class AlgorithmCanvas extends JComponent implements MouseListener, MouseM
      * @param groups
      */
     public AlgorithmCanvas(ArrayList<AlgorithmUnit> groups, CustomAlgorithmCreator.AlgorithmCreationSynchronizer controller){
+        super(groups);
         this.controller = controller;
         /* set dimensions */
         setMinimumSize(preferredDimension);
@@ -35,12 +31,8 @@ public class AlgorithmCanvas extends JComponent implements MouseListener, MouseM
         setMaximumSize(preferredDimension);
 
         /* initialize values */
-        this.groups = groups;
         currentGroup = new int[AlgorithmUnit.RECT_SIZE];
         drawingRectangle = false;
-
-        /* compute center point */
-        centerPoint = new Point();
 
         /* create popup menu on right click*/
         rightClickOptions = new JPopupMenu();
@@ -56,7 +48,6 @@ public class AlgorithmCanvas extends JComponent implements MouseListener, MouseM
         /* add listeners */
         addMouseListener(this);
         addMouseMotionListener(this);
-        setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.RED));
     }
 
     @Override

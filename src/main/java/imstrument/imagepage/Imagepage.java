@@ -3,6 +3,7 @@ package imstrument.imagepage;
 /* imstrument packages */
 
 import imstrument.algorithm.ControlWindow;
+import imstrument.algorithm.CustomAlgorithmCreator;
 import imstrument.sound.utils.SoundImagePanel;
 import imstrument.sound.wavetables.Test;
 import imstrument.start.StartApp;
@@ -73,15 +74,14 @@ public class Imagepage extends JPanel {
         /* algorythms menu */
         // TODO lista degli algoritmi
         JMenu algorithmsMenu = new JMenu("Algorithms");
-        JMenuItem algoControlPanel = new JMenuItem("Control panel");
-        algoControlPanel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                SwingUtilities.invokeLater(ControlWindow::new);
-            }
-        });
+        JMenuItem createAlgorithm = new JMenuItem("Create Algorithm");
+        createAlgorithm.addActionListener(e -> SwingUtilities.invokeLater(CustomAlgorithmCreator::new));
+        algorithmsMenu.add(createAlgorithm);
 
-        algorithmsMenu.add(algoControlPanel);
+        JMenuItem algorithmControls = new JMenuItem("Controls");
+        algorithmControls.addActionListener(e -> SwingUtilities.invokeLater(ControlWindow::new));
+        algorithmsMenu.add(algorithmControls);
+
         menuBar.add(algorithmsMenu);
 
         /* visualize menu */

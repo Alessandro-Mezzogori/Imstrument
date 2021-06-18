@@ -1,5 +1,6 @@
 package imstrument.algorithm;
 
+import imstrument.globals.GlobalSetting;
 import org.lwjgl.system.CallbackI;
 
 import javax.swing.*;
@@ -15,7 +16,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class CustomAlgorithmCreator extends JPanel {
+public class CustomAlgorithmCreator extends JFrame {
     AlgorithmCanvas drawingAlgorithmCanvas;
     UnitWindow unitWindow;
     ArrayList<AlgorithmUnit> groups;
@@ -84,8 +85,14 @@ public class CustomAlgorithmCreator extends JPanel {
 
         setLayout(new BorderLayout());
         add(buttonContainer, BorderLayout.SOUTH);
-//        add(drawingAlgorithmCanvas, BorderLayout.CENTER);
         add(container, BorderLayout.CENTER);
+        add(Box.createRigidArea(new Dimension(20, 20)), BorderLayout.LINE_START);
+
+        setMinimumSize(GlobalSetting.MINIMUM_WINDOW_SIZE);
+        pack();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setVisible(true); // shows jframe
+        requestFocus(); // requestes focus for event dispatching
     }
 
     private void clear(){
