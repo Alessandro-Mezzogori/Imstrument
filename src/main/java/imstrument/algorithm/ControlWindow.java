@@ -2,16 +2,14 @@ package imstrument.algorithm;
 
 import imstrument.globals.GlobalSetting;
 import imstrument.start.StartApp;
-import org.lwjgl.system.CallbackI;
 
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.concurrent.Flow;
 
 public class ControlWindow extends JFrame {
     final AlgorithmDisplay algorithmDisplay;
@@ -25,7 +23,7 @@ public class ControlWindow extends JFrame {
 
         /* left sided of the control panel */
         algorithmNames = new ArrayList<>();
-        populateAlgorithmList(Algorithm.algorithmFolder);
+        populateAlgorithmList(Algorithm.CUSTOM_ALGORITHM_FOLDER);
 
         ListModel<String> operatorsListModel = new AbstractListModel<>() {
             @Override
@@ -36,7 +34,10 @@ public class ControlWindow extends JFrame {
         algorithmList = new JList<>(operatorsListModel);
 
         JButton createAlgorithmButton = new JButton("Create");
-        createAlgorithmButton.addActionListener(e -> SwingUtilities.invokeLater(CustomAlgorithmCreator::new));
+        createAlgorithmButton.addActionListener(e -> {
+            SwingUtilities.invokeLater(() -> { new CustomAlgorithmCreator(true); });
+            dispose();
+        });
         createAlgorithmButton.setVerticalAlignment(JButton.BOTTOM);
 
         JPanel algorithmListPanel = new JPanel(new BorderLayout());
@@ -59,6 +60,12 @@ public class ControlWindow extends JFrame {
         JButton selectAlgorithmButton = new JButton("Select");
         selectAlgorithmButton.addActionListener(e ->{
             //TODO aggiungi caricamento dell'algoritmo
+            File selectedFile = new File(Algorithm.CUSTOM_ALGORITHM_FOLDER.toString() + "/" + algorithmList.getSelectedValue() + "." + Algorithm.fileExtension);
+            try {
+                StartApp.algorithm.decode(Files.readString(selectedFile.toPath()));
+            } catch (IOException ioException) {
+                ioException.printStackTrace(); //TODO se non riesce a leggere il file
+            }
             algorithmDisplay.repaint();
         });
 
@@ -74,6 +81,11 @@ public class ControlWindow extends JFrame {
     }
 
     public void populateAlgorithmList(final File folder) {
+        /* standard algorithms */
+        for(final File fileEntry: Objects.requireNonNull())
+
+
+        /* custom algorithms */
         for (final File fileEntry : Objects.requireNonNull(folder.listFiles())) {
             String name = fileEntry.getName();
             if (fileEntry.isDirectory()) {

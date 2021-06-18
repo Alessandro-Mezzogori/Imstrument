@@ -3,7 +3,6 @@ package imstrument.algorithm;
 import imstrument.algorithm.operators.*;
 import imstrument.start.StartApp;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -20,7 +19,8 @@ public class Algorithm {
     protected static final TreeMap<String, Operator> operatorTable;
 
     public static final String fileExtension = "imalg";
-    public static final File algorithmFolder = new File(StartApp.defaultFolder.toString() + "/algorithm/");
+    public static final File CUSTOM_ALGORITHM_FOLDER = new File(StartApp.defaultFolder.toString() + "/algorithm/");
+    public static final File STANDARD_ALGORITHM_FOLDER = new File(getClass().getResource())
 
     static
     {
@@ -30,8 +30,8 @@ public class Algorithm {
         for(Operator operator : operators)
             operatorTable.put(operator.getName(), operator);
 
-        if(!algorithmFolder.exists()){
-            boolean mkdir = algorithmFolder.mkdir(); // TODO notify user if default folder is not created
+        if(!CUSTOM_ALGORITHM_FOLDER.exists()){
+            boolean mkdir = CUSTOM_ALGORITHM_FOLDER.mkdir(); // TODO notify user if default folder is not created
         }
     }
 

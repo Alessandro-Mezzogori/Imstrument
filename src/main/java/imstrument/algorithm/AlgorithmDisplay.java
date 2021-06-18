@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class AlgorithmDisplay extends JComponent {
     protected static final Dimension STANDARD_USAGE_SIZE = new Dimension(100, 100);
     protected static final Dimension ALGORITHM_DISPLAY_SIZE = new Dimension(300, 300);
+    protected static final int STANDARDIZING_RATIO = (int) Math.round(((double)(AlgorithmDisplay.ALGORITHM_DISPLAY_SIZE.width)/AlgorithmDisplay.STANDARD_USAGE_SIZE.width));
 
     protected ArrayList<AlgorithmUnit> groups;
     protected Point centerPoint;
@@ -41,10 +42,10 @@ public class AlgorithmDisplay extends JComponent {
         g.setColor(Color.cyan);
         for(AlgorithmUnit group : groups){
             g.drawRect(
-                    centerPoint.x + group.rect[0],
-                    centerPoint.y + group.rect[1],
-                    (group.rect[2]),
-                    (group.rect[3])
+                    centerPoint.x + group.rect[0]* STANDARDIZING_RATIO,
+                    centerPoint.y + group.rect[1]* STANDARDIZING_RATIO,
+                    (group.rect[2])* STANDARDIZING_RATIO,
+                    (group.rect[3])* STANDARDIZING_RATIO
             );
         }
     }

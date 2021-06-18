@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class AlgorithmCanvas extends AlgorithmDisplay implements MouseListener, MouseMotionListener
 {
     /* amount to divide the components of currentGroup to have it inside a 100x100 square +- approximations*/
-    final int standardizingRatio = (int) Math.round(((double)(AlgorithmDisplay.ALGORITHM_DISPLAY_SIZE.width)/AlgorithmDisplay.STANDARD_USAGE_SIZE.width));
 
     /* drawing params */
     int[] currentGroup;
@@ -48,7 +47,7 @@ public class AlgorithmCanvas extends AlgorithmDisplay implements MouseListener, 
 
     @Override
     protected void paintComponent(Graphics g) {
-//        super.paintComponent(g);
+        super.paintComponent(g);
         Dimension currentSize = getSize();
         centerPoint.x = currentSize.width/2;
         centerPoint.y = currentSize.height/2;
@@ -56,17 +55,6 @@ public class AlgorithmCanvas extends AlgorithmDisplay implements MouseListener, 
         /* draw center square  */
         g.setColor(Color.red);
         g.fillRect(centerPoint.x - 2, centerPoint.y - 2, 5, 5);
-
-        /* draw saved groups */
-        g.setColor(Color.cyan);
-        for(AlgorithmUnit group : groups){
-            g.drawRect(
-                    centerPoint.x + group.rect[0]*standardizingRatio,
-                    centerPoint.y + group.rect[1]*standardizingRatio,
-                    (group.rect[2])*standardizingRatio,
-                    (group.rect[3])*standardizingRatio
-            );
-        }
 
         /* draw current drawing group */
         if(drawingRectangle) {
@@ -103,7 +91,7 @@ public class AlgorithmCanvas extends AlgorithmDisplay implements MouseListener, 
                 currentGroup[1] -= centerPoint.y;
             }
 
-            for(int i = 0, rectSize = currentGroup.length; i < rectSize; i++) { currentGroup[i] /= standardizingRatio; }
+            for(int i = 0, rectSize = currentGroup.length; i < rectSize; i++) { currentGroup[i] /= STANDARDIZING_RATIO; }
             /* add to the group and repaint */
             groups.add(new AlgorithmUnit(currentGroup));
             controller.update();

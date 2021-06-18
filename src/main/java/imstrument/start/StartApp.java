@@ -40,8 +40,12 @@ public class StartApp {
         );
         /* check if folder exists */
 
+        /* initialize algorithm */
+        algorithm = new Algorithm();
+
         /* initialize audio thread and WaveManager*/
         waveManager = new WaveManager();
+
        //waveManager.importWaveSettings(carrier, WaveManager.KeyboardRows.TOP_ROW, waveManager.currentOctaves[0]);
        //waveManager.importWaveSettings(carrier, WaveManager.KeyboardRows.BOTTOM_ROW, waveManager.currentOctaves[1]);
         audioThread = new AudioThread(() -> {
