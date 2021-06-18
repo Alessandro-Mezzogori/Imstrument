@@ -76,15 +76,11 @@ public class CustomAlgorithmCreator extends JPanel {
             clear();
         });
 
-        JButton cancelButton = new JButton("Cancel");
         JPanel buttonContainer = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buttonContainer.add(algorithmNameFieldLabel);
         buttonContainer.add(algorithmNameField);
-        buttonContainer.add(cancelButton);
         buttonContainer.add(clearButton);
         buttonContainer.add(saveButton);
-
-
 
         setLayout(new BorderLayout());
         add(buttonContainer, BorderLayout.SOUTH);

@@ -1,5 +1,6 @@
 package imstrument.virtualkeyboard;
 
+import imstrument.sound.utils.Octave;
 import imstrument.sound.waves.WaveManager;
 import imstrument.start.StartApp;
 import imstrument.sound.utils.Note;
