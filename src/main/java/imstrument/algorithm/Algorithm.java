@@ -12,15 +12,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Algorithm {
-    private  ArrayList<AlgorithmUnit> groups;
+    private final ArrayList<AlgorithmUnit> groups;
+    private String currentName;
 
     private static final int groupElementSize = 4;
     private static final Pattern pattern = Pattern.compile("_<(-?[\\d]+),(-?[\\d]+),(-?[\\d]+),(-?[\\d]+)><(.*?)>_");
     protected static final TreeMap<String, Operator> operatorTable;
 
     public static final String fileExtension = "imalg";
-    public static final File CUSTOM_ALGORITHM_FOLDER = new File(StartApp.defaultFolder.toString() + "/algorithm/");
-    public static final File STANDARD_ALGORITHM_FOLDER = new File(getClass().getResource())
+    public static final File ALGORITHM_FOLDER = new File(StartApp.defaultFolder.toString() + "/algorithm/");
 
     static
     {
@@ -30,18 +30,14 @@ public class Algorithm {
         for(Operator operator : operators)
             operatorTable.put(operator.getName(), operator);
 
-        if(!CUSTOM_ALGORITHM_FOLDER.exists()){
-            boolean mkdir = CUSTOM_ALGORITHM_FOLDER.mkdir(); // TODO notify user if default folder is not created
+        if(!ALGORITHM_FOLDER.exists()){
+            boolean mkdir = ALGORITHM_FOLDER.mkdir(); // TODO notify user if default folder is not created
         }
-    }
-
-    public Algorithm(String algorithm){
-        this();
-        decode(algorithm);
     }
 
     public Algorithm(){
         groups = new ArrayList<>();
+        currentName = "";
     }
 
     public void compute(BufferedImage image, Point pressed){
@@ -67,8 +63,9 @@ public class Algorithm {
             System.out.println(value);
     }
 
-    public void decode(String algorithm){
+    public void decode(String name, String algorithm){
         //TODO error messages
+        this.currentName = name;
         groups.clear();
         //operatorMatrix.clear();
         Matcher matcher = pattern.matcher(algorithm);
@@ -86,5 +83,10 @@ public class Algorithm {
 
     public ArrayList<AlgorithmUnit> getGroups() {
         return groups;
+    }
+    public String getCurrentName(){ return currentName;}
+
+    public static class Standard{
+        /* add standard algorithms*/
     }
 }

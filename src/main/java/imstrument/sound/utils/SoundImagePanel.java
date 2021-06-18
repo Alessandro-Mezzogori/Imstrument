@@ -17,18 +17,7 @@ import java.util.ArrayList;
 public class SoundImagePanel extends ImagePanel{
 
     private boolean drawMouse;
-    Algorithm algorithm = new Algorithm(
-            "_<-9,-9,3,3><RED>_" +
-            "_<-6,-6,3,3><RED>_" +
-            "_<-3,-3,3,3><RED>_" +
-            "_<0,0,3,3><AVGLUMINANCE>_" +
-            "_<3,3,3,3><AVGLUMINANCE>_" +
-            "_<6,6,3,3><AVGLUMINANCE>_" +
-            "_<-9,6,3,3><AVGLUMINANCE>_" +
-            "_<-6,3,3,3><AVGLUMINANCE>_" +
-            "_<0,-3,3,3><AVGLUMINANCE>_" +
-            "_<3,-6,3,3><AVGLUMINANCE>_"
-    );
+
     Point mousePoint;
 
 
@@ -54,7 +43,7 @@ public class SoundImagePanel extends ImagePanel{
         super.paintComponent(g);
         if(drawMouse) {
             g.setColor(Color.red);
-            for (AlgorithmUnit unit : algorithm.getGroups()) {
+            for (AlgorithmUnit unit : StartApp.algorithm.getGroups()) {
                 int[] rect = unit.getRect();
                 g.fillRect(
                         mousePoint.x + currentStartCorner.x + rect[0],
@@ -77,7 +66,7 @@ public class SoundImagePanel extends ImagePanel{
                 p.x -= currentStartCorner.x;
                 p.y -= currentStartCorner.y;
 
-                algorithm.compute(image, p);
+                StartApp.algorithm.compute(image, p);
 
                 /* stops the audio thread from starting over and over again for performance and quality */
                 StartApp.waveManager.triggerWaveGeneration(WaveManager.MOUSE_SOUNDWAVE_INDEX);

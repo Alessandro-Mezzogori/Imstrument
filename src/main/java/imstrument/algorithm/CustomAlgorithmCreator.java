@@ -24,18 +24,8 @@ public class CustomAlgorithmCreator extends JFrame {
         this.fromAlgorithmSelect = fromAlgorithmSelect;
         /* create custom algorithm canvas */
         groups = new ArrayList<>();
-        drawingAlgorithmCanvas = new AlgorithmCanvas(
-                groups,
-                () -> {
-                    unitWindow.updateTable();
-                }
-        );
-        unitWindow = new UnitWindow(
-                groups,
-                () -> {
-                    drawingAlgorithmCanvas.repaint();
-                }
-        );
+        drawingAlgorithmCanvas = new AlgorithmCanvas(groups, () -> unitWindow.updateTable());
+        unitWindow = new UnitWindow(groups, () -> drawingAlgorithmCanvas.repaint());
 
         JPanel container = new JPanel();
         container.setLayout(new BoxLayout(container, BoxLayout.LINE_AXIS));
@@ -51,7 +41,7 @@ public class CustomAlgorithmCreator extends JFrame {
         saveButton.addActionListener(e ->{
             //TODO check that there's no other algorithm with the same name
             //TODO check that all groups have an operator
-            File newFile = new File(Algorithm.CUSTOM_ALGORITHM_FOLDER.toString() + "/" + algorithmNameField.getText() + "." + Algorithm.fileExtension) ;
+            File newFile = new File(Algorithm.ALGORITHM_FOLDER.toString() + "/" + algorithmNameField.getText() + "." + Algorithm.fileExtension) ;
             try {
                 boolean isCreated = newFile.createNewFile(); // TODO notify user if it doesn't go well
                 StringBuilder stringBuilder = new StringBuilder();
@@ -69,9 +59,7 @@ public class CustomAlgorithmCreator extends JFrame {
         });
 
         JButton clearButton = new JButton("Clear");
-        clearButton.addActionListener(e -> {
-            clear();
-        });
+        clearButton.addActionListener(e -> clear());
 
         JPanel buttonContainer = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buttonContainer.add(algorithmNameFieldLabel);

@@ -23,7 +23,7 @@ public class ControlWindow extends JFrame {
 
         /* left sided of the control panel */
         algorithmNames = new ArrayList<>();
-        populateAlgorithmList(Algorithm.CUSTOM_ALGORITHM_FOLDER);
+        populateAlgorithmList(Algorithm.ALGORITHM_FOLDER);
 
         ListModel<String> operatorsListModel = new AbstractListModel<>() {
             @Override
@@ -35,7 +35,7 @@ public class ControlWindow extends JFrame {
 
         JButton createAlgorithmButton = new JButton("Create");
         createAlgorithmButton.addActionListener(e -> {
-            SwingUtilities.invokeLater(() -> { new CustomAlgorithmCreator(true); });
+            SwingUtilities.invokeLater(() -> new CustomAlgorithmCreator(true));
             dispose();
         });
         createAlgorithmButton.setVerticalAlignment(JButton.BOTTOM);
@@ -60,9 +60,10 @@ public class ControlWindow extends JFrame {
         JButton selectAlgorithmButton = new JButton("Select");
         selectAlgorithmButton.addActionListener(e ->{
             //TODO aggiungi caricamento dell'algoritmo
-            File selectedFile = new File(Algorithm.CUSTOM_ALGORITHM_FOLDER.toString() + "/" + algorithmList.getSelectedValue() + "." + Algorithm.fileExtension);
+            String selectedAlgorithm = algorithmList.getSelectedValue();
+            File selectedFile = new File(Algorithm.ALGORITHM_FOLDER.toString() + "/" + selectedAlgorithm + "." + Algorithm.fileExtension);
             try {
-                StartApp.algorithm.decode(Files.readString(selectedFile.toPath()));
+                StartApp.algorithm.decode(selectedAlgorithm, Files.readString(selectedFile.toPath()));
             } catch (IOException ioException) {
                 ioException.printStackTrace(); //TODO se non riesce a leggere il file
             }
@@ -80,12 +81,7 @@ public class ControlWindow extends JFrame {
         requestFocus(); // requestes focus for event dispatching
     }
 
-    public void populateAlgorithmList(final File folder) {
-        /* standard algorithms */
-        for(final File fileEntry: Objects.requireNonNull())
-
-
-        /* custom algorithms */
+    private void populateAlgorithmList(final File folder) {
         for (final File fileEntry : Objects.requireNonNull(folder.listFiles())) {
             String name = fileEntry.getName();
             if (fileEntry.isDirectory()) {
@@ -96,7 +92,15 @@ public class ControlWindow extends JFrame {
         }
     }
 
-    public String getExtension(String filename) {
+    private void selectCurrentAlgorithm(){
+        String currentAlgorithm = StartApp.algorithm.getCurrentName();
+        if(currentAlgorithm.equals("")) return;
+
+        algorithmList.setSelectedValue(currentAlgorithm, false);
+        algorithmDisplay.repaint();
+    }
+
+    private String getExtension(String filename) {
         int index = filename.lastIndexOf('.');
         return (index == -1) ? "" : filename.substring(index + 1);
     }
