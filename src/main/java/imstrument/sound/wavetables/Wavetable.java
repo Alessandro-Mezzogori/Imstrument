@@ -102,7 +102,6 @@ public class Wavetable {
     public void readFromFile() {
         //todo generalize
         File fileIn = new File(this.getClass().getResource("/imstrument/wavetables/14-SinFormant.wav").getPath());
-        ArrayList<byte[]> byteArray = new ArrayList<>();
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(fileIn);
             int bytesPerFrame = audioInputStream.getFormat().getFrameSize();
