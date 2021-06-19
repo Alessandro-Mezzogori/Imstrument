@@ -12,8 +12,6 @@ imstrument/sound/waves/Envelope.java
 imstrument/sound/waves/WaveManager.java
  imstrument.sound.waves.WaveManager
  imstrument.sound.waves.WaveManager$KeyboardRows
-imstrument/algorithm/operators/Transparancy.java
- imstrument.algorithm.operators.Transparancy
 imstrument/start/TopContainer.java
  imstrument.start.TopContainer
  imstrument.start.TopContainer$1
@@ -29,6 +27,8 @@ imstrument/sound/utils/Note.java
  imstrument.sound.utils.Note
 imstrument/algorithm/operators/NotBlue.java
  imstrument.algorithm.operators.NotBlue
+imstrument/algorithm/operators/Transparency.java
+ imstrument.algorithm.operators.Transparency
 imstrument/virtualkeyboard/PianoKey.java
  imstrument.virtualkeyboard.PianoKey
  imstrument.virtualkeyboard.PianoKey$KeyColor
