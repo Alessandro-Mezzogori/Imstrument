@@ -4,6 +4,7 @@ import java.awt.*;
 
 public class NotRed implements Operator{
     public static String name = "NOTRED";
+    public static Color LIGHT_BLUE = new Color(173, 216, 230);
 
     @Override
     public double compute(Color[] pixels) {
@@ -17,4 +18,7 @@ public class NotRed implements Operator{
 
     @Override
     public String getName(){return name;}
+
+    @Override
+    public Color getColor(){return LIGHT_BLUE; }
 }

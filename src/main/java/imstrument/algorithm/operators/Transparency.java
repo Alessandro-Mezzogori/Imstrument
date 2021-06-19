@@ -17,4 +17,7 @@ public class Transparency implements Operator{
 
     @Override
     public String getName(){return name;}
+
+    @Override
+    public Color getColor(){return Color.LIGHT_GRAY; }
 }

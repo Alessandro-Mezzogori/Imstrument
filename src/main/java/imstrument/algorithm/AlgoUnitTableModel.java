@@ -3,6 +3,7 @@ package imstrument.algorithm;
 import imstrument.algorithm.operators.Operator;
 
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,5 +58,13 @@ public class AlgoUnitTableModel extends AbstractTableModel {
             default:
                 return null;
         }
+    }
+
+
+
+    @Override
+    public void fireTableChanged(TableModelEvent e) {
+        super.fireTableChanged(e);
+        controller.update();
     }
 }

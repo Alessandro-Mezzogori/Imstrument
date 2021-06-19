@@ -37,6 +37,7 @@ public class TopContainer extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true); // shows jframe
         requestFocus(); // requestes focus for event dispatching
+        setTitle("Imstrument");
     }
 
     public void changeCard(String cardID){

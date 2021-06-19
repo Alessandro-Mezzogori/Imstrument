@@ -28,9 +28,14 @@ public class CustomAlgorithmCreator extends JFrame {
         unitWindow = new UnitWindow(groups, () -> drawingAlgorithmCanvas.repaint());
 
         JPanel container = new JPanel();
-        container.setLayout(new BoxLayout(container, BoxLayout.LINE_AXIS));
-        container.add(drawingAlgorithmCanvas);
-        container.add(unitWindow);
+        container.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+
+        container.add(drawingAlgorithmCanvas, constraints);
+        constraints.gridx = 1;
+        container.add(unitWindow, constraints);
 
 
         final JTextField algorithmNameField = new JTextField(algorithmNameFieldWidth);
@@ -82,11 +87,12 @@ public class CustomAlgorithmCreator extends JFrame {
             }
         });
 
-        setMinimumSize(GlobalSetting.MINIMUM_WINDOW_SIZE);
         pack();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true); // shows jframe
         requestFocus(); // requestes focus for event dispatching
+        setResizable(false);
+        setTitle("Algorithm Creator");
     }
 
     private void clear(){

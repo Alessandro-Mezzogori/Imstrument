@@ -8,6 +8,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -48,26 +49,41 @@ public class ControlWindow extends JFrame {
 
         /* right side of the control panel */
         JPanel descriptionPanel = new JPanel(new BorderLayout());
+
         JPanel displayPanel = new JPanel();
-        displayPanel.setLayout(new BoxLayout(displayPanel, BoxLayout.LINE_AXIS));
-        displayPanel.add(algorithmDisplay);
-        displayPanel.add(Box.createRigidArea(new Dimension(50, 150)));
+        displayPanel.setLayout(new GridBagLayout()); // grid bag layout for component alignment and preventing resizing
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        JLabel displayPanelTitle  = new JLabel("Algorithm Description");
+        displayPanelTitle.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        displayPanel.add(displayPanelTitle, constraints);
+        constraints.gridy = 1;
+        displayPanel.add(algorithmDisplay, constraints);
+        constraints.gridx = 1;
+        displayPanel.add(new OperatorColorLegend(), constraints);
+
+
+
 
         descriptionPanel.add(displayPanel, BorderLayout.CENTER);
-        descriptionPanel.add(new JLabel("Description"), BorderLayout.NORTH);
 
         JPanel buttonContainer = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton selectAlgorithmButton = new JButton("Select");
         selectAlgorithmButton.addActionListener(e ->{
-            //TODO aggiungi caricamento dell'algoritmo
+            boolean loaded = false;
             String selectedAlgorithm = algorithmList.getSelectedValue();
             File selectedFile = new File(Algorithm.ALGORITHM_FOLDER.toString() + "/" + selectedAlgorithm + "." + Algorithm.fileExtension);
             try {
                 StartApp.algorithm.decode(selectedAlgorithm, Files.readString(selectedFile.toPath()));
-            } catch (IOException ioException) {
-                ioException.printStackTrace(); //TODO se non riesce a leggere il file
+                loaded = true;
+            } catch (NoSuchFileException noSuchFileExceptionException) {
+                /* if there's no file do nothing */
+            } catch (IOException ioException){
+                /* TODO catch*/
             }
-            algorithmDisplay.repaint();
+
+            if(loaded) algorithmDisplay.repaint();
         });
 
         buttonContainer.add(selectAlgorithmButton);
@@ -78,6 +94,8 @@ public class ControlWindow extends JFrame {
         pack();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true); // shows jframe
+        setResizable(false);
+        setTitle("Algorithm Selector");
         requestFocus(); // requestes focus for event dispatching
     }
 

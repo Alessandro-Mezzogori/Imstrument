@@ -15,10 +15,12 @@ public class UnitWindow extends JPanel {
     JScrollPane unitsTableWrapper;
 
     final JPopupMenu operatorSelector;
+    final CustomAlgorithmCreator.AlgorithmCreationSynchronizer controller;
 
     public UnitWindow(ArrayList<AlgorithmUnit> groups, CustomAlgorithmCreator.AlgorithmCreationSynchronizer controller){
         this.groups = groups;
-        unitsTableModel = new AlgoUnitTableModel(this.groups, controller);
+        this.controller = controller;
+        unitsTableModel = new AlgoUnitTableModel(this.groups, this.controller);
         unitsTable = new JTable(unitsTableModel);
 
         /* create the operator select menu */

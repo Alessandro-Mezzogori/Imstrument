@@ -17,4 +17,7 @@ public class NotBlue implements Operator{
 
     @Override
     public String getName(){return name;}
+
+    @Override
+    public Color getColor(){return Color.yellow; }
 }

@@ -52,6 +52,8 @@ imstrument/imagepage/Imagepage.java
  imstrument.imagepage.Imagepage$2
 imstrument/sound/utils/NoteFrequencyMapping.java
  imstrument.sound.utils.NoteFrequencyMapping
+imstrument/algorithm/OperatorColorLegend.java
+ imstrument.algorithm.OperatorColorLegend
 imstrument/algorithm/operators/Red.java
  imstrument.algorithm.operators.Red
 imstrument/start/StartApp.java

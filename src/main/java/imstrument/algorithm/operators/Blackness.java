@@ -16,4 +16,7 @@ public class Blackness implements Operator{
 
     @Override
     public String getName() { return name; }
+
+    @Override
+    public Color getColor(){return Color.black; }
 }

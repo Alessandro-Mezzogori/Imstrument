@@ -16,4 +16,7 @@ public class Luminance implements Operator{
 
     @Override
     public String getName() { return name; }
+
+    @Override
+    public Color getColor(){return Color.white; }
 }

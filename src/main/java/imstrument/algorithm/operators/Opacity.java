@@ -17,4 +17,7 @@ public class Opacity implements Operator{
 
     @Override
     public String getName(){return name;}
+
+    @Override
+    public Color getColor(){return Color.DARK_GRAY; }
 }

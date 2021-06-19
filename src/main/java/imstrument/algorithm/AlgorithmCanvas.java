@@ -18,7 +18,8 @@ public class AlgorithmCanvas extends AlgorithmDisplay implements MouseListener, 
 
     /**
      * creates a canvas to draw/add algo units to the passed arraylist
-     * @param groups
+     * @param groups array list containing the algorithmic unit of the current decoded algorithm
+     * @param controller dummy object for synchronization with other diplays of groups
      */
     public AlgorithmCanvas(ArrayList<AlgorithmUnit> groups, CustomAlgorithmCreator.AlgorithmCreationSynchronizer controller){
         super(groups);
@@ -53,11 +54,12 @@ public class AlgorithmCanvas extends AlgorithmDisplay implements MouseListener, 
         centerPoint.y = currentSize.height/2;
 
         /* draw center square  */
-        g.setColor(Color.red);
+        g.setColor(Color.magenta);
         g.fillRect(centerPoint.x - 2, centerPoint.y - 2, 5, 5);
 
         /* draw current drawing group */
         if(drawingRectangle) {
+            g.setColor(Color.cyan);
             /* have the starting drawing corner to be the top-left corner just for drawing */
             g.drawRect(
                 (currentGroup[2] > 0) ? currentGroup[0] : currentGroup[0] + currentGroup[2],
