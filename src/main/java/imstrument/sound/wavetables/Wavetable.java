@@ -28,19 +28,6 @@ public class Wavetable {
 
         readFromFile();
 
-//        wavetables = new float[testLengt.h][];
-//        for(int i = 0; i < testLength; i++)
-//            wavetables[i] = new float[WAVETABLE_SIZE];
-//
-//        for (int i = 0; i < WAVETABLE_SIZE; i++) {
-//            double time = ((double) i / SAMPLE_RATE);
-//            wavetables[0][i] = (float) Math.sin(2 * Math.PI * fundamentalFrequency * time);
-//            wavetables[1][i] = Math.signum(wavetables[0][i]);
-//            wavetables[2][i] = (float)(2*(time*fundamentalFrequency - Math.floor(0.5 + time*fundamentalFrequency)));
-//        }
-
-
-        //TODO switch type
     }
 
     public Wavetable(float[] wavetable) {

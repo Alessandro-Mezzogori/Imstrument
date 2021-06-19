@@ -108,7 +108,6 @@ public class ImagePanel extends JPanel {
                 this.currentStartCorner.y = (parentSize.height - imageSize.height) / 2 - this.margins.height;
             }
 
-            //TODO rimpiazzare con OPENCV per migliore qualità e velocità
             g.drawImage(image, this.currentStartCorner.x, this.currentStartCorner.y, imageSize.width, imageSize.height, this);
         }
     }

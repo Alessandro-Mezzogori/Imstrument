@@ -72,7 +72,6 @@ public class Imagepage extends JPanel {
         menuBar.add(importMenu);
 
         /* algorythms menu */
-        // TODO lista degli algoritmi
         JMenu algorithmsMenu = new JMenu("Algorithms");
         JMenuItem createAlgorithm = new JMenuItem("Create Algorithm");
         createAlgorithm.addActionListener(e -> {
@@ -104,7 +103,6 @@ public class Imagepage extends JPanel {
         menuBar.add(visualizeMenu);
 
         /* mp3 management menu */
-        //TODO record playing
         JMenu mp3Menu = new JMenu("MP3");
         menuBar.add(mp3Menu);
 

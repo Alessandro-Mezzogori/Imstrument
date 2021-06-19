@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class AlgorithmUnit {
     int[] rect;
-    Operator operator; //TODO add multiple operators ??
+    Operator operator;
 
     public static int RECT_SIZE = 4;
 

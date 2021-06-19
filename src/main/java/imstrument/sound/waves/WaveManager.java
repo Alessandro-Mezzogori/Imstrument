@@ -63,7 +63,6 @@ public class WaveManager{
     /* interface/public methods */
 
     public void setShouldGenerate(boolean shouldGenerate, int index) {
-        //TODO add controls
         this.shouldGenerate.set(index, shouldGenerate);
         if(!shouldGenerate)
             this.soundwaves.get(index).reset();
