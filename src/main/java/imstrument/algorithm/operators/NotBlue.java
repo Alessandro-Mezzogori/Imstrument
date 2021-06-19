@@ -2,17 +2,17 @@ package imstrument.algorithm.operators;
 
 import java.awt.*;
 
-public class Red implements Operator{
-    public static String name = "RED";
+public class NotBlue implements Operator{
+    public static String name = "NOTBLUE";
 
     @Override
     public double compute(Color[] pixels) {
         // luminance = (r * 0.3) + (g * 0.59) + (b * 0.11)
-        double red = 0.0;
+        double notblue = 0.0;
         for (Color pixel : pixels) {
-            red += pixel.getRed();
+            notblue += pixel.getGreen() + pixel.getRed();
         }
-        return red / pixels.length;
+        return notblue / pixels.length;
     }
 
     @Override

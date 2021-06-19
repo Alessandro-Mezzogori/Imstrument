@@ -1,6 +1,7 @@
 package imstrument.algorithm;
 
 import imstrument.algorithm.operators.*;
+import imstrument.algorithm.operators.Transparency;
 import imstrument.start.StartApp;
 
 import java.awt.*;
@@ -26,7 +27,12 @@ public class Algorithm {
     {
         operatorTable = new TreeMap<>();
 
-        Operator[] operators = {new AvgLuminance(), new Red(), new DummyOperator()};
+        Operator[] operators = {
+                new Luminance(), new Blackness(), new Opacity(), new Transparency(),
+                new Red(), new Green(), new Blue(),
+                new NotRed(), new NotGreen(), new NotBlue()
+        };
+
         for(Operator operator : operators)
             operatorTable.put(operator.getName(), operator);
 

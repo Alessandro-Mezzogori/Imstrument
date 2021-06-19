@@ -12,11 +12,13 @@ imstrument/sound/waves/Envelope.java
 imstrument/sound/waves/WaveManager.java
  imstrument.sound.waves.WaveManager
  imstrument.sound.waves.WaveManager$KeyboardRows
+imstrument/algorithm/operators/Transparancy.java
+ imstrument.algorithm.operators.Transparancy
 imstrument/start/TopContainer.java
  imstrument.start.TopContainer
  imstrument.start.TopContainer$1
-imstrument/algorithm/operators/DummyOperator.java
- imstrument.algorithm.operators.DummyOperator
+imstrument/algorithm/operators/Blackness.java
+ imstrument.algorithm.operators.Blackness
 imstrument/sound/wavetables/WaveTableEnum.java
  imstrument.sound.wavetables.WaveTableEnum
 imstrument/algorithm/AlgorithmCanvas.java
@@ -25,6 +27,8 @@ imstrument/sound/openal/AudioThread.java
  imstrument.sound.openal.AudioThread
 imstrument/sound/utils/Note.java
  imstrument.sound.utils.Note
+imstrument/algorithm/operators/NotBlue.java
+ imstrument.algorithm.operators.NotBlue
 imstrument/virtualkeyboard/PianoKey.java
  imstrument.virtualkeyboard.PianoKey
  imstrument.virtualkeyboard.PianoKey$KeyColor
@@ -40,8 +44,8 @@ imstrument/algorithm/UnitWindow.java
  imstrument.algorithm.UnitWindow$1
  imstrument.algorithm.UnitWindow$JTableButtonMouseListener
  imstrument.algorithm.UnitWindow$JTableButtonRenderer
-imstrument/algorithm/operators/AvgLuminance.java
- imstrument.algorithm.operators.AvgLuminance
+imstrument/algorithm/operators/Blue.java
+ imstrument.algorithm.operators.Blue
 imstrument/imagepage/Imagepage.java
  imstrument.imagepage.Imagepage
  imstrument.imagepage.Imagepage$1
@@ -54,10 +58,16 @@ imstrument/start/StartApp.java
  imstrument.start.StartApp
 imstrument/algorithm/AlgorithmDisplay.java
  imstrument.algorithm.AlgorithmDisplay
+imstrument/algorithm/operators/NotRed.java
+ imstrument.algorithm.operators.NotRed
+imstrument/algorithm/operators/Luminance.java
+ imstrument.algorithm.operators.Luminance
 imstrument/sound/utils/ImagePanel.java
  imstrument.sound.utils.ImagePanel
 imstrument/algorithm/AlgorithmUnit.java
  imstrument.algorithm.AlgorithmUnit
+imstrument/algorithm/operators/Opacity.java
+ imstrument.algorithm.operators.Opacity
 imstrument/algorithm/operators/Operator.java
  imstrument.algorithm.operators.Operator
 imstrument/algorithm/AlgoUnitTableModel.java
@@ -81,9 +91,13 @@ imstrument/algorithm/CustomAlgorithmCreator.java
  imstrument.algorithm.CustomAlgorithmCreator
  imstrument.algorithm.CustomAlgorithmCreator$1
  imstrument.algorithm.CustomAlgorithmCreator$AlgorithmCreationSynchronizer
+imstrument/algorithm/operators/Green.java
+ imstrument.algorithm.operators.Green
 imstrument/virtualkeyboard/VirtualKeyboardVisualizer.java
  imstrument.virtualkeyboard.VirtualKeyboardVisualizer
  imstrument.virtualkeyboard.VirtualKeyboardVisualizer$PianoKeyAdapter
+imstrument/algorithm/operators/NotGreen.java
+ imstrument.algorithm.operators.NotGreen
 imstrument/sound/wavetables/WaveVisualizer.java
  imstrument.sound.wavetables.WaveVisualizer
 imstrument/sound/utils/DatatypeConversion.java
