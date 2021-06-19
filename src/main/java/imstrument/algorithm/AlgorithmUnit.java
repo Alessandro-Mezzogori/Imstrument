@@ -40,6 +40,12 @@ public class AlgorithmUnit {
         return operator;
     }
 
+    /**
+     * computes the area of the rectangle described by the attribute "rect"
+     * @return the area of the rectangle
+     */
+    public int getPixelNumber(){return this.rect[2]*this.rect[3];}
+
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
@@ -51,4 +57,5 @@ public class AlgorithmUnit {
         stringBuilder.append("><").append(operator.getName()).append(">_");
         return stringBuilder.toString();
     }
+
 }

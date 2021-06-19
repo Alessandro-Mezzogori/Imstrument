@@ -5,16 +5,13 @@ package imstrument.imagepage;
 import imstrument.algorithm.ControlWindow;
 import imstrument.algorithm.CustomAlgorithmCreator;
 import imstrument.sound.utils.SoundImagePanel;
-import imstrument.sound.wavetables.Test;
+import imstrument.sound.waves.ModulatingWaveNumberSpinner;
 import imstrument.start.StartApp;
 import imstrument.start.TopContainer;
 import imstrument.virtualkeyboard.VirtualKeyboardVisualizer;
-import org.lwjgl.system.CallbackI;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.*;
@@ -94,17 +91,21 @@ public class Imagepage extends JPanel {
                 e -> SwingUtilities.invokeLater(() -> virtualKeyboardVisualizer = new VirtualKeyboardVisualizer())
         );
         visualizeMenu.add(visualizeVirtualKeyboard);
-
-        JMenuItem visualizeSoundwave = new JMenuItem("Soundwave");
-        visualizeSoundwave.addActionListener(
-                e -> SwingUtilities.invokeLater(Test::new)
-        );
-        visualizeMenu.add(visualizeSoundwave);
         menuBar.add(visualizeMenu);
 
         /* mp3 management menu */
         JMenu mp3Menu = new JMenu("MP3");
         menuBar.add(mp3Menu);
+
+        /* all the components added after horizontal glue will be to the right side of the menu bar*/
+        menuBar.add(Box.createHorizontalGlue());
+
+        ModulatingWaveNumberSpinner modulatingWaveNumberSpinner = new ModulatingWaveNumberSpinner();
+        JLabel modulatingWaveNumberSpinnerLabel = new JLabel("Modulators number ");
+        modulatingWaveNumberSpinnerLabel.setLabelFor(modulatingWaveNumberSpinner);
+
+        menuBar.add(modulatingWaveNumberSpinnerLabel);
+        menuBar.add(modulatingWaveNumberSpinner);
 
         /* image panel */
         this.soundImagePanel = new SoundImagePanel();

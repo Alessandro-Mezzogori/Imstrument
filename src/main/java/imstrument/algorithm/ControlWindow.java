@@ -20,7 +20,7 @@ public class ControlWindow extends JFrame {
 
     public ControlWindow(){
         setLayout(new BorderLayout());
-        algorithmDisplay = new AlgorithmDisplay(StartApp.algorithm.getGroups());
+        algorithmDisplay = new AlgorithmDisplay(StartApp.algorithm.getUnits());
 
         /* left sided of the control panel */
         algorithmNames = new ArrayList<>();

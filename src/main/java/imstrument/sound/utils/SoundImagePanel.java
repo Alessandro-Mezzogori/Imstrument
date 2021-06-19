@@ -1,6 +1,5 @@
 package imstrument.sound.utils;
 
-import imstrument.algorithm.Algorithm;
 import imstrument.algorithm.AlgorithmUnit;
 import imstrument.sound.waves.WaveManager;
 import imstrument.start.StartApp;
@@ -9,7 +8,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
-import java.util.ArrayList;
 
 /**
  * extension of ImagePanel class providing audio generation on triggers
@@ -43,7 +41,7 @@ public class SoundImagePanel extends ImagePanel{
         super.paintComponent(g);
         if(drawMouse) {
             g.setColor(Color.red);
-            for (AlgorithmUnit unit : StartApp.algorithm.getGroups()) {
+            for (AlgorithmUnit unit : StartApp.algorithm.getUnits()) {
                 int[] rect = unit.getRect();
                 g.fillRect(
                         mousePoint.x + currentStartCorner.x + rect[0],

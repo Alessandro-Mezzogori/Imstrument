@@ -2,6 +2,7 @@ package imstrument.algorithm;
 
 import imstrument.algorithm.operators.*;
 import imstrument.algorithm.operators.Transparency;
+import imstrument.sound.waves.Soundwave;
 import imstrument.start.StartApp;
 
 import java.awt.*;
@@ -13,7 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Algorithm {
-    private final ArrayList<AlgorithmUnit> groups;
+    private final ArrayList<AlgorithmUnit> units;
     private String currentName;
 
     private static final int groupElementSize = 4;
@@ -42,16 +43,16 @@ public class Algorithm {
     }
 
     public Algorithm(){
-        groups = new ArrayList<>();
+        units = new ArrayList<>();
         currentName = "";
     }
 
-    public void compute(BufferedImage image, Point pressed){
+    public double[] compute(BufferedImage image, Point pressed){
         System.out.println(image.getWidth() + " " + image.getHeight());
 
-        double[] values = new double[groups.size()];
-        for(int i = 0, groupSize = groups.size(); i < groupSize; i++){
-            AlgorithmUnit unit = groups.get(i);
+        double[] values = new double[units.size()];
+        for(int i = 0, groupSize = units.size(); i < groupSize; i++){
+            AlgorithmUnit unit = units.get(i);
             int[] rect = unit.rect;
 
             // bound checking
@@ -63,16 +64,32 @@ public class Algorithm {
             values[i] = unit.operator.compute(colors);
         }
 
-        // TODO REMOVE DEBUG PRINT
+        return values;
+    }
+
+    public void assignValues(Soundwave soundwave, double[] values){
+        /* compute the sizes of each algorithm unit */
+        int[] sizes = new int[units.size()];
+        for(int i = 0, unitsSize = units.size(); i < unitsSize; i++) sizes[i] = units.get(i).getPixelNumber();
+
+        /* get the number of Soundwaves that have to be assigned */
+        /* compute how many pixel are used per Soundwave */
+        /* assign the values via linear interpolation if between two units */
+    }
+
+    public void computeAndAssign(Soundwave soundwave, BufferedImage image, Point pressed){
+        double[] values = compute(image, pressed);
         System.out.println("VALUES: ");
         for(double value : values)
             System.out.println(value);
+
+        assignValues(soundwave, values);
     }
 
     public void decode(String name, String algorithm){
         //TODO error messages
         this.currentName = name;
-        groups.clear();
+        units.clear();
         //operatorMatrix.clear();
         Matcher matcher = pattern.matcher(algorithm);
 
@@ -83,12 +100,12 @@ public class Algorithm {
                 group[i - 1] = Integer.parseInt(matcher.group(i));
             }
 
-            groups.add(new AlgorithmUnit(group, operatorTable.get(matcher.group(matcher.groupCount()))));
+            units.add(new AlgorithmUnit(group, operatorTable.get(matcher.group(matcher.groupCount()))));
         }
     }
 
-    public ArrayList<AlgorithmUnit> getGroups() {
-        return groups;
+    public ArrayList<AlgorithmUnit> getUnits() {
+        return units;
     }
     public String getCurrentName(){ return currentName;}
 

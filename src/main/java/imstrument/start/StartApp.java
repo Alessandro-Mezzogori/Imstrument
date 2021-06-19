@@ -46,17 +46,14 @@ public class StartApp {
         /* initialize audio thread and WaveManager*/
         waveManager = new WaveManager();
 
-       //waveManager.importWaveSettings(carrier, WaveManager.KeyboardRows.TOP_ROW, waveManager.currentOctaves[0]);
-       //waveManager.importWaveSettings(carrier, WaveManager.KeyboardRows.BOTTOM_ROW, waveManager.currentOctaves[1]);
+        waveManager.importWaveSettings(carrier, WaveManager.KeyboardRows.TOP_ROW, waveManager.currentOctaves[0]);
+        waveManager.importWaveSettings(carrier, WaveManager.KeyboardRows.BOTTOM_ROW, waveManager.currentOctaves[1]);
         audioThread = new AudioThread(() -> {
-            boolean isGenerating = false;
             if (waveManager.isGeneratingSamples()) {
                 short[] samples = new short[AudioThread.BUFFER_SIZE];
                 for (int i = 0; i < AudioThread.BUFFER_SIZE; i++) {
                     samples[i] = waveManager.generateSample();
                 }
-
-
 
                 return samples;
             }

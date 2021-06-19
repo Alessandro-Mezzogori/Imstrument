@@ -55,7 +55,6 @@ public class UnitWindow extends JPanel {
         operatorSelector.add(operatorSelectorButtonPanel);
         operatorSelector.add(operatorsList);
 
-
         /* create the table with the data */
         unitsTable.getColumn("DELETE").setCellRenderer(new JTableButtonRenderer());
         unitsTable.addMouseListener(new JTableButtonMouseListener(unitsTable, operatorSelector));
