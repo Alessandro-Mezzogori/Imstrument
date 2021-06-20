@@ -9,11 +9,11 @@ import java.util.Arrays;
 public class AlgorithmUnit {
     int[] rect;
     Operator operator;
-
+    boolean active;
     public static int RECT_SIZE = 4;
 
     public AlgorithmUnit(int[] rect, Operator operator){
-        this.rect = new int[RECT_SIZE];
+        this();
         /* put the starting corner to the top-left*/
         this.rect[0] = (rect[2] > 0) ? rect[0] : rect[0] + rect[2];
         this.rect[1] = (rect[3] > 0) ? rect[1] : rect[1] + rect[3];
@@ -30,6 +30,7 @@ public class AlgorithmUnit {
     public AlgorithmUnit(){
         rect = new int[RECT_SIZE];
         operator = null;
+        active = true;
     }
 
     public int[] getRect() {
@@ -39,6 +40,9 @@ public class AlgorithmUnit {
     public Operator getOperator() {
         return operator;
     }
+
+    public boolean isActive() { return active; }
+    public void setActive(boolean active) { this.active = active; }
 
     /**
      * computes the area of the rectangle described by the attribute "rect"

@@ -67,8 +67,6 @@ public class Soundwave {
             throw new InvalidParameterException("The array values can only have a lenght of PARAM_NUMBER_BASE_WAVE or PARAM_NUMBER_MODULATOR");
         }
 
-        for(double v : values)
-            System.out.println(v);
         /* assign base values */
         wavetable = new Wavetable(Wavetable.Type.SIMPLE);
         wavetable.setWavetableIndex((int) Math.round((wavetable.getWavetableNumber() - 1)*values[0]));

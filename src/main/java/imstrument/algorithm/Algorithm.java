@@ -19,6 +19,7 @@ import java.util.regex.Pattern;
 public class Algorithm {
     private final ArrayList<AlgorithmUnit> units;
     private String currentName;
+    private boolean allUnitsDeactivated;
 
     private static final int groupElementSize = 4;
     private static final Pattern pattern = Pattern.compile("_<(-?[\\d]+),(-?[\\d]+),(-?[\\d]+),(-?[\\d]+)><(.*?)>_");
@@ -50,31 +51,35 @@ public class Algorithm {
         currentName = "";
     }
 
-    public double[] compute(BufferedImage image, Point pressed){
-
+    private double[] compute(BufferedImage image, Point pressed){
         double[] values = new double[units.size()];
+        allUnitsDeactivated = true;
+
         for(int i = 0, groupSize = units.size(); i < groupSize; i++){
             AlgorithmUnit unit = units.get(i);
             int[] rect = unit.rect;
 
             // bound checking
-            int[] pixels = image.getRGB(pressed.x + rect[0], pressed.y + rect[1], rect[2], rect[3], null, 0, rect[2]);
-            Color[] colors = new Color[pixels.length];
+            if(unit.isActive()) {
+                allUnitsDeactivated = false;
+                int[] pixels = image.getRGB(pressed.x + rect[0], pressed.y + rect[1], rect[2], rect[3], null, 0, rect[2]);
+                Color[] colors = new Color[pixels.length];
 
-            for(int j = 0, pixelsLen = pixels.length; j < pixelsLen; j++)
-                colors[j] = new Color(pixels[j]);
-            values[i] = unit.operator.compute(colors);
+                for (int j = 0, pixelsLen = pixels.length; j < pixelsLen; j++)
+                    colors[j] = new Color(pixels[j]);
+                values[i] = unit.operator.compute(colors);
+            }
         }
 
-        return values;
+        return allUnitsDeactivated ? null : values;
     }
 
-    public void assignValues(Soundwave soundwave, double[] values){
+    private void assignValues(Soundwave soundwave, double[] values){
         /* compute the sizes of each algorithm unit */
         int[] sizes = new int[units.size()];
         int total = 0;
         for(int i = 0, unitsSize = units.size(); i < unitsSize; i++){
-            sizes[i] = units.get(i).getPixelNumber();
+            sizes[i] = units.get(i).isActive() ? units.get(i).getPixelNumber() : 0;;
             total += sizes[i];
         }
 
@@ -88,28 +93,33 @@ public class Algorithm {
 
         /* assign the values via linear interpolation if between two units */
         int currentUnit = 0;
+        /* get the first active unit */
+        while(sizes[currentUnit] == 0) currentUnit = (currentUnit + 1) % sizes.length;
+
         int currentPixel = 0;
         Soundwave prevSoundwave = null, currentSoundwave;
         for(int currentSoundwaveNumber = 0; currentSoundwaveNumber < soundwaveNumber + 1; currentSoundwaveNumber++){
             double[] currentValues = new double[ currentSoundwaveNumber != 0 ? Soundwave.PARAM_NUMBER_WITH_MODULATOR : Soundwave.PARAM_NUMBER_WITHOUT_MODULATOR];
 
             for(int i = 0; i < currentValues.length; i++) {
-                int remainingPixelInUnit = sizes[currentUnit] - currentPixel;
+                /* get the next active unit */
 
+                int remainingPixelInUnit = sizes[currentUnit] - currentPixel;
                 /* compute the weight associated with the value of the currentUnit */
-                double weight = Math.min(1.0, ((double) remainingPixelInUnit) / pixelsPerValue);
+                double weight = Math.min(1.0, Math.max( 0.0, ((double) remainingPixelInUnit) / pixelsPerValue));
 
                 /* computer the value with the current unit */
                 currentValues[i] = values[currentUnit] * weight;
 
                 /* if it's not fully contained in the currentUnit add the second part of the weighted sum */
                 if (pixelsPerValue > remainingPixelInUnit) {
+                    /* get the next active unit */
+                    while(sizes[currentUnit] == 0) currentUnit = (currentUnit + 1) % sizes.length;
+
                     /* no need to check if currentUnit + 1 is in range because in the last group it's fully contained */
-                    currentValues[i] += (1.0 - weight) * values[(currentUnit + 1) % sizes.length];
-                    /* assign value to the correct parameter */
+                    currentValues[i] += (1.0 - weight) * values[currentUnit];
 
                     /* get next unit if there are no more unit wrap around */
-                    currentUnit = (currentUnit + 1) % sizes.length;
                     currentPixel = pixelsPerValue - remainingPixelInUnit;
                 } else {
                     currentPixel += pixelsPerValue;
@@ -123,9 +133,15 @@ public class Algorithm {
             }
             prevSoundwave = currentSoundwave;
         }
-        StartApp.waveManager.soundwaves.set(
-                StartApp.waveManager.soundwaves.indexOf(soundwave), prevSoundwave
-        );
+
+        StartApp.waveManager.soundwaves.set(StartApp.waveManager.soundwaves.indexOf(soundwave), prevSoundwave);
+    }
+
+    public void computeAndAssign(BufferedImage image, Point pressed, Soundwave soundwave){
+        double[] values = compute(image, pressed);
+        if(values != null){
+            assignValues(soundwave, values);
+        }
     }
 
     public void decode(String name, String algorithm){
@@ -150,6 +166,8 @@ public class Algorithm {
         return units;
     }
     public String getCurrentName(){ return currentName;}
+
+    public boolean isAllUnitsDeactivated() {return allUnitsDeactivated; }
 
     public static class Standard{
         /* add standard algorithms*/

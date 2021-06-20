@@ -40,9 +40,14 @@ public class SoundImagePanel extends ImagePanel{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         if(drawMouse) {
-            g.setColor(Color.red);
             for (AlgorithmUnit unit : StartApp.algorithm.getUnits()) {
                 int[] rect = unit.getRect();
+                int x = mousePoint.x + currentStartCorner.x + rect[0];
+                int y = mousePoint.y + currentStartCorner.y + rect[1];
+                unit.setActive(imageContains(x, y) && imageContains(x + rect[2], y + rect[3]));
+
+                /* check if it's inside the image */
+                g.setColor(unit.isActive() ? Color.red : Color.red.darker().darker());
                 g.fillRect(
                         mousePoint.x + currentStartCorner.x + rect[0],
                         mousePoint.y + currentStartCorner.y + rect[1],
@@ -64,23 +69,22 @@ public class SoundImagePanel extends ImagePanel{
                 p.x -= currentStartCorner.x;
                 p.y -= currentStartCorner.y;
 
-                StartApp.algorithm.assignValues(
-                        StartApp.waveManager.soundwaves.get(WaveManager.MOUSE_SOUNDWAVE_INDEX),
-                        StartApp.algorithm.compute(image, p)
-                );
+                StartApp.algorithm.computeAndAssign(image,p, StartApp.waveManager.soundwaves.get(WaveManager.MOUSE_SOUNDWAVE_INDEX));
 
                 /* stops the audio thread from starting over and over again for performance and quality */
-                StartApp.waveManager.triggerWaveGeneration(WaveManager.MOUSE_SOUNDWAVE_INDEX);
-                if (!StartApp.audioThread.isRunning()) {
-                    StartApp.audioThread.triggerPlayback();
+                if(!StartApp.algorithm.isAllUnitsDeactivated()) {
+                    StartApp.waveManager.triggerWaveGeneration(WaveManager.MOUSE_SOUNDWAVE_INDEX);
+                    if (!StartApp.audioThread.isRunning()) {
+                        StartApp.audioThread.triggerPlayback();
+                    }
                 }
-
             }
         }
 
         @Override
         public void mouseMoved(MouseEvent e) {
             if(drawMouse) {
+
                 mousePoint = e.getPoint();
                 mousePoint.x -= currentStartCorner.x;
                 mousePoint.y -= currentStartCorner.y;

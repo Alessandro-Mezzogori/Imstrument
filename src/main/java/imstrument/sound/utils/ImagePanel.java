@@ -35,6 +35,8 @@ public class ImagePanel extends JPanel {
      */
     protected final Point currentStartCorner;
 
+    protected Dimension currentImageSize;
+
     /**
      * flag, if true it will center the image inside it's container
      */
@@ -61,6 +63,7 @@ public class ImagePanel extends JPanel {
         /* set other params of imagepanel*/
         this.centerImage = centerimage;
         this.margins = margins;
+        this.currentImageSize = getPreferredSize();
         /* attempt to retrieve image from path */
         try {
             this.image = ImageIO.read(url);
@@ -92,24 +95,35 @@ public class ImagePanel extends JPanel {
         if (image != null) {
             /* prepering objects to do the centering math and/or rendering of the image*/
             Dimension parentSize = this.getSize();
-            Dimension imageSize = this.getPreferredSize();
+            currentImageSize = this.getPreferredSize();
             this.currentStartCorner.x = this.startingPoint.x;
             this.currentStartCorner.y = this.startingPoint.y;
             DimensionComparator dimensionComparator = new DimensionComparator();
 
             /* if the image is bigger of the parent size it gets resized */
-            if (dimensionComparator.isBigger(imageSize, parentSize)) {
-                imageSize = this.getScaledSize(true);
+            if (dimensionComparator.isBigger(currentImageSize, parentSize)) {
+                currentImageSize = this.getScaledSize(true);
             }
 
             /* centers the image in the parent container */
             if (this.centerImage) {
-                this.currentStartCorner.x = (parentSize.width - imageSize.width) / 2 - this.margins.width;
-                this.currentStartCorner.y = (parentSize.height - imageSize.height) / 2 - this.margins.height;
+                this.currentStartCorner.x = (parentSize.width - currentImageSize.width) / 2 - this.margins.width;
+                this.currentStartCorner.y = (parentSize.height - currentImageSize.height) / 2 - this.margins.height;
             }
 
-            g.drawImage(image, this.currentStartCorner.x, this.currentStartCorner.y, imageSize.width, imageSize.height, this);
+            g.drawImage(image, this.currentStartCorner.x, this.currentStartCorner.y, currentImageSize.width, currentImageSize.height, this);
         }
+    }
+
+    /**
+     * checks it the coordinates are inside the rendered imaged
+     * @param x x coordinate
+     * @param y y coordinate
+     * @return true if the corodinates are inside else false
+     */
+    public boolean imageContains(int x, int y){
+        return (x >= currentStartCorner.x && x < currentStartCorner.x + currentImageSize.width) &&
+                (y >= currentStartCorner.y && y < currentStartCorner.y + currentImageSize.height);
     }
 
     @Override
