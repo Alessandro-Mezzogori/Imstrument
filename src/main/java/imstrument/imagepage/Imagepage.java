@@ -71,9 +71,7 @@ public class Imagepage extends JPanel {
         /* algorythms menu */
         JMenu algorithmsMenu = new JMenu("Algorithms");
         JMenuItem createAlgorithm = new JMenuItem("Create Algorithm");
-        createAlgorithm.addActionListener(e -> {
-            SwingUtilities.invokeLater(() -> { new CustomAlgorithmCreator(false); });
-        });
+        createAlgorithm.addActionListener(e -> SwingUtilities.invokeLater(() -> new CustomAlgorithmCreator(false)));
         algorithmsMenu.add(createAlgorithm);
 
         JMenuItem algorithmControls = new JMenuItem("Controls");

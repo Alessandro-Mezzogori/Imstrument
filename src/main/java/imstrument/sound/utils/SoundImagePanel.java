@@ -64,7 +64,10 @@ public class SoundImagePanel extends ImagePanel{
                 p.x -= currentStartCorner.x;
                 p.y -= currentStartCorner.y;
 
-                StartApp.algorithm.compute(image, p);
+                StartApp.algorithm.assignValues(
+                        StartApp.waveManager.soundwaves.get(WaveManager.MOUSE_SOUNDWAVE_INDEX),
+                        StartApp.algorithm.compute(image, p)
+                );
 
                 /* stops the audio thread from starting over and over again for performance and quality */
                 StartApp.waveManager.triggerWaveGeneration(WaveManager.MOUSE_SOUNDWAVE_INDEX);

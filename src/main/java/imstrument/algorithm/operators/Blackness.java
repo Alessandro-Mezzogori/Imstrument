@@ -11,7 +11,7 @@ public class Blackness implements Operator{
         for (Color pixel : pixels) {
             luminance += pixel.getRed()*0.2126 + pixel.getGreen()*0.7152 + pixel.getBlue()*0.0722;
         }
-        return 255 - (luminance/ pixels.length);
+        return 1.0 - (luminance/ pixels.length)/255.0;
     }
 
     @Override

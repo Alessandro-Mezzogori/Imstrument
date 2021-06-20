@@ -2,6 +2,8 @@ package imstrument.sound.waves;
 
 import imstrument.sound.wavetables.Wavetable;
 
+import java.security.InvalidParameterException;
+
 public class Soundwave {
     /* general */
     private double frequency;
@@ -18,6 +20,13 @@ public class Soundwave {
     /* frequency modulation attributes */
     Soundwave modulatingWave;
     double modulatingIndex;
+
+    /* values from algorithm params */
+    public static final int PARAM_NUMBER_WITHOUT_MODULATOR = 10;
+    public static final int PARAM_NUMBER_WITH_MODULATOR = PARAM_NUMBER_WITHOUT_MODULATOR + 1; // adds the modulating index
+
+    private static final double MAX_FREQUENCY = 3000;
+    private static final double MAX_MODULATING_INDEX = 5000;
 
     public Soundwave(Wavetable wavetable, double frequency, Envelope sweepEnvelope, Soundwave modulatingWave, double modulatingIndex){
         this.frequency = frequency;
@@ -50,6 +59,38 @@ public class Soundwave {
                 null,
                 0.0
         );
+    }
+
+    public Soundwave(double[] values){
+        /* the lenght of values can only be two numbers */
+        if(values.length != PARAM_NUMBER_WITHOUT_MODULATOR && values.length != PARAM_NUMBER_WITH_MODULATOR){
+            throw new InvalidParameterException("The array values can only have a lenght of PARAM_NUMBER_BASE_WAVE or PARAM_NUMBER_MODULATOR");
+        }
+
+        for(double v : values)
+            System.out.println(v);
+        /* assign base values */
+        wavetable = new Wavetable(Wavetable.Type.SIMPLE);
+        wavetable.setWavetableIndex((int) Math.round((wavetable.getWavetableNumber() - 1)*values[0]));
+
+        frequency = MAX_FREQUENCY*values[1];
+        setFrequency(frequency);
+
+        sweepEnvelope = new Envelope(
+                values[2],
+                values[3],
+                values[4],
+                values[5],
+                values[6],
+                values[7],
+                values[8],
+                values[9]
+        );
+
+        if(values.length == PARAM_NUMBER_WITH_MODULATOR){
+            /* assign modulating index */
+            this.modulatingIndex = MAX_MODULATING_INDEX*values[10];
+        }
     }
 
     public double getSample(){
@@ -121,4 +162,5 @@ public class Soundwave {
     public void setFrequency(double frequency){
         waveIndexStep = Wavetable.getStepSize(frequency);
     }
+    public void setModulatingWave(Soundwave modulating) {this.modulatingWave = modulating;}
 }

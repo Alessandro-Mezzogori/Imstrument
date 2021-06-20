@@ -12,7 +12,7 @@ public class Blue implements Operator{
         for (Color pixel : pixels) {
             blue += pixel.getBlue();
         }
-        return blue / pixels.length;
+        return blue / pixels.length / 255.0;
     }
 
     @Override

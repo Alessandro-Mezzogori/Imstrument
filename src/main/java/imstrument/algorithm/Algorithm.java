@@ -3,7 +3,10 @@ package imstrument.algorithm;
 import imstrument.algorithm.operators.*;
 import imstrument.algorithm.operators.Transparency;
 import imstrument.sound.waves.Soundwave;
+import imstrument.sound.waves.Soundwaves;
+import imstrument.sound.waves.WaveManager;
 import imstrument.start.StartApp;
+import org.lwjgl.system.CallbackI;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -48,7 +51,6 @@ public class Algorithm {
     }
 
     public double[] compute(BufferedImage image, Point pressed){
-        System.out.println(image.getWidth() + " " + image.getHeight());
 
         double[] values = new double[units.size()];
         for(int i = 0, groupSize = units.size(); i < groupSize; i++){
@@ -70,20 +72,60 @@ public class Algorithm {
     public void assignValues(Soundwave soundwave, double[] values){
         /* compute the sizes of each algorithm unit */
         int[] sizes = new int[units.size()];
-        for(int i = 0, unitsSize = units.size(); i < unitsSize; i++) sizes[i] = units.get(i).getPixelNumber();
+        int total = 0;
+        for(int i = 0, unitsSize = units.size(); i < unitsSize; i++){
+            sizes[i] = units.get(i).getPixelNumber();
+            total += sizes[i];
+        }
 
         /* get the number of Soundwaves that have to be assigned */
-        /* compute how many pixel are used per Soundwave */
+        int soundwaveNumber = Soundwaves.getModulatingSoundwaveNumber(soundwave);
+        /* compute how many pixel are used per value aka (10 + 11*modulating soundwave */
+        int numberOfValues = Soundwave.PARAM_NUMBER_WITHOUT_MODULATOR + Soundwave.PARAM_NUMBER_WITH_MODULATOR * soundwaveNumber;
+        int pixelsPerValue = total >= numberOfValues ? total/numberOfValues : 1;
+
+        /* TODO if pixelsPerValue is less than 0 -> cycle back trough */
+
         /* assign the values via linear interpolation if between two units */
-    }
+        int currentUnit = 0;
+        int currentPixel = 0;
+        Soundwave prevSoundwave = null, currentSoundwave;
+        for(int currentSoundwaveNumber = 0; currentSoundwaveNumber < soundwaveNumber + 1; currentSoundwaveNumber++){
+            double[] currentValues = new double[ currentSoundwaveNumber != 0 ? Soundwave.PARAM_NUMBER_WITH_MODULATOR : Soundwave.PARAM_NUMBER_WITHOUT_MODULATOR];
 
-    public void computeAndAssign(Soundwave soundwave, BufferedImage image, Point pressed){
-        double[] values = compute(image, pressed);
-        System.out.println("VALUES: ");
-        for(double value : values)
-            System.out.println(value);
+            for(int i = 0; i < currentValues.length; i++) {
+                int remainingPixelInUnit = sizes[currentUnit] - currentPixel;
 
-        assignValues(soundwave, values);
+                /* compute the weight associated with the value of the currentUnit */
+                double weight = Math.min(1.0, ((double) remainingPixelInUnit) / pixelsPerValue);
+
+                /* computer the value with the current unit */
+                currentValues[i] = values[currentUnit] * weight;
+
+                /* if it's not fully contained in the currentUnit add the second part of the weighted sum */
+                if (pixelsPerValue > remainingPixelInUnit) {
+                    /* no need to check if currentUnit + 1 is in range because in the last group it's fully contained */
+                    currentValues[i] += (1.0 - weight) * values[(currentUnit + 1) % sizes.length];
+                    /* assign value to the correct parameter */
+
+                    /* get next unit if there are no more unit wrap around */
+                    currentUnit = (currentUnit + 1) % sizes.length;
+                    currentPixel = pixelsPerValue - remainingPixelInUnit;
+                } else {
+                    currentPixel += pixelsPerValue;
+                }
+            }
+
+            currentSoundwave = new Soundwave(currentValues);
+            if( currentSoundwaveNumber > 0) {
+                /* if it's not the inner most wave */
+                currentSoundwave.setModulatingWave(prevSoundwave);
+            }
+            prevSoundwave = currentSoundwave;
+        }
+        StartApp.waveManager.soundwaves.set(
+                StartApp.waveManager.soundwaves.indexOf(soundwave), prevSoundwave
+        );
     }
 
     public void decode(String name, String algorithm){

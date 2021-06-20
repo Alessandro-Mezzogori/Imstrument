@@ -31,7 +31,6 @@ public class AlgorithmDisplay extends JComponent {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Dimension currentSize = getSize();
-        System.out.println(currentSize);
         centerPoint.x = currentSize.width/2;
         centerPoint.y = currentSize.height/2;
 

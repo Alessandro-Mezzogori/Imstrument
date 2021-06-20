@@ -11,7 +11,7 @@ public class Luminance implements Operator{
         for (Color pixel : pixels) {
             luminance += pixel.getRed()*0.2126 + pixel.getGreen()*0.7152 + pixel.getBlue()*0.0722;
         }
-        return luminance/ pixels.length;
+        return luminance/ pixels.length / 255.0;
     }
 
     @Override

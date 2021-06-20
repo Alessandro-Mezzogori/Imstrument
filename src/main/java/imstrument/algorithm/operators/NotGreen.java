@@ -12,7 +12,7 @@ public class NotGreen implements Operator{
         for (Color pixel : pixels) {
             notgreen += pixel.getBlue() + pixel.getRed();
         }
-        return notgreen / pixels.length;
+        return notgreen / pixels.length / 510.0;
     }
 
     @Override

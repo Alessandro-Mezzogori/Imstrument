@@ -13,7 +13,7 @@ public class NotRed implements Operator{
         for (Color pixel : pixels) {
             notred += pixel.getBlue() + pixel.getGreen();
         }
-        return notred / pixels.length;
+        return notred / pixels.length / 510.0;
     }
 
     @Override

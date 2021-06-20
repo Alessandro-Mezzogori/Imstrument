@@ -45,7 +45,15 @@ public class CustomAlgorithmCreator extends JFrame {
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(e ->{
             //TODO check that there's no other algorithm with the same name
-            //TODO check that all groups have an operator
+
+            /* check that all groups have an operator */
+            for(AlgorithmUnit unit : groups){
+                if(unit.operator == null){
+                    JOptionPane.showMessageDialog(null, "Please give all the units an operator");
+                    return;
+                }
+            }
+
             File newFile = new File(Algorithm.ALGORITHM_FOLDER.toString() + "/" + algorithmNameField.getText() + "." + Algorithm.fileExtension) ;
             try {
                 boolean isCreated = newFile.createNewFile(); // TODO notify user if it doesn't go well

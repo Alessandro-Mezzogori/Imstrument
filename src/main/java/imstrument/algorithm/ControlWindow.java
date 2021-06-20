@@ -26,13 +26,9 @@ public class ControlWindow extends JFrame {
         algorithmNames = new ArrayList<>();
         populateAlgorithmList(Algorithm.ALGORITHM_FOLDER);
 
-        ListModel<String> operatorsListModel = new AbstractListModel<>() {
-            @Override
-            public int getSize() { return algorithmNames.size(); }
-            @Override
-            public String getElementAt(int index) { return algorithmNames.get(index); }
-        };
-        algorithmList = new JList<>(operatorsListModel);
+        DefaultListModel<String> algorithmListModel = new DefaultListModel<>();
+        algorithmListModel.addAll(0, algorithmNames);
+        algorithmList = new JList<>(algorithmListModel);
 
         JButton createAlgorithmButton = new JButton("Create");
         createAlgorithmButton.addActionListener(e -> {
@@ -63,9 +59,6 @@ public class ControlWindow extends JFrame {
         constraints.gridx = 1;
         displayPanel.add(new OperatorColorLegend(), constraints);
 
-
-
-
         descriptionPanel.add(displayPanel, BorderLayout.CENTER);
 
         JPanel buttonContainer = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -85,8 +78,20 @@ public class ControlWindow extends JFrame {
 
             if(loaded) algorithmDisplay.repaint();
         });
+        JButton deleteAlgorithmButton = new JButton("Delete");
+        deleteAlgorithmButton.addActionListener(e ->{
+            String selectedAlgorithm = algorithmList.getSelectedValue();
+            File selectedFile = new File(Algorithm.ALGORITHM_FOLDER.toString() + "/" + selectedAlgorithm + "." + Algorithm.fileExtension);
+            boolean deletedResult = selectedFile.delete();
+
+            if(deletedResult){
+                /* update gui */
+                ((DefaultListModel<String>) algorithmList.getModel()).remove(algorithmList.getSelectedIndex());
+            }
+        });
 
         buttonContainer.add(selectAlgorithmButton);
+        buttonContainer.add(deleteAlgorithmButton);
         descriptionPanel.add(buttonContainer, BorderLayout.SOUTH);
         add(descriptionPanel, BorderLayout.CENTER);
 

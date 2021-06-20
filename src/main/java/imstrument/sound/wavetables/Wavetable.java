@@ -27,7 +27,10 @@ public class Wavetable {
         final int testLength = 3;
 
         readFromFile();
+    }
 
+    public Wavetable(Type type){
+        this(type, 0);
     }
 
     public Wavetable(float[] wavetable) {
@@ -50,6 +53,12 @@ public class Wavetable {
 
     public int getWavetableIndex() {
         return wavetableIndex;
+    }
+
+    public void setWavetableIndex(int index) {
+        if(index >= this.wavetables.length) throw new IndexOutOfBoundsException("Trying to select an non existing soundwave");
+
+        this.wavetableIndex = index;
     }
 
     /* static helper functions */

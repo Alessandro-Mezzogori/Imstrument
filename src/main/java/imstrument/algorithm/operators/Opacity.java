@@ -12,7 +12,7 @@ public class Opacity implements Operator{
         for (Color pixel : pixels) {
             alpha += pixel.getAlpha();
         }
-        return alpha / pixels.length;
+        return alpha / pixels.length / 255.0;
     }
 
     @Override

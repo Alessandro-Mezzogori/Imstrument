@@ -12,7 +12,7 @@ public class Transparency implements Operator{
         for (Color pixel : pixels) {
             alpha += pixel.getAlpha();
         }
-        return 255 - (alpha / pixels.length);
+        return 1.0 - (alpha / pixels.length) / 255.0;
     }
 
     @Override

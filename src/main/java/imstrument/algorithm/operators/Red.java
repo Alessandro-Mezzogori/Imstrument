@@ -12,7 +12,7 @@ public class Red implements Operator{
         for (Color pixel : pixels) {
             red += pixel.getRed();
         }
-        return red / pixels.length;
+        return red / pixels.length/ 255.0;
     }
 
     @Override
