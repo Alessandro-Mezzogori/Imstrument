@@ -7,6 +7,7 @@ import imstrument.sound.wavetables.Wavetable;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.IOException;
 
 public class StartApp {
     public static WaveManager waveManager;
@@ -52,7 +53,13 @@ public class StartApp {
                 for (int i = 0; i < AudioThread.BUFFER_SIZE; i++) {
                     samples[i] = waveManager.generateSample();
                 }
-                if (recording.isRecording)  recording.record(samples);
+                if (recording.isRecording) {
+                    try {
+                        recording.record(samples);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
 
                 return samples;
             }

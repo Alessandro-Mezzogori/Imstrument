@@ -6,15 +6,14 @@ imstrument/sound/waves/Soundwave.java
 imstrument/sound/wavetables/Wavetable.java
  imstrument.sound.wavetables.Wavetable
  imstrument.sound.wavetables.Wavetable$Type
-imstrument/sound/waves/WaveManager.java
- imstrument.sound.waves.WaveManager
- imstrument.sound.waves.WaveManager$KeyboardRows
 imstrument/sound/waves/Envelope.java
  imstrument.sound.waves.Envelope
  imstrument.sound.waves.Envelope$1
-imstrument/start/TopContainer.java
- imstrument.start.TopContainer
- imstrument.start.TopContainer$1
+imstrument/sound/waves/WaveManager.java
+ imstrument.sound.waves.WaveManager
+ imstrument.sound.waves.WaveManager$KeyboardRows
+imstrument/sound/utils/DatatypeConversion.java
+ imstrument.sound.utils.DatatypeConversion
 imstrument/algorithm/operators/DummyOperator.java
  imstrument.algorithm.operators.DummyOperator
 imstrument/sound/wavetables/WaveTableEnum.java
@@ -34,26 +33,25 @@ imstrument/sound/openal/OpenAlException.java
  imstrument.sound.openal.OpenAlException
 imstrument/algorithm/Algorithm.java
  imstrument.algorithm.Algorithm
-imstrument/algorithm/operators/AvgLuminance.java
- imstrument.algorithm.operators.AvgLuminance
 imstrument/algorithm/UnitWindow.java
  imstrument.algorithm.UnitWindow
  imstrument.algorithm.UnitWindow$1
  imstrument.algorithm.UnitWindow$JTableButtonMouseListener
  imstrument.algorithm.UnitWindow$JTableButtonRenderer
-imstrument/imagepage/Imagepage.java
- imstrument.imagepage.Imagepage
- imstrument.imagepage.Imagepage$1
- imstrument.imagepage.Imagepage$2
- imstrument.imagepage.Imagepage$3
-imstrument/sound/wavetables/WavetableTransform.java
- imstrument.sound.wavetables.WavetableTransform
+imstrument/algorithm/operators/AvgLuminance.java
+ imstrument.algorithm.operators.AvgLuminance
+imstrument/sound/wavetables/WaveVisualizer.java
+ imstrument.sound.wavetables.WaveVisualizer
 imstrument/sound/utils/NoteFrequencyMapping.java
  imstrument.sound.utils.NoteFrequencyMapping
+imstrument/sound/wavetables/WavetableTransform.java
+ imstrument.sound.wavetables.WavetableTransform
 imstrument/algorithm/operators/Red.java
  imstrument.algorithm.operators.Red
 imstrument/start/StartApp.java
  imstrument.start.StartApp
+imstrument/sound/openal/Recording.java
+ imstrument.sound.openal.Recording
 imstrument/sound/utils/ImagePanel.java
  imstrument.sound.utils.ImagePanel
 imstrument/algorithm/AlgorithmUnit.java
@@ -82,7 +80,13 @@ imstrument/algorithm/CustomAlgorithmCreator.java
 imstrument/virtualkeyboard/VirtualKeyboardVisualizer.java
  imstrument.virtualkeyboard.VirtualKeyboardVisualizer
  imstrument.virtualkeyboard.VirtualKeyboardVisualizer$PianoKeyAdapter
-imstrument/sound/wavetables/WaveVisualizer.java
- imstrument.sound.wavetables.WaveVisualizer
-imstrument/sound/utils/DatatypeConversion.java
- imstrument.sound.utils.DatatypeConversion
+imstrument/start/TopContainer.java
+ imstrument.start.TopContainer
+ imstrument.start.TopContainer$1
+imstrument/imagepage/Imagepage.java
+ imstrument.imagepage.Imagepage
+ imstrument.imagepage.Imagepage$1
+ imstrument.imagepage.Imagepage$2
+ imstrument.imagepage.Imagepage$3
+ imstrument.imagepage.Imagepage$4
+ imstrument.imagepage.Imagepage$5

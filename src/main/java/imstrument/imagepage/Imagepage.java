@@ -3,6 +3,7 @@ package imstrument.imagepage;
 /* imstrument packages */
 
 import imstrument.algorithm.ControlWindow;
+import imstrument.sound.openal.Recording;
 import imstrument.sound.utils.SoundImagePanel;
 import imstrument.sound.wavetables.Test;
 import imstrument.start.StartApp;
@@ -104,6 +105,24 @@ public class Imagepage extends JPanel {
         /* mp3 management menu */
         //TODO record playing
         JMenu mp3Menu = new JMenu("MP3");
+        JMenuItem startRecordAudio = new JMenuItem("START-RECORD");
+        startRecordAudio.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Recording recording = new Recording();
+                recording.startRecording();
+            }
+        });
+        JMenuItem stopRecordAudio = new JMenuItem("STOP-RECORD");
+        stopRecordAudio.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Recording recording = new Recording();
+                recording.stopRecording();
+            }
+        });
+        mp3Menu.add(startRecordAudio);
+        mp3Menu.add(stopRecordAudio);
         menuBar.add(mp3Menu);
 
         /* image panel */
