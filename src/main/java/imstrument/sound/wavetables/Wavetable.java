@@ -12,16 +12,13 @@ import java.util.Arrays;
 
 public class Wavetable {
     private float[][] wavetables;
-    private Type type;
     private int wavetableIndex;
 
     public static int WAVETABLE_SIZE = 2048;
     public static int SAMPLE_RATE = 48000;
     public static double FUNDAMENTAL_FREQUENCY = ((double) WAVETABLE_SIZE) / SAMPLE_RATE;
-    private static final double fundamentalFrequency = ((double) SAMPLE_RATE / WAVETABLE_SIZE);
 
-    public Wavetable(Type type, int wavetableIndex) {
-        this.type = type;
+    public Wavetable(int wavetableIndex) {
         this.wavetableIndex = wavetableIndex;
 
         final int testLength = 3;
@@ -29,13 +26,12 @@ public class Wavetable {
         readFromFile();
     }
 
-    public Wavetable(Type type){
-        this(type, 0);
+    public Wavetable(){
+        this(0);
     }
 
     public Wavetable(float[] wavetable) {
         this.wavetables = new float[][]{wavetable};
-        this.type = Type.CUSTOM;
         this.wavetableIndex = 0;
     }
 
@@ -64,11 +60,6 @@ public class Wavetable {
     /* static helper functions */
     public static double getStepSize(double frequency) {
         return frequency * FUNDAMENTAL_FREQUENCY;
-    }
-
-    public enum Type {
-        SIMPLE, //SINE, SAW, SQUARE, TRIANGLE
-        CUSTOM, //WAVETABLE CREATED FROM OTHER WAVETABLES
     }
 
     /* import export to file */

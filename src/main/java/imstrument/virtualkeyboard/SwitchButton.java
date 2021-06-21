@@ -37,15 +37,12 @@ public class SwitchButton extends JButton {
             }
         }
 
-        addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                StartApp.waveManager.setOctave(
-                        WaveManager.KeyboardRows.values()[refKey],
-                        StartApp.waveManager.currentOctaves[refKey] + ((SwitchButton.this.goUp) ? 1 : -1)
-                );
-            }
-        });
+        addActionListener(
+            e -> StartApp.waveManager.setOctave(
+                WaveManager.KeyboardRows.values()[refKey],
+                StartApp.waveManager.currentOctaves[refKey] + ((SwitchButton.this.goUp) ? 1 : -1)
+            )
+        );
     }
 
     public boolean getId(){return goUp;}

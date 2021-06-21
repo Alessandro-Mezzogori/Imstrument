@@ -7,7 +7,6 @@ imstrument/homepage/Homepage.java
  imstrument.homepage.Homepage$1
 imstrument/sound/wavetables/Wavetable.java
  imstrument.sound.wavetables.Wavetable
- imstrument.sound.wavetables.Wavetable$Type
 imstrument/sound/waves/Envelope.java
  imstrument.sound.waves.Envelope
  imstrument.sound.waves.Envelope$1
@@ -82,7 +81,6 @@ imstrument/globals/GlobalSetting.java
  imstrument.globals.GlobalSetting
 imstrument/virtualkeyboard/SwitchButton.java
  imstrument.virtualkeyboard.SwitchButton
- imstrument.virtualkeyboard.SwitchButton$1
 imstrument/sound/utils/SoundImagePanel.java
  imstrument.sound.utils.SoundImagePanel
  imstrument.sound.utils.SoundImagePanel$ImageMouseListener

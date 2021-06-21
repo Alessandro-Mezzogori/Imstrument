@@ -40,7 +40,7 @@ public class VirtualKeyboardVisualizer extends JFrame {
         mainPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
         final int numberOfKeyboards = 2;
-        entryBox= new JLabel[numberOfKeyboards];
+        entryBox = new JLabel[numberOfKeyboards];
         for (int keyboardIndex = 0; keyboardIndex < numberOfKeyboards; keyboardIndex++) {
             //creating the notes panel
             JPanel notesPanel = createNotes(keyboardIndex);

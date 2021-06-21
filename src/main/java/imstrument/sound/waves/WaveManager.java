@@ -52,7 +52,7 @@ public class WaveManager{
         // 0 -> click wave, 1-24 -> keyboard triggered waves
         int waveCount = 25;
         for(int i = 0; i < waveCount; i++)
-            this.soundwaves.add(new Soundwave(new Wavetable(Wavetable.Type.SIMPLE, 0), 0));
+            this.soundwaves.add(new Soundwave(new Wavetable(0), 0));
 
         shouldGenerate = new ArrayList<>(Arrays.asList(new Boolean[soundwaves.size()]));
         Collections.fill(shouldGenerate, Boolean.FALSE);
@@ -120,8 +120,8 @@ public class WaveManager{
     public void setOctave(KeyboardRows keyboardRows, int currentOctave){
         currentOctaves[keyboardRows.getRowNumber()] = currentOctave;
 
-        for(int i = 0; i < OCTAVE_KEY_COUNT + 12* keyboardRows.getRowNumber(); i++){
-            soundwaves.get(i).setFrequency(
+        for(int i = 0; i < OCTAVE_KEY_COUNT; i++){
+            soundwaves.get(i + OCTAVE_KEY_COUNT*keyboardRows.getRowNumber() + 1).setFrequency(
                     NoteFrequencyMapping.getNoteFrequency(
                             Note.values()[i], currentOctave
                     )

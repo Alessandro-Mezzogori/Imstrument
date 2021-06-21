@@ -53,7 +53,7 @@ public class Soundwave {
 
     public Soundwave(){
         this(
-                new Wavetable(Wavetable.Type.SIMPLE, 0),
+                new Wavetable(0),
                 440,
                 new Envelope(),
                 null,
@@ -68,7 +68,7 @@ public class Soundwave {
         }
 
         /* assign base values */
-        wavetable = new Wavetable(Wavetable.Type.SIMPLE);
+        wavetable = new Wavetable();
         wavetable.setWavetableIndex((int) Math.round((wavetable.getWavetableNumber() - 1)*values[0]));
 
         frequency = MAX_FREQUENCY*values[1];

@@ -22,15 +22,15 @@ public class StartApp {
         }
 
 
-        Wavetable wavetable = new Wavetable(Wavetable.Type.SIMPLE, 0);
+        Wavetable wavetable = new Wavetable(0);
         wavetable.readFromFile();
 
         Soundwave carrier = new Soundwave(
-                new Wavetable(Wavetable.Type.SIMPLE, 0),
+                new Wavetable(0),
                 440.0,
                 new Envelope(1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.5, 1.0),
                 new Soundwave(
-                        new Wavetable(Wavetable.Type.SIMPLE, 0),
+                        new Wavetable(0),
                         10.0,
                         new Envelope(1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.5, 1.0),
                         null,
