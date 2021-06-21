@@ -6,9 +6,11 @@ import imstrument.algorithm.ControlWindow;
 import imstrument.algorithm.CustomAlgorithmCreator;
 import imstrument.sound.utils.SoundImagePanel;
 import imstrument.sound.waves.ModulatingWaveNumberSpinner;
+import imstrument.sound.waves.WaveManager;
 import imstrument.start.StartApp;
 import imstrument.start.TopContainer;
 import imstrument.virtualkeyboard.VirtualKeyboardVisualizer;
+import org.lwjgl.system.CallbackI;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -82,7 +84,7 @@ public class Imagepage extends JPanel {
 
         /* visualize menu */
         // TODO mappa note
-        JMenu visualizeMenu = new JMenu("Visualize");
+        JMenu visualizeMenu = new JMenu("View");
 
         JMenuItem visualizeVirtualKeyboard = new JMenuItem("Virtual Keyboard");
         visualizeVirtualKeyboard.addActionListener(
@@ -94,6 +96,31 @@ public class Imagepage extends JPanel {
         /* mp3 management menu */
         JMenu mp3Menu = new JMenu("MP3");
         menuBar.add(mp3Menu);
+
+        JMenu soundMenu = new JMenu("Sound");
+        JMenuItem toKeyboard0 = new JMenuItem("Save to first keyboard");
+        toKeyboard0.addActionListener(
+                e -> StartApp.waveManager.importWaveSettings(
+                        StartApp.waveManager.soundwaves.get(WaveManager.MOUSE_SOUNDWAVE_INDEX),
+                        WaveManager.KeyboardRows.TOP_ROW,
+                        StartApp.waveManager.currentOctaves[WaveManager.KeyboardRows.TOP_ROW.getRowNumber()]
+                )
+        );
+        toKeyboard0.setAccelerator(KeyStroke.getKeyStroke('1', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+        soundMenu.add(toKeyboard0);
+
+        JMenuItem toKeyboard1 = new JMenuItem("Save to second keyboard");
+        toKeyboard1.addActionListener(
+                e -> StartApp.waveManager.importWaveSettings(
+                        StartApp.waveManager.soundwaves.get(WaveManager.MOUSE_SOUNDWAVE_INDEX),
+                        WaveManager.KeyboardRows.BOTTOM_ROW,
+                        StartApp.waveManager.currentOctaves[WaveManager.KeyboardRows.BOTTOM_ROW.getRowNumber()]
+                )
+        );
+        toKeyboard1.setAccelerator(KeyStroke.getKeyStroke('2', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+        soundMenu.add(toKeyboard1);
+
+        menuBar.add(soundMenu);
 
         /* all the components added after horizontal glue will be to the right side of the menu bar*/
         menuBar.add(Box.createHorizontalGlue());

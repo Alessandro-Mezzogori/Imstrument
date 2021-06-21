@@ -17,9 +17,14 @@ import java.util.ArrayList;
  */
 public class ImagePanel extends JPanel {
     /**
-     * image displayed
+     * image to be displayed
      */
-    protected BufferedImage image;
+    private BufferedImage image;
+
+    /**
+     * actual image that is displayed;
+     */
+    protected BufferedImage scaledImage;
 
     /**
      * margins from the border of the ImagePanel container
@@ -50,12 +55,6 @@ public class ImagePanel extends JPanel {
      * @param centerimage if true it will center the image in the container
      */
     public ImagePanel(URL url, Dimension margins, Point startingPoint, boolean centerimage) {
-        /*
-            roba temporanea per i test sulla generazione del suono
-            verrano sostituiti dalle manipolazioni create dettate
-            dall'algoritmo scelto
-         */
-
         /* set default coordinates of image in panel*/
         this.startingPoint = startingPoint;
         /* initialize currentStartCorner of the rendering*/
@@ -78,7 +77,6 @@ public class ImagePanel extends JPanel {
             //e.printStackTrace();
             this.image = null;
         }
-
     }
 
     public ImagePanel() {
@@ -101,8 +99,14 @@ public class ImagePanel extends JPanel {
             DimensionComparator dimensionComparator = new DimensionComparator();
 
             /* if the image is bigger of the parent size it gets resized */
+            scaledImage = image;
             if (dimensionComparator.isBigger(currentImageSize, parentSize)) {
                 currentImageSize = this.getScaledSize(true);
+
+                scaledImage = new BufferedImage(currentImageSize.width, currentImageSize.height, BufferedImage.TYPE_INT_ARGB);
+                Graphics scaledImageGraphics = scaledImage.getGraphics();
+                scaledImageGraphics.drawImage(image, 0, 0, currentImageSize.width, currentImageSize.height, null);
+                scaledImageGraphics.dispose();
             }
 
             /* centers the image in the parent container */
@@ -111,7 +115,7 @@ public class ImagePanel extends JPanel {
                 this.currentStartCorner.y = (parentSize.height - currentImageSize.height) / 2 - this.margins.height;
             }
 
-            g.drawImage(image, this.currentStartCorner.x, this.currentStartCorner.y, currentImageSize.width, currentImageSize.height, this);
+            g.drawImage(scaledImage, this.currentStartCorner.x, this.currentStartCorner.y, currentImageSize.width, currentImageSize.height, this);
         }
     }
 

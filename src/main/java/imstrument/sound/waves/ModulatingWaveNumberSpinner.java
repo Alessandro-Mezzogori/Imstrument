@@ -26,7 +26,9 @@ public class ModulatingWaveNumberSpinner extends JSpinner {
         );
         setModel(spinnerNumberModel);
 
-        ((DefaultFormatter)((JSpinner.DefaultEditor) getEditor()).getTextField().getFormatter()).setAllowsInvalid(false);
+        JFormattedTextField spinnerTextField = ((JSpinner.DefaultEditor) getEditor()).getTextField();
+        /* prevent direct insertion of numbers */
+        spinnerTextField.setEditable(false);
 
         addChangeListener(e -> {
             /* get the current number of modulators */

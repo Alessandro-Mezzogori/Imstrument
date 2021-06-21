@@ -1,6 +1,7 @@
 package imstrument.sound.utils;
 
 import imstrument.algorithm.AlgorithmUnit;
+import imstrument.sound.waves.Soundwaves;
 import imstrument.sound.waves.WaveManager;
 import imstrument.start.StartApp;
 
@@ -42,9 +43,6 @@ public class SoundImagePanel extends ImagePanel{
         if(drawMouse) {
             for (AlgorithmUnit unit : StartApp.algorithm.getUnits()) {
                 int[] rect = unit.getRect();
-                int x = mousePoint.x + currentStartCorner.x + rect[0];
-                int y = mousePoint.y + currentStartCorner.y + rect[1];
-                unit.setActive(imageContains(x, y) && imageContains(x + rect[2], y + rect[3]));
 
                 /* check if it's inside the image */
                 g.setColor(unit.isActive() ? Color.red : Color.red.darker().darker());
@@ -64,34 +62,15 @@ public class SoundImagePanel extends ImagePanel{
     private class ImageMouseListener extends MouseAdapter {
         @Override
         public void mousePressed(MouseEvent e) {
-            if (image != null) {
-                Point p = e.getPoint();
-                p.x -= currentStartCorner.x;
-                p.y -= currentStartCorner.y;
-
-                StartApp.algorithm.computeAndAssign(image,p, StartApp.waveManager.soundwaves.get(WaveManager.MOUSE_SOUNDWAVE_INDEX));
-
-                /* stops the audio thread from starting over and over again for performance and quality */
-                if(!StartApp.algorithm.isAllUnitsDeactivated()) {
-                    StartApp.waveManager.triggerWaveGeneration(WaveManager.MOUSE_SOUNDWAVE_INDEX);
-                    if (!StartApp.audioThread.isRunning()) {
-                        StartApp.audioThread.triggerPlayback();
-                    }
-                }
-            }
+            computeSoundwave(e);
         }
 
         @Override
         public void mouseMoved(MouseEvent e) {
-            if(drawMouse) {
-
-                mousePoint = e.getPoint();
-                mousePoint.x -= currentStartCorner.x;
-                mousePoint.y -= currentStartCorner.y;
-
-                //soundAlgorithm.computePoints(image, p);
-                ((SoundImagePanel) e.getSource()).repaint();
-            }
+            extractMousePoint(e);
+            drawMouse = SoundImagePanel.this.contains(mousePoint);
+            updateUnitActiveState();
+            SoundImagePanel.this.repaint();
         }
 
         @Override
@@ -101,7 +80,7 @@ public class SoundImagePanel extends ImagePanel{
 
         @Override
         public void mouseEntered(MouseEvent e) {
-            if(image != null) {
+            if(scaledImage != null) {
                 drawMouse = true;
             }
         }
@@ -109,6 +88,51 @@ public class SoundImagePanel extends ImagePanel{
         @Override
         public void mouseExited(MouseEvent e) {
             drawMouse = false;
+        }
+
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            super.mouseDragged(e);
+            extractMousePoint(e);
+            updateUnitActiveState();
+            SoundImagePanel.this.repaint();
+            computeSoundwave(e);
+        }
+
+        private void updateUnitActiveState(){
+            for(AlgorithmUnit unit : StartApp.algorithm.getUnits()){
+                int[] rect = unit.getRect();
+                int x = mousePoint.x + currentStartCorner.x + rect[0];
+                int y = mousePoint.y + currentStartCorner.y + rect[1];
+                unit.setActive(imageContains(x, y) && imageContains(x + rect[2], y + rect[3]));
+            }
+        }
+
+        private void extractMousePoint(MouseEvent e){
+            mousePoint = e.getPoint();
+            mousePoint.x -= currentStartCorner.x;
+            mousePoint.y -= currentStartCorner.y;
+        }
+
+        private void computeSoundwave(MouseEvent e){
+            if (scaledImage != null) {
+                extractMousePoint(e);
+                updateUnitActiveState();
+
+                StartApp.algorithm.computeAndAssign(
+                        scaledImage,
+                        mousePoint,
+                        StartApp.waveManager.soundwaves.get(WaveManager.MOUSE_SOUNDWAVE_INDEX)
+                );
+
+                /* stops the audio thread from starting over and over again for performance and quality */
+                if(!StartApp.algorithm.isAllUnitsDeactivated()) {
+                    StartApp.waveManager.triggerWaveGeneration(WaveManager.MOUSE_SOUNDWAVE_INDEX);
+                    if (!StartApp.audioThread.isRunning()) {
+                        StartApp.audioThread.triggerPlayback();
+                    }
+                }
+            }
         }
     }
 }
