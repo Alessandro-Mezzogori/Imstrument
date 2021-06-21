@@ -67,7 +67,7 @@ public class Wavetable {
         //todo generalize
         try {
             //TODO se file non è trovato crearlo
-            FileOutputStream fileOutputStream = new FileOutputStream(this.getClass().getResource("/imstrument/wavetables/14-SinFormant.wav").getPath());
+            FileOutputStream fileOutputStream = new FileOutputStream(this.getClass().getResource("/imstrument/wavetables/SINE-C2.wav").getPath());
 
             int offset = 0;
             for (int i = 0; i < wavetables.length; i++) {

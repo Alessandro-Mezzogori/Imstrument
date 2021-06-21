@@ -90,15 +90,6 @@ public class SoundImagePanel extends ImagePanel{
             drawMouse = false;
         }
 
-        @Override
-        public void mouseDragged(MouseEvent e) {
-            super.mouseDragged(e);
-            extractMousePoint(e);
-            updateUnitActiveState();
-            SoundImagePanel.this.repaint();
-            computeSoundwave(e);
-        }
-
         private void updateUnitActiveState(){
             for(AlgorithmUnit unit : StartApp.algorithm.getUnits()){
                 int[] rect = unit.getRect();

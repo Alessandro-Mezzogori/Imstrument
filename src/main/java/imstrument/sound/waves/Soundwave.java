@@ -16,23 +16,24 @@ public class Soundwave {
     /* wave table sweep attributes */
     public Wavetable wavetable;
     public Envelope sweepEnvelope;
+    public Envelope amplitudeEnvelope;
 
     /* frequency modulation attributes */
     Soundwave modulatingWave;
     double modulatingIndex;
 
     /* values from algorithm params */
-    public static final int PARAM_NUMBER_WITHOUT_MODULATOR = 10;
+    public static final int PARAM_NUMBER_WITHOUT_MODULATOR = 18;
     public static final int PARAM_NUMBER_WITH_MODULATOR = PARAM_NUMBER_WITHOUT_MODULATOR + 1; // adds the modulating index
 
-    private static final double MAX_FREQUENCY = 3000;
-    private static final double MAX_MODULATING_INDEX = 5000;
+    private static final double MAX_FREQUENCY = 2000;
+    private static final double MAX_MODULATING_INDEX = 3000;
 
-    public Soundwave(Wavetable wavetable, double frequency, Envelope sweepEnvelope, Soundwave modulatingWave, double modulatingIndex){
+    public Soundwave(Wavetable wavetable, double frequency, Envelope sweepEnvelope, Envelope amplitudeEnvelope, Soundwave modulatingWave, double modulatingIndex){
         this.frequency = frequency;
         this.wavetable = wavetable;
         this.sweepEnvelope = sweepEnvelope;
-
+        this.amplitudeEnvelope = amplitudeEnvelope;
         this.modulatingWave = modulatingWave;
 
         this.modulatingIndex = modulatingIndex;
@@ -46,6 +47,7 @@ public class Soundwave {
                 wavetable,
                 frequency,
                 new Envelope(),
+                new Envelope(),
                 null,
                 0.0
         );
@@ -55,6 +57,7 @@ public class Soundwave {
         this(
                 new Wavetable(0),
                 440,
+                new Envelope(),
                 new Envelope(),
                 null,
                 0.0
@@ -71,6 +74,7 @@ public class Soundwave {
         wavetable = new Wavetable();
         wavetable.setWavetableIndex((int) Math.round((wavetable.getWavetableNumber() - 1)*values[0]));
 
+        //frequency = WaveManager.MOUSE_FREQUENCY*modulatingFrequencyMultipliers[(int) (modulatingFrequencyMultipliers.length*values[1])];
         frequency = MAX_FREQUENCY*values[1];
         setFrequency(frequency);
 
@@ -85,9 +89,20 @@ public class Soundwave {
                 values[9]
         );
 
+        amplitudeEnvelope = new Envelope(
+                values[10],
+                values[11],
+                values[12],
+                values[13],
+                values[14],
+                values[15],
+                values[16],
+                values[17]
+        );
+
         if(values.length == PARAM_NUMBER_WITH_MODULATOR){
             /* assign modulating index */
-            this.modulatingIndex = MAX_MODULATING_INDEX*values[10];
+            this.modulatingIndex = MAX_MODULATING_INDEX*values[18];
         }
     }
 
@@ -117,7 +132,7 @@ public class Soundwave {
         *  waveIndex: is modified accordingly to the base wavetable step formula modified to accomodate the frequency modulatino
         *  modulatingWaveIndex: is modified only accordingly to the base wavetable step formula (implies that there's only one level of modulation )*/
         waveIndex = Math.abs(waveIndex + waveIndexStep + modulatingIndex*modulatingSample*Wavetable.WAVETABLE_SIZE/Wavetable.SAMPLE_RATE) % Wavetable.WAVETABLE_SIZE;
-        return sample; //TODO add amplitudeEnvelope ?
+        return sample*amplitudeEnvelope.getAmplitudeAmplifier(time); //TODO add amplitudeEnvelope ?
     }
 
     public void reset(){

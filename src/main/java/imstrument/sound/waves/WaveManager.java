@@ -39,6 +39,9 @@ public class WaveManager{
      * index of the wavesummer associated with mouse click
      */
     public static final int MOUSE_SOUNDWAVE_INDEX = 0;
+
+    public static final double MOUSE_FREQUENCY = NoteFrequencyMapping.getNoteFrequency(Note.C, 3); // C3 -> mouse frequency
+
     /**
      * numbers of keys in a single octave
      */

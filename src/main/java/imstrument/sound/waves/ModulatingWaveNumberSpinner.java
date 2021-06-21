@@ -35,7 +35,6 @@ public class ModulatingWaveNumberSpinner extends JSpinner {
             Soundwave soundwave = StartApp.waveManager.soundwaves.get(0);
             int current = Soundwaves.getModulatingSoundwaveNumber(soundwave);
 
-            System.out.println("C: " + current + " S: " + spinnerNumberModel.getNumber());
             /* compute the difference between the current and the selected  */
             int difference = spinnerNumberModel.getNumber().intValue() - current;
             /* while there's a difference in the number of modulators keep adding / removing as needed */

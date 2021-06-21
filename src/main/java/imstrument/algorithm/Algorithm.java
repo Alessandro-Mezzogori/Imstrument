@@ -89,8 +89,6 @@ public class Algorithm {
         int numberOfValues = Soundwave.PARAM_NUMBER_WITHOUT_MODULATOR + Soundwave.PARAM_NUMBER_WITH_MODULATOR * soundwaveNumber;
         int pixelsPerValue = total >= numberOfValues ? total/numberOfValues : 1;
 
-        /* TODO if pixelsPerValue is less than 0 -> cycle back trough */
-
         /* assign the values via linear interpolation if between two units */
         int currentUnit = 0;
         /* get the first active unit */
@@ -133,6 +131,8 @@ public class Algorithm {
             }
             prevSoundwave = currentSoundwave;
         }
+
+        /* set constant carrier frequency */
 
         StartApp.waveManager.soundwaves.set(StartApp.waveManager.soundwaves.indexOf(soundwave), prevSoundwave);
     }
