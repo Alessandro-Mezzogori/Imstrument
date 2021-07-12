@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class AlgorithmUnit {
-    int[] rect;
-    Operator operator;
-    boolean active;
-    public static int RECT_SIZE = 4;
+    int[] rect; // associated rectangle of values
+    Operator operator; // associated operator
+    boolean active; // tells if it's inside or outside the current image
+    public static int RECT_SIZE = 4; // values need to define a rectangle
 
     public AlgorithmUnit(int[] rect, Operator operator){
         this();
@@ -37,11 +37,24 @@ public class AlgorithmUnit {
         return rect;
     }
 
+    /**
+     * gets the unit's operator
+     * @return the reference to the units operator
+     */
     public Operator getOperator() {
         return operator;
     }
 
+    /**
+     * tells if the units should be counted or not in the compute and assign functions of the algorithm class
+     * @return if the unit is active
+     */
     public boolean isActive() { return active; }
+
+    /**
+     * set the active status of the unit ( used to disable the unit from the computation if outside the image )
+     * @param active status of unit
+     */
     public void setActive(boolean active) { this.active = active; }
 
     /**
@@ -50,6 +63,10 @@ public class AlgorithmUnit {
      */
     public int getPixelNumber(){return this.rect[2]*this.rect[3];}
 
+    /**
+     * debug function
+     * @return the string representation of the unit
+     */
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();

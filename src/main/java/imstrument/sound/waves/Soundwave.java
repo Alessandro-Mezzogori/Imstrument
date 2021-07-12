@@ -26,9 +26,6 @@ public class Soundwave {
     public static final int PARAM_NUMBER_WITHOUT_MODULATOR = 18;
     public static final int PARAM_NUMBER_WITH_MODULATOR = PARAM_NUMBER_WITHOUT_MODULATOR + 1; // adds the modulating index
 
-    private static final double MAX_FREQUENCY = 2000;
-    private static final double MAX_MODULATING_INDEX = 3000;
-
     public Soundwave(Wavetable wavetable, double frequency, Envelope sweepEnvelope, Envelope amplitudeEnvelope, Soundwave modulatingWave, double modulatingIndex){
         this.frequency = frequency;
         this.wavetable = wavetable;
@@ -64,6 +61,15 @@ public class Soundwave {
         );
     }
 
+    /**
+     * creates a soundwave with the defaults from the passed array
+     * 0 -> wavetable index
+     * 1 -> frequency
+     * 2-9 -> sweep envelope params
+     * 10-17 -> amplitude envelope params
+     * 18 -> modulation index of the modulator ( only if it has a modulator )
+     * @param values the values to initialize the soundwave
+     */
     public Soundwave(double[] values){
         /* the lenght of values can only be two numbers */
         if(values.length != PARAM_NUMBER_WITHOUT_MODULATOR && values.length != PARAM_NUMBER_WITH_MODULATOR){
@@ -75,7 +81,7 @@ public class Soundwave {
         wavetable.setWavetableIndex((int) Math.round((wavetable.getWavetableNumber() - 1)*values[0]));
 
         //frequency = WaveManager.MOUSE_FREQUENCY*modulatingFrequencyMultipliers[(int) (modulatingFrequencyMultipliers.length*values[1])];
-        frequency = MAX_FREQUENCY*values[1];
+        frequency = values[1];
         setFrequency(frequency);
 
         sweepEnvelope = new Envelope(
@@ -102,7 +108,7 @@ public class Soundwave {
 
         if(values.length == PARAM_NUMBER_WITH_MODULATOR){
             /* assign modulating index */
-            this.modulatingIndex = MAX_MODULATING_INDEX*values[18];
+            this.modulatingIndex = values[18];
         }
     }
 
@@ -175,5 +181,6 @@ public class Soundwave {
     public void setFrequency(double frequency){
         waveIndexStep = Wavetable.getStepSize(frequency);
     }
+    public double getFrequency() { return frequency; }
     public void setModulatingWave(Soundwave modulating) {this.modulatingWave = modulating;}
 }
