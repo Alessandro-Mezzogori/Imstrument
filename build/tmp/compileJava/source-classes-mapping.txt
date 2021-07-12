@@ -41,7 +41,6 @@ imstrument/sound/openal/OpenAlException.java
  imstrument.sound.openal.OpenAlException
 imstrument/algorithm/Algorithm.java
  imstrument.algorithm.Algorithm
- imstrument.algorithm.Algorithm$Standard
 imstrument/algorithm/UnitWindow.java
  imstrument.algorithm.UnitWindow
  imstrument.algorithm.UnitWindow$1

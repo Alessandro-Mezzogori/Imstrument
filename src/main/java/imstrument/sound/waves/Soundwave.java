@@ -138,7 +138,7 @@ public class Soundwave {
         *  waveIndex: is modified accordingly to the base wavetable step formula modified to accomodate the frequency modulatino
         *  modulatingWaveIndex: is modified only accordingly to the base wavetable step formula (implies that there's only one level of modulation )*/
         waveIndex = Math.abs(waveIndex + waveIndexStep + modulatingIndex*modulatingSample*Wavetable.WAVETABLE_SIZE/Wavetable.SAMPLE_RATE) % Wavetable.WAVETABLE_SIZE;
-        return sample*amplitudeEnvelope.getAmplitudeAmplifier(time); //TODO add amplitudeEnvelope ?
+        return sample*amplitudeEnvelope.getAmplitudeAmplifier(time);
     }
 
     public void reset(){
