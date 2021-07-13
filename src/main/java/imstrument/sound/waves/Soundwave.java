@@ -112,6 +112,10 @@ public class Soundwave {
         }
     }
 
+    /**
+     * gets a sample from the soundwave
+     * @return a sample
+     */
     public double getSample(){
         /* variables for easier readability */
         double time = ((double)sampleIndex++)/Wavetable.SAMPLE_RATE;
@@ -141,6 +145,9 @@ public class Soundwave {
         return sample*amplitudeEnvelope.getAmplitudeAmplifier(time);
     }
 
+    /**
+     * resets the soundwave
+     */
     public void reset(){
         /* reset the wave sample generation to the start*/
         this.waveIndex = 0;
@@ -157,6 +164,11 @@ public class Soundwave {
 
     /* getters and setters */
 
+    /**
+     * import the inner state of another soundwave
+     * @param soundwave to import from
+     * @param frequency new frequency
+     */
     public void importFrom(Soundwave soundwave, double frequency){
         wavetable = soundwave.wavetable;
         sweepEnvelope.importSettings(soundwave.sweepEnvelope);
@@ -164,6 +176,7 @@ public class Soundwave {
         /* calculate step sizes */
         waveIndexStep = Wavetable.getStepSize(frequency);
 
+        // if the wave has a modulator then call the import function recursively
         if(soundwave.modulatingWave != null){
             if(modulatingWave == null){
                 modulatingWave = new Soundwave();
@@ -178,6 +191,7 @@ public class Soundwave {
         reset();
     }
 
+    /* getters and setters */
     public void setFrequency(double frequency){
         waveIndexStep = Wavetable.getStepSize(frequency);
     }

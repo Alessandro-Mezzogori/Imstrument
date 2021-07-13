@@ -20,8 +20,17 @@ import java.awt.event.WindowEvent;
  */
 public class Homepage extends JPanel { /* Logic attributes */
      /* GUI components */
-    Label credits; // used to display creators and maybe copyright
+    /**
+     *  used to display creators and maybe copyright
+     */
+    Label credits;
+    /**
+     * Imstrument logo image
+     */
     ImagePanel imstrumentLogo;
+    /**
+     * Button to open the imagepage
+     */
     JButton startButton;
     public Homepage(){
         super();
@@ -32,7 +41,7 @@ public class Homepage extends JPanel { /* Logic attributes */
         /* create components*/
         /*
         * bottom component
-        * contains the credits of the creators and TODO copyright of software application
+        * contains the credits of the creators
         * */
         /* logo definition */
         GridBagConstraints imageConstraints = new GridBagConstraints();
@@ -55,16 +64,13 @@ public class Homepage extends JPanel { /* Logic attributes */
         JPanel buttonPanel = new JPanel(new GridBagLayout());
         startButton = new JButton("Start");
         startButton.addActionListener(
-            new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
+                e -> {
                     JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor((JComponent) e.getSource());
                     if(topFrame instanceof TopContainer){
                         TopContainer topContainer = (TopContainer) topFrame;
                         topContainer.changeCard(TopContainer.IMAGEPAGE);
                     }
                 }
-            }
         );
         buttonPanel.add(startButton, buttonConstraints);
 

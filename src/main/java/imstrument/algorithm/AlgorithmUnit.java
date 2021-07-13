@@ -7,10 +7,25 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class AlgorithmUnit {
-    int[] rect; // associated rectangle of values
-    Operator operator; // associated operator
-    boolean active; // tells if it's inside or outside the current image
-    public static int RECT_SIZE = 4; // values need to define a rectangle
+    /**
+     * associated rectangle of values
+     */
+    int[] rect;
+
+    /**
+     * associated operator
+     */
+    Operator operator;
+
+    /**
+     * tells if it's inside or outside the current image
+     */
+    boolean active;
+
+    /**
+     * number of values need to define a rectangle
+     */
+    public static int RECT_SIZE = 4;
 
     public AlgorithmUnit(int[] rect, Operator operator){
         this();

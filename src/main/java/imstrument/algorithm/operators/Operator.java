@@ -9,6 +9,16 @@ public interface Operator {
      * @return a value beetween [0.0,1.0]
      */
     double compute(Color[] pixels);
+
+    /**
+     * Retrieves the name of operator
+     * @return the name of the operator in a string object
+     */
     String getName();
+
+    /**
+     * Returns the associated color of the operator
+     * @return the color of the operator
+     */
     Color getColor();
 }

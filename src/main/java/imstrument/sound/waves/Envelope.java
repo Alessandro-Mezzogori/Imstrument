@@ -85,11 +85,6 @@ public class Envelope {
      * @param releaseVelocity coefficient for the realease curve, the larger it is the faster the sound reaches 0.0 amplitude
      */
     public Envelope(double attackTime, double attackVelocity, double attackAmplifierPeak, double decayTime, double decayVelocity, double sustainAmplifier, double releaseTime, double releaseVelocity){
-        /*
-            TODO add checks for:
-                - attackAmplifierPeak [0.0, 1.0]
-                - sustainAmplifier [0.0, 1.0]
-         */
         this.attackTime = attackTime;
         this.attackVelocity = attackVelocity;
 
@@ -113,29 +108,11 @@ public class Envelope {
         this(0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0);
     }
 
-    public Envelope(Envelope envelope){
-        attackTime = envelope.attackTime;
-        attackVelocity = envelope.attackVelocity;
-        attackAmplifierPeak = envelope.attackAmplifierPeak;
-        decayTime = envelope.decayTime;
-        decayVelocity = envelope.decayVelocity;
-        sustainAmplifier = envelope.sustainAmplifier;
-        releaseTime = envelope.releaseTime;
-        releaseVelocity = envelope.releaseVelocity;
-
-        computeAttackDenominator();
-        computeDecayDenominator();
-        computeReleaseDenominator();
-        reset();
-    }
-
     /**
-     * returns the coefficient at the time of the wave generation
-     * @param time time in seconds from the start of the soundwave generation
-     * @return number between [0.0, attackAmplifierPeak] with a max of [0.0, 1.0]
+     * returns the current amplitude of the envelope
+     * @param time at which to sample the envelope
+     * @return the ampliture of the envelope
      */
-    static int counter = 0;
-
     public double getAmplitudeAmplifier(double time){
         double amplifier = Math.max(
             switch (this.state){
@@ -228,7 +205,7 @@ public class Envelope {
         computeAttackDenominator();
     }
 
-    /* computer*Denominator, optimization to speed up the generation of the AmplitudeAmplifier*/
+    /* compute the denominators for a faster computation */
     private void computeAttackDenominator(){
         attackDenominator = Math.exp(attackVelocity* attackTime) - 1.0;
     }
@@ -245,9 +222,5 @@ public class Envelope {
                 "\nDecay " + decayTime + " " + decayVelocity +
                 "\nSustain: " + sustainAmplifier +
                 "\nRelease: " + releaseTime + " " + releaseVelocity + "\n";
-    }
-
-    public double getTotalTime(){
-        return  attackTime + decayTime + ((attackTime + decayTime) / 2) + releaseTime;
     }
 }

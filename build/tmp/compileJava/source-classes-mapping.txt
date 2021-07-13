@@ -4,7 +4,6 @@ imstrument/sound/waves/Soundwave.java
  imstrument.sound.waves.Soundwave
 imstrument/homepage/Homepage.java
  imstrument.homepage.Homepage
- imstrument.homepage.Homepage$1
 imstrument/sound/wavetables/Wavetable.java
  imstrument.sound.wavetables.Wavetable
 imstrument/sound/waves/Envelope.java
@@ -78,8 +77,8 @@ imstrument/algorithm/AlgoUnitTableModel.java
  imstrument.algorithm.AlgoUnitTableModel
 imstrument/globals/GlobalSetting.java
  imstrument.globals.GlobalSetting
-imstrument/virtualkeyboard/SwitchButton.java
- imstrument.virtualkeyboard.SwitchButton
+imstrument/algorithm/operators/NotGreen.java
+ imstrument.algorithm.operators.NotGreen
 imstrument/sound/utils/SoundImagePanel.java
  imstrument.sound.utils.SoundImagePanel
  imstrument.sound.utils.SoundImagePanel$ImageMouseListener
@@ -93,12 +92,10 @@ imstrument/algorithm/CustomAlgorithmCreator.java
  imstrument.algorithm.CustomAlgorithmCreator$AlgorithmCreationSynchronizer
 imstrument/algorithm/operators/Green.java
  imstrument.algorithm.operators.Green
+imstrument/sound/utils/DatatypeConversion.java
+ imstrument.sound.utils.DatatypeConversion
 imstrument/virtualkeyboard/VirtualKeyboardVisualizer.java
  imstrument.virtualkeyboard.VirtualKeyboardVisualizer
  imstrument.virtualkeyboard.VirtualKeyboardVisualizer$PianoKeyAdapter
-imstrument/algorithm/operators/NotGreen.java
- imstrument.algorithm.operators.NotGreen
-imstrument/sound/wavetables/WaveVisualizer.java
- imstrument.sound.wavetables.WaveVisualizer
-imstrument/sound/utils/DatatypeConversion.java
- imstrument.sound.utils.DatatypeConversion
+imstrument/virtualkeyboard/SwitchButton.java
+ imstrument.virtualkeyboard.SwitchButton

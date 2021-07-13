@@ -12,21 +12,53 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Window dedicated to the creation of new Algorithms
+ */
 public class CustomAlgorithmCreator extends JFrame {
+    /**
+     * used to draw the rectangles of each unit
+     */
     AlgorithmCanvas drawingAlgorithmCanvas;
+
+    /**
+     * Shows the corrisponding table to the created algorithm units
+     */
     UnitWindow unitWindow;
+
+    /**
+     * Current Algorithm units
+     */
     ArrayList<AlgorithmUnit> groups;
+
+    /**
+     * Tells if the Jframe was opene from the Controls Jframe
+     * if it's true when this frame will be close it will automatically open the controls JFrame
+     */
     final boolean fromAlgorithmSelect;
+
+    /**
+     * Input JTextField to save the created algorithm with a name
+     */
+    final JTextField algorithmNameField;
 
     public CustomAlgorithmCreator(boolean fromAlgorithmSelect){
         /* params */
+        // set the algorithm name input field width
         final int algorithmNameFieldWidth = 20;
+
+        // save if it came from the algorithm select window
         this.fromAlgorithmSelect = fromAlgorithmSelect;
-        /* create custom algorithm canvas */
+
+        /* initialize the array list for the algo units */
         groups = new ArrayList<>();
+        // create the canvas to draw the rectangles for the units
+        // and give it an update function to call
         drawingAlgorithmCanvas = new AlgorithmCanvas(groups, () -> unitWindow.updateTable());
+        // create the algorithm units window and five it an update function to call
         unitWindow = new UnitWindow(groups, () -> drawingAlgorithmCanvas.repaint());
 
+        // component placement and jframe layout
         JPanel container = new JPanel();
         container.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
@@ -37,43 +69,21 @@ public class CustomAlgorithmCreator extends JFrame {
         constraints.gridx = 1;
         container.add(unitWindow, constraints);
 
-
-        final JTextField algorithmNameField = new JTextField(algorithmNameFieldWidth);
+        // algorithm name field to save the created algorithm
+        algorithmNameField = new JTextField(algorithmNameFieldWidth);
+        // algorithm name field label so that it tells what is it for
         final JLabel algorithmNameFieldLabel = new JLabel("New Algorithm Name: ");
         algorithmNameFieldLabel.setLabelFor(algorithmNameField);
-        /* create custom algorithm buttons */
+
+        // create the save button
         JButton saveButton = new JButton("Save");
-        saveButton.addActionListener(e ->{
-            //TODO check that there's no other algorithm with the same name
+        saveButton.addActionListener(e -> saveAlgorithm(algorithmNameField.getName()));
 
-            /* check that all groups have an operator */
-            for(AlgorithmUnit unit : groups){
-                if(unit.operator == null){
-                    JOptionPane.showMessageDialog(null, "Please give all the units an operator");
-                    return;
-                }
-            }
-
-            File newFile = new File(Algorithm.ALGORITHM_FOLDER.toString() + "/" + algorithmNameField.getText() + "." + Algorithm.fileExtension) ;
-            try {
-                boolean isCreated = newFile.createNewFile(); // TODO notify user if it doesn't go well
-                StringBuilder stringBuilder = new StringBuilder();
-                for(AlgorithmUnit unit : groups){
-                    stringBuilder.append(unit.toString());
-                }
-
-                BufferedWriter writer = new BufferedWriter(new FileWriter(newFile));
-                writer.write(stringBuilder.toString());
-                writer.close();
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
-            clear();
-        });
-
+        // go back to a blank slate button
         JButton clearButton = new JButton("Clear");
         clearButton.addActionListener(e -> clear());
 
+        // visual formatting
         JPanel buttonContainer = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buttonContainer.add(algorithmNameFieldLabel);
         buttonContainer.add(algorithmNameField);
@@ -85,6 +95,7 @@ public class CustomAlgorithmCreator extends JFrame {
         add(container, BorderLayout.CENTER);
         add(Box.createRigidArea(new Dimension(20, 20)), BorderLayout.LINE_START);
 
+        // if the window is closing and it came from the algorithm select -> open a control window
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -103,12 +114,66 @@ public class CustomAlgorithmCreator extends JFrame {
         setTitle("Algorithm Creator");
     }
 
+    /**
+     * Saves the current algorithm to a file and resest
+     * the algorithm creation environment
+     * @param name the name of the file
+     */
+    private void saveAlgorithm(String name){
+        /* check that all groups have an operator */
+        for(AlgorithmUnit unit : groups){
+            if(unit.operator == null){
+                JOptionPane.showMessageDialog(null, "Please give all the units an operator");
+                return;
+            }
+        }
+
+        File newFile = new File(Algorithm.ALGORITHM_FOLDER.toString() + "/" + name + "." + Algorithm.fileExtension) ;
+        // if the file exists then ask if it wants to overwrite it
+        if( newFile.exists() ){
+            int input = JOptionPane.showConfirmDialog(null, name + " already present, overwrite it ?");
+            // if the result is not ok exit
+            if( input != JOptionPane.OK_OPTION ) { return; }
+        }
+
+        // create / open the file and write the algorithm to it
+        try {
+            boolean isCreated = newFile.createNewFile(); // TODO notify user if it doesn't go well
+            // create a string builder object to concatenate all the unit string representation
+            StringBuilder stringBuilder = new StringBuilder();
+            for(AlgorithmUnit unit : groups){
+                stringBuilder.append(unit.toString());
+            }
+
+            // create buffere write from the opened filed
+            BufferedWriter writer = new BufferedWriter(new FileWriter(newFile));
+            // write the algorithm string representation
+            writer.write(stringBuilder.toString());
+            // close and save file
+            writer.close();
+        } catch (IOException ioException) {
+            // shouldn't go here if it does ignore
+            // ioException.printStackTrace();
+        }
+
+        // reset the algorithm creation environment
+        clear();
+    }
+
+    /**
+     * Resets the creation environment
+     */
     private void clear(){
         groups.clear();
         drawingAlgorithmCanvas.repaint();
         unitWindow.updateTable();
     }
 
+    /**
+     * Dummy interface to pass an update function used only for synchronizastion
+     * purposes between the unit window and the algorithm canvas,
+     * the update functions should tell the other that the caller was updated
+     */
     public interface AlgorithmCreationSynchronizer {
         void update();
     }

@@ -20,7 +20,7 @@ public class WaveManager{
     public final ArrayList<Soundwave> soundwaves;
 
     /**
-     * TODO
+     * array of the current keyboard octaves
      */
     public int[] currentOctaves;
     /**
@@ -39,8 +39,6 @@ public class WaveManager{
      * index of the wavesummer associated with mouse click
      */
     public static final int MOUSE_SOUNDWAVE_INDEX = 0;
-
-    public static final double MOUSE_FREQUENCY = NoteFrequencyMapping.getNoteFrequency(Note.C, 3); // C3 -> mouse frequency
 
     /**
      * numbers of keys in a single octave
@@ -65,6 +63,12 @@ public class WaveManager{
 
     /* interface/public methods */
 
+    /**
+     * start or stop the playback of the given index soundwave
+     * if should generate is true then it starts else it stop
+     * @param shouldGenerate tells to stop or start the playback
+     * @param index of the soundwave to start/stop the playback
+     */
     public void setShouldGenerate(boolean shouldGenerate, int index) {
         this.shouldGenerate.set(index, shouldGenerate);
         if(!shouldGenerate)
@@ -101,17 +105,19 @@ public class WaveManager{
     /* wave getters and setters */
 
     public void triggerWaveGeneration(int waveIndex){
-        if (!StartApp.audioThread.isRunning()) {
+        if (StartApp.audioThread.isNotRunning()) {
             StartApp.audioThread.triggerPlayback();
         }
         generatingSamples = true;
         shouldGenerate.set(waveIndex, true);
     }
 
-    public void importMouseWaveSettings(Soundwave soundwave){
-        soundwaves.set(0 ,soundwave);
-    }
-
+    /**
+     * Import the inner statte of a soundwave in a whole keyboard row
+     * @param soundwave from which to import
+     * @param keyboardRows which soundwaves will import
+     * @param currentOctave the octave at which the new imported waves will be at the end
+     */
     public void importWaveSettings(Soundwave soundwave, KeyboardRows keyboardRows, int currentOctave){
         currentOctaves[keyboardRows.getRowNumber()] = currentOctave;
 
@@ -120,6 +126,11 @@ public class WaveManager{
         }
     }
 
+    /**
+     * sets the octave of a keyboard row
+     * @param keyboardRows which keyboard row will change its octave
+     * @param currentOctave the octave to change to
+     */
     public void setOctave(KeyboardRows keyboardRows, int currentOctave){
         currentOctaves[keyboardRows.getRowNumber()] = currentOctave;
 
@@ -132,6 +143,9 @@ public class WaveManager{
         }
     }
 
+    /**
+     * Enum for readability
+     */
     public enum KeyboardRows{
         TOP_ROW(0),
         BOTTOM_ROW(1),

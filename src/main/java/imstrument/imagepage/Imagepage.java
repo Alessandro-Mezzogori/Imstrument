@@ -1,16 +1,13 @@
 package imstrument.imagepage;
 
 /* imstrument packages */
-
 import imstrument.algorithm.ControlWindow;
-import imstrument.algorithm.CustomAlgorithmCreator;
 import imstrument.sound.utils.SoundImagePanel;
 import imstrument.sound.waves.ModulatingWaveNumberSpinner;
 import imstrument.sound.waves.WaveManager;
 import imstrument.start.StartApp;
 import imstrument.start.TopContainer;
 import imstrument.virtualkeyboard.VirtualKeyboardVisualizer;
-import org.lwjgl.system.CallbackI;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -25,8 +22,17 @@ import java.io.IOException;
  */
 public class Imagepage extends JPanel {
     /* GUI components */
+    /**
+     * application menu
+     */
     JMenuBar menuBar;
+    /**
+     * panel showing the image and processing the click events
+     */
     SoundImagePanel soundImagePanel;
+    /**
+     * keyboard visualizer and octave changes
+     */
     VirtualKeyboardVisualizer virtualKeyboardVisualizer;
 
     public Imagepage(){
@@ -34,25 +40,28 @@ public class Imagepage extends JPanel {
         /* create menubar */
         menuBar = new JMenuBar();
 
+        // logo formatting
         JButton logoIcon = new JButton();
         logoIcon.setBorderPainted(false);
         logoIcon.setBorder(null);
         logoIcon.setMargin(new Insets(0, 0, 0, 0));
         logoIcon.setContentAreaFilled(false);
         try {
-            /*
-             * TODO per imstrument_logo -> mettere il background bianco trasparente tramite convertitori online, photoshop o paint.net
-             */
+            // read the imstrument logo
             BufferedImage logoImage = ImageIO.read(this.getClass().getResource("/imstrument/globals/imstrument_logo.png"));
             logoIcon.setIcon(new ImageIcon(logoImage));
         } catch (IOException e) {
             logoIcon.setText("Homepage");
         }
 
+        // when the logo is clicked return to the main page
         logoIcon.addActionListener(
                 e -> {
+                    // get the JFrame of the current card
                     JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor((JComponent) e.getSource());
                     if(topFrame instanceof TopContainer){
+                        // if it's an instance of TopContainer ( container for the card layout )
+                        // change to the HOMEPAGE card
                         TopContainer topContainer = (TopContainer) topFrame;
                         topContainer.changeCard(TopContainer.HOMEPAGE);
                     }
@@ -62,20 +71,24 @@ public class Imagepage extends JPanel {
         menuBar.add(logoIcon);
 
         /* import menu */
+        // menu item to import an image to be procecssed
+        JMenu importMenu = new JMenu("Import");
+        // menu item to import an image .jpg or .png
         JMenuItem importImage = new JMenuItem("Image");
         importImage.addActionListener(e -> importImage());
-
-        JMenu importMenu = new JMenu("Import");
         importMenu.add(importImage);
 
         menuBar.add(importMenu);
 
-        /* algorythms menu */
+        /* algorithms menu */
+        // menu used to create and select the possible computing algorithms
         JMenu algorithmsMenu = new JMenu("Algorithms");
-        JMenuItem createAlgorithm = new JMenuItem("Create Algorithm");
-        createAlgorithm.addActionListener(e -> SwingUtilities.invokeLater(() -> new CustomAlgorithmCreator(false)));
-        algorithmsMenu.add(createAlgorithm);
+//        JMenuItem createAlgorithm = new JMenuItem("Create Algorithm");
+//        createAlgorithm.addActionListener(e -> SwingUtilities.invokeLater(() -> new CustomAlgorithmCreator(false)));
+//        algorithmsMenu.add(createAlgorithm);
 
+        // menu item that when selected popups the control panel of the algorithm
+        // used to create and / or select an algorithm
         JMenuItem algorithmControls = new JMenuItem("Controls");
         algorithmControls.addActionListener(e -> SwingUtilities.invokeLater(ControlWindow::new));
         algorithmsMenu.add(algorithmControls);
@@ -83,40 +96,52 @@ public class Imagepage extends JPanel {
         menuBar.add(algorithmsMenu);
 
         /* visualize menu */
-        // TODO mappa note
+        // used to show hidden information or possible visualizers ( Keyboard and colormap )
         JMenu visualizeMenu = new JMenu("View");
 
+        // menu item that when clicked will show the keyboard visualizer
         JMenuItem visualizeVirtualKeyboard = new JMenuItem("Virtual Keyboard");
         visualizeVirtualKeyboard.addActionListener(
+                // create a  runnable that instantiate the virtual keyboard visualizer for future access
+                // and linking between this jframe and the visualizer
                 e -> SwingUtilities.invokeLater(() -> virtualKeyboardVisualizer = new VirtualKeyboardVisualizer())
         );
         visualizeMenu.add(visualizeVirtualKeyboard);
         menuBar.add(visualizeMenu);
 
         /* mp3 management menu */
+        // export menu
         JMenu mp3Menu = new JMenu("MP3");
         menuBar.add(mp3Menu);
 
+        /* sound menu */
+        // used to manipulate the keyboard
         JMenu soundMenu = new JMenu("Sound");
-        JMenuItem toKeyboard0 = new JMenuItem("Save to first keyboard");
+        // imports the current mouse soundwave in the top keyboard
+        JMenuItem toKeyboard0 = new JMenuItem("Save to top keyboard");
         toKeyboard0.addActionListener(
+                // import inside the top keyboard the current mouse soundwave with the current selected octave
                 e -> StartApp.waveManager.importWaveSettings(
                         StartApp.waveManager.soundwaves.get(WaveManager.MOUSE_SOUNDWAVE_INDEX),
                         WaveManager.KeyboardRows.TOP_ROW,
                         StartApp.waveManager.currentOctaves[WaveManager.KeyboardRows.TOP_ROW.getRowNumber()]
                 )
         );
+        // setup keyboard shortcut CTRL + 1
         toKeyboard0.setAccelerator(KeyStroke.getKeyStroke('1', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         soundMenu.add(toKeyboard0);
 
-        JMenuItem toKeyboard1 = new JMenuItem("Save to second keyboard");
+        // imports the current mouse soundwave in the bottom keyboard
+        JMenuItem toKeyboard1 = new JMenuItem("Save to bottom keyboard");
         toKeyboard1.addActionListener(
+                // import inside the bottom keyboard the current mouse soundwave with the current selected octave
                 e -> StartApp.waveManager.importWaveSettings(
                         StartApp.waveManager.soundwaves.get(WaveManager.MOUSE_SOUNDWAVE_INDEX),
                         WaveManager.KeyboardRows.BOTTOM_ROW,
                         StartApp.waveManager.currentOctaves[WaveManager.KeyboardRows.BOTTOM_ROW.getRowNumber()]
                 )
         );
+        // setup keyboard shortcut CTRL + 2
         toKeyboard1.setAccelerator(KeyStroke.getKeyStroke('2', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         soundMenu.add(toKeyboard1);
 
@@ -125,6 +150,7 @@ public class Imagepage extends JPanel {
         /* all the components added after horizontal glue will be to the right side of the menu bar*/
         menuBar.add(Box.createHorizontalGlue());
 
+        // controller for the number of modulators the carrier soundwave will have ( starts at 0 )
         ModulatingWaveNumberSpinner modulatingWaveNumberSpinner = new ModulatingWaveNumberSpinner();
         JLabel modulatingWaveNumberSpinnerLabel = new JLabel("Modulators number ");
         modulatingWaveNumberSpinnerLabel.setLabelFor(modulatingWaveNumberSpinner);
@@ -143,15 +169,23 @@ public class Imagepage extends JPanel {
         setKeyboardBindings();
     }
 
+    /**
+     * Makes the user select a jpg or png image and loads it as the current
+     * rendered image of the sound image panel component
+     */
     private void importImage(){
+        // create a file chooser object that only accepts the extensions JPG and PNG
         JFileChooser imageChooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "JPG & PNG", "jpg", "png"
         );
         imageChooser.setFileFilter(filter);
+
+        // retrieve if something was confirmed inside the file chooser dialog
         int choosingResult = imageChooser.showOpenDialog(this);
         if(choosingResult == JFileChooser.APPROVE_OPTION){
             try {
+                // retrieve the selected image
                 this.soundImagePanel.setImage(ImageIO.read(imageChooser.getSelectedFile()));
             } catch (IOException e) {
                 //TODO notifica utente in caso di errore e sopprimi chiusura
@@ -161,8 +195,12 @@ public class Imagepage extends JPanel {
         }
     }
 
+    /**
+     * function that setups all the keyboard bindings to play the top and bottom virtual keyboards
+     */
     private void setKeyboardBindings(){
         InputMap inputMap = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        // TOP ROW PRESSED
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, false), "CT_T");
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_3, 0, false), "C#T_T");
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0, false), "DT_T");
@@ -176,6 +214,7 @@ public class Imagepage extends JPanel {
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_8, 0, false), "A#T_T");
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_I, 0, false), "BT_T");
 
+        // BOTTOM ROW PRESSED
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, 0, false), "CB_T");
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, false), "C#B_T");
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_X, 0, false), "DB_T");
@@ -189,6 +228,7 @@ public class Imagepage extends JPanel {
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_J, 0, false), "A#B_T");
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_M, 0, false), "BB_T");
 
+        // TOP ROW RELEASE
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, true), "CT_R");
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_3, 0, true), "C#T_R");
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0, true), "DT_R");
@@ -202,6 +242,7 @@ public class Imagepage extends JPanel {
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_8, 0, true), "A#T_R");
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_I, 0, true), "BT_R");
 
+        // BOTTOM ROW RELEASE
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, 0, true), "CB_R");
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, true), "C#B_R");
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_X, 0, true), "DB_R");
@@ -215,28 +256,36 @@ public class Imagepage extends JPanel {
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_J, 0, true), "A#B_R");
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_M, 0, true), "BB_R");
 
+        // BUTTON PRESSED ACTION
         Action onPressed = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // get the index of the associated soundwave
                 int index = convertBindingToIndex(e.getActionCommand());
 
                 if(index != -1){
+                    // start playing the associated soundwave
                     StartApp.waveManager.triggerWaveGeneration(index);
                     if (virtualKeyboardVisualizer != null){
+                        // if the visualizer is showing show that we are pressing a button
                         virtualKeyboardVisualizer.setPressed(index , true);
                     }
                 }
             }
         };
 
+        // BUTTON RELEASE ACTION
         Action onRelease = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // get the index of the associated soundwave
                 int index = convertBindingToIndex(e.getActionCommand());
 
                 if(index != -1){
+                    // stop the soundwave generation
                     StartApp.waveManager.setShouldGenerate(false, index);
                     if (virtualKeyboardVisualizer != null){
+                        // if the visualizer is showing stop pressing the button
                         virtualKeyboardVisualizer.setPressed(index , false);
                     }
                 }
@@ -244,7 +293,7 @@ public class Imagepage extends JPanel {
         };
 
         ActionMap actionMap = getActionMap();
-
+        /* link all the possibile bindings the the action */
         actionMap.put("CT_T", onPressed);
         actionMap.put("C#T_T", onPressed);
         actionMap.put("DT_T", onPressed);
@@ -297,7 +346,12 @@ public class Imagepage extends JPanel {
         actionMap.put("A#B_R", onRelease);
         actionMap.put("BB_R", onRelease);
     }
-    
+
+    /**
+     * Retrieves the associated soundwave index from a keyboard action command
+     * @param actionCommand keyboard action command es. 'w' '3' 'u'...
+     * @return the associated soundwave index
+     */
     private int convertBindingToIndex(String actionCommand) { //TODO convert to hashtable lookup
         return switch (actionCommand) {
             case "w" -> 1;

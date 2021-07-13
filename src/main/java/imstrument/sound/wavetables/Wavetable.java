@@ -21,8 +21,6 @@ public class Wavetable {
     public Wavetable(int wavetableIndex) {
         this.wavetableIndex = wavetableIndex;
 
-        final int testLength = 3;
-
         readFromFile();
     }
 
@@ -30,17 +28,9 @@ public class Wavetable {
         this(0);
     }
 
-    public Wavetable(float[] wavetable) {
-        this.wavetables = new float[][]{wavetable};
-        this.wavetableIndex = 0;
-    }
 
     public float[] getSamples(int wavetableIndex) {
         return wavetables[wavetableIndex];
-    }
-
-    public float[] getSamples() {
-        return wavetables[this.wavetableIndex];
     }
 
     public int getWavetableNumber() {
@@ -60,28 +50,6 @@ public class Wavetable {
     /* static helper functions */
     public static double getStepSize(double frequency) {
         return frequency * FUNDAMENTAL_FREQUENCY;
-    }
-
-    /* import export to file */
-    public void writeToFile() {
-        //todo generalize
-        try {
-            //TODO se file non è trovato crearlo
-            FileOutputStream fileOutputStream = new FileOutputStream(this.getClass().getResource("/imstrument/wavetables/SINE-C2.wav").getPath());
-
-            int offset = 0;
-            for (int i = 0; i < wavetables.length; i++) {
-                byte[] byteArray = DatatypeConversion.FloatArray2ByteArray(wavetables[i]);
-                fileOutputStream.write(byteArray, 0, byteArray.length);
-                fileOutputStream.flush();
-                offset += byteArray.length;
-            }
-            fileOutputStream.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void readFromFile() {

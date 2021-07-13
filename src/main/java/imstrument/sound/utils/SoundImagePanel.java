@@ -1,31 +1,26 @@
 package imstrument.sound.utils;
 
 import imstrument.algorithm.AlgorithmUnit;
-import imstrument.sound.waves.Soundwaves;
 import imstrument.sound.waves.WaveManager;
 import imstrument.start.StartApp;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.net.URL;
 
 /**
  * extension of ImagePanel class providing audio generation on triggers
  */
 public class SoundImagePanel extends ImagePanel{
-
+    /**
+     * tells if it will draw the mouse or not
+     */
     private boolean drawMouse;
 
+    /**
+     * current mouse location
+     */
     Point mousePoint;
-
-
-    public SoundImagePanel(URL url, Dimension margins, Point startingPoint, boolean centerimage) {
-        super(url, margins, startingPoint, centerimage);
-
-        drawMouse = false;
-        this.addMouseListener(new ImageMouseListener());
-    }
 
     public SoundImagePanel(){
         super();
@@ -41,6 +36,7 @@ public class SoundImagePanel extends ImagePanel{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         if(drawMouse) {
+            // draw each unit's rectangle
             for (AlgorithmUnit unit : StartApp.algorithm.getUnits()) {
                 int[] rect = unit.getRect();
 
@@ -62,24 +58,32 @@ public class SoundImagePanel extends ImagePanel{
     private class ImageMouseListener extends MouseAdapter {
         @Override
         public void mousePressed(MouseEvent e) {
-            computeSoundwave(e);
+            // when clicked compute the soundwave at that click
+            extractMousePoint(e);
+            computeSoundwave();
         }
 
         @Override
         public void mouseMoved(MouseEvent e) {
+            // get the mouse location
             extractMousePoint(e);
+            // check if the mouse should be rendered in the image
             drawMouse = SoundImagePanel.this.contains(mousePoint);
+            // update the state of the panel
             updateUnitActiveState();
+            // repaint
             SoundImagePanel.this.repaint();
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
+            // stop playing the Mouse soundwave when the mouse is released
             StartApp.waveManager.setShouldGenerate(false, WaveManager.MOUSE_SOUNDWAVE_INDEX);
         }
 
         @Override
         public void mouseEntered(MouseEvent e) {
+            // if there's a loaded image then draw the mouse when it enters the component
             if(scaledImage != null) {
                 drawMouse = true;
             }
@@ -87,9 +91,15 @@ public class SoundImagePanel extends ImagePanel{
 
         @Override
         public void mouseExited(MouseEvent e) {
+            // stop the mouse drawing when it exits
             drawMouse = false;
         }
 
+        /**
+         *  sets the active state of a algorithm unit based on the mouse location
+         *  if a unit has some part of its rectangle outside the boundary of the scaled image
+         *  then it will be set to inactive
+         */
         private void updateUnitActiveState(){
             for(AlgorithmUnit unit : StartApp.algorithm.getUnits()){
                 int[] rect = unit.getRect();
@@ -99,15 +109,21 @@ public class SoundImagePanel extends ImagePanel{
             }
         }
 
+        /**
+         * exctracts the mouse location from a mouse event
+         * @param e mouse event from which to extract the mouse location
+         */
         private void extractMousePoint(MouseEvent e){
             mousePoint = e.getPoint();
             mousePoint.x -= currentStartCorner.x;
             mousePoint.y -= currentStartCorner.y;
         }
 
-        private void computeSoundwave(MouseEvent e){
+        /**
+         * compute the soundwave trough the currently selected algorithm and play it
+         */
+        private void computeSoundwave(){
             if (scaledImage != null) {
-                extractMousePoint(e);
                 updateUnitActiveState();
 
                 StartApp.algorithm.computeAndAssign(
@@ -119,7 +135,7 @@ public class SoundImagePanel extends ImagePanel{
                 /* stops the audio thread from starting over and over again for performance and quality */
                 if(!StartApp.algorithm.isAllUnitsDeactivated()) {
                     StartApp.waveManager.triggerWaveGeneration(WaveManager.MOUSE_SOUNDWAVE_INDEX);
-                    if (!StartApp.audioThread.isRunning()) {
+                    if (StartApp.audioThread.isNotRunning()) {
                         StartApp.audioThread.triggerPlayback();
                     }
                 }

@@ -12,10 +12,22 @@ import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * Jframe used to select an already created algorithm and to access the algorithm creation window
+ */
 public class ControlWindow extends JFrame {
+    /**
+     * component displaying the current selected algorithm
+     */
     final AlgorithmDisplay algorithmDisplay;
 
+    /**
+     * list of all the created algorithms inside the storing folder
+     */
     final ArrayList<String> algorithmNames;
+    /**
+     * component showing list of names
+     */
     final JList<String> algorithmList;
 
     public ControlWindow(){
@@ -24,19 +36,23 @@ public class ControlWindow extends JFrame {
 
         /* left sided of the control panel */
         algorithmNames = new ArrayList<>();
+        // retrieve all the algorithm names from the storage folder
         populateAlgorithmList(Algorithm.ALGORITHM_FOLDER);
 
+        // create the visuals for the name list
         DefaultListModel<String> algorithmListModel = new DefaultListModel<>();
         algorithmListModel.addAll(0, algorithmNames);
         algorithmList = new JList<>(algorithmListModel);
 
+        // button used to access the algorithm creation menu
         JButton createAlgorithmButton = new JButton("Create");
         createAlgorithmButton.addActionListener(e -> {
             SwingUtilities.invokeLater(() -> new CustomAlgorithmCreator(true));
-            dispose();
+            dispose(); // dispose of the current jframe so it doesn't clutter the view
         });
         createAlgorithmButton.setVerticalAlignment(JButton.BOTTOM);
 
+        // add everything to a panel that is placed on the left side of the jframe
         JPanel algorithmListPanel = new JPanel(new BorderLayout());
         algorithmListPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 50));
         algorithmListPanel.add(new JScrollPane(algorithmList), BorderLayout.CENTER);
@@ -61,6 +77,8 @@ public class ControlWindow extends JFrame {
 
         descriptionPanel.add(displayPanel, BorderLayout.CENTER);
 
+        // description panel buttons
+        // select button
         JPanel buttonContainer = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton selectAlgorithmButton = new JButton("Select");
         selectAlgorithmButton.addActionListener(e ->{
@@ -78,6 +96,8 @@ public class ControlWindow extends JFrame {
 
             if(loaded) algorithmDisplay.repaint();
         });
+
+        // delete button
         JButton deleteAlgorithmButton = new JButton("Delete");
         deleteAlgorithmButton.addActionListener(e ->{
             String selectedAlgorithm = algorithmList.getSelectedValue();
@@ -104,6 +124,11 @@ public class ControlWindow extends JFrame {
         requestFocus(); // requestes focus for event dispatching
     }
 
+    /**
+     * Populates the algorithmName array list of string with the name of files
+     * with the extension Algorithm.fileExtensdion given a folder location
+     * @param folder folder location in which to look for the files
+     */
     private void populateAlgorithmList(final File folder) {
         for (final File fileEntry : Objects.requireNonNull(folder.listFiles())) {
             String name = fileEntry.getName();
@@ -115,14 +140,11 @@ public class ControlWindow extends JFrame {
         }
     }
 
-    private void selectCurrentAlgorithm(){
-        String currentAlgorithm = StartApp.algorithm.getCurrentName();
-        if(currentAlgorithm.equals("")) return;
-
-        algorithmList.setSelectedValue(currentAlgorithm, false);
-        algorithmDisplay.repaint();
-    }
-
+    /**
+     * Gets the extension of the filename
+     * @param filename from which to extract the extension
+     * @return the extension of the given filename string
+     */
     private String getExtension(String filename) {
         int index = filename.lastIndexOf('.');
         return (index == -1) ? "" : filename.substring(index + 1);

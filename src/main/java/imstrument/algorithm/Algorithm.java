@@ -131,7 +131,6 @@ public class Algorithm {
         // Create the soundwaves that will be used to generate the new one from the values that were computed
         Soundwave carrier = null, prevSoundwave = null, currentSoundwave;
         // create a carrier soundwave modulated by soundwaveNumber waves
-        System.out.println(soundwaveNumber);
         for(int currentSoundwaveNumber = 0; currentSoundwaveNumber < soundwaveNumber + 1; currentSoundwaveNumber++){
             // build the soundwave from the outside in  -> carrier to inner most modulator
             // the soundwaves that have a modulator need an additional parameter ( modulation index )
