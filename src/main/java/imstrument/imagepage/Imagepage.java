@@ -5,6 +5,7 @@ import imstrument.algorithm.ControlWindow;
 import imstrument.sound.utils.SoundImagePanel;
 import imstrument.sound.waves.ModulatingWaveNumberSpinner;
 import imstrument.sound.waves.WaveManager;
+import imstrument.sound.wavetables.WavetableSelector;
 import imstrument.start.StartApp;
 import imstrument.start.TopContainer;
 import imstrument.virtualkeyboard.VirtualKeyboardVisualizer;
@@ -93,6 +94,7 @@ public class Imagepage extends JPanel {
         algorithmControls.addActionListener(e -> SwingUtilities.invokeLater(ControlWindow::new));
         algorithmsMenu.add(algorithmControls);
 
+
         menuBar.add(algorithmsMenu);
 
         /* visualize menu */
@@ -119,9 +121,7 @@ public class Imagepage extends JPanel {
         JMenu soundMenu = new JMenu("Sound");
         // wavetable selector
         JMenuItem wavetableSelector = new JMenuItem("Select wavetable");
-        wavetableSelector.addActionListener(e -> {
-            // something
-        });
+        wavetableSelector.addActionListener(e -> SwingUtilities.invokeLater(WavetableSelector::new));
         soundMenu.add(wavetableSelector);
 
         // imports the current mouse soundwave in the top keyboard

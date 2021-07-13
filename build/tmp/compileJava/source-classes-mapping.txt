@@ -1,7 +1,7 @@
 imstrument/sound/waves/ModulatingWaveNumberSpinner.java
  imstrument.sound.waves.ModulatingWaveNumberSpinner
-imstrument/sound/waves/Soundwave.java
- imstrument.sound.waves.Soundwave
+imstrument/sound/utils/DatatypeConversion.java
+ imstrument.sound.utils.DatatypeConversion
 imstrument/homepage/Homepage.java
  imstrument.homepage.Homepage
 imstrument/sound/wavetables/Wavetable.java
@@ -47,10 +47,9 @@ imstrument/algorithm/UnitWindow.java
  imstrument.algorithm.UnitWindow$JTableButtonRenderer
 imstrument/algorithm/operators/Blue.java
  imstrument.algorithm.operators.Blue
-imstrument/imagepage/Imagepage.java
- imstrument.imagepage.Imagepage
- imstrument.imagepage.Imagepage$1
- imstrument.imagepage.Imagepage$2
+imstrument/virtualkeyboard/VirtualKeyboardVisualizer.java
+ imstrument.virtualkeyboard.VirtualKeyboardVisualizer
+ imstrument.virtualkeyboard.VirtualKeyboardVisualizer$PianoKeyAdapter
 imstrument/sound/utils/NoteFrequencyMapping.java
  imstrument.sound.utils.NoteFrequencyMapping
 imstrument/algorithm/OperatorColorLegend.java
@@ -84,6 +83,8 @@ imstrument/sound/utils/SoundImagePanel.java
  imstrument.sound.utils.SoundImagePanel$ImageMouseListener
 imstrument/globals/DimensionComparator.java
  imstrument.globals.DimensionComparator
+imstrument/algorithm/operators/NotGreen.java
+ imstrument.algorithm.operators.NotGreen
 imstrument/algorithm/ControlWindow.java
  imstrument.algorithm.ControlWindow
 imstrument/algorithm/CustomAlgorithmCreator.java
@@ -92,10 +93,11 @@ imstrument/algorithm/CustomAlgorithmCreator.java
  imstrument.algorithm.CustomAlgorithmCreator$AlgorithmCreationSynchronizer
 imstrument/algorithm/operators/Green.java
  imstrument.algorithm.operators.Green
-imstrument/virtualkeyboard/VirtualKeyboardVisualizer.java
- imstrument.virtualkeyboard.VirtualKeyboardVisualizer
- imstrument.virtualkeyboard.VirtualKeyboardVisualizer$PianoKeyAdapter
-imstrument/algorithm/operators/NotGreen.java
- imstrument.algorithm.operators.NotGreen
-imstrument/sound/utils/DatatypeConversion.java
- imstrument.sound.utils.DatatypeConversion
+imstrument/sound/waves/Soundwave.java
+ imstrument.sound.waves.Soundwave
+imstrument/sound/wavetables/WavetableSelector.java
+ imstrument.sound.wavetables.WavetableSelector
+imstrument/imagepage/Imagepage.java
+ imstrument.imagepage.Imagepage
+ imstrument.imagepage.Imagepage$1
+ imstrument.imagepage.Imagepage$2

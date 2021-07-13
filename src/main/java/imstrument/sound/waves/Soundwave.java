@@ -1,6 +1,7 @@
 package imstrument.sound.waves;
 
 import imstrument.sound.wavetables.Wavetable;
+import imstrument.sound.wavetables.WavetableSelector;
 
 import java.security.InvalidParameterException;
 
@@ -52,7 +53,7 @@ public class Soundwave {
 
     public Soundwave(){
         this(
-                new Wavetable("14-SinFormant"), // todo get default
+                new Wavetable(WavetableSelector.activeWavetableName),
                 440,
                 new Envelope(),
                 new Envelope(),
@@ -77,7 +78,7 @@ public class Soundwave {
         }
 
         /* assign base values */
-        wavetable = new Wavetable("14-SinFormant"); // TODO default
+        wavetable = new Wavetable(WavetableSelector.activeWavetableName);
         wavetable.setWavetableIndex((int) Math.round((wavetable.getWavetableNumber() - 1)*values[0]));
 
         //frequency = WaveManager.MOUSE_FREQUENCY*modulatingFrequencyMultipliers[(int) (modulatingFrequencyMultipliers.length*values[1])];
@@ -197,4 +198,11 @@ public class Soundwave {
     }
     public double getFrequency() { return frequency; }
     public void setModulatingWave(Soundwave modulating) {this.modulatingWave = modulating;}
+
+    public void setWavetable(Wavetable wavetable) {
+        this.wavetable = wavetable;
+        if(this.modulatingWave != null){
+            this.modulatingWave.setWavetable(wavetable);
+        }
+    }
 }
