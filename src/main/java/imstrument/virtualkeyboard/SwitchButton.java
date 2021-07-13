@@ -24,8 +24,11 @@ public class SwitchButton extends JButton {
                 img.getScaledInstance(35,10, java.awt.Image.SCALE_SMOOTH);
                 this.setIcon(new ImageIcon(img));
             } catch (IOException e) {
-                e.printStackTrace(); //TODO aggiungi alternative
+                this.setText("Right arrow");
+            } catch (IllegalArgumentException e){
+                this.setText("Right Arrow");
             }
+
         }
         else {
             try {
@@ -33,7 +36,9 @@ public class SwitchButton extends JButton {
                 img.getScaledInstance(35,10, java.awt.Image.SCALE_SMOOTH);
                 this.setIcon(new ImageIcon(img));
             } catch (IOException e) {
-                e.printStackTrace(); //TODO aggiungi alternative
+                this.setText("Left arrow");
+            }catch (IllegalArgumentException e){
+                this.setText("Left Arrow");
             }
         }
 
