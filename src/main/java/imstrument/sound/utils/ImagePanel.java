@@ -66,15 +66,8 @@ public class ImagePanel extends JPanel {
         /* attempt to retrieve image from path */
         try {
             this.image = ImageIO.read(url);
-        } catch (IOException e) {
-            //TODO temporary stack trace and system print
-            e.printStackTrace();
-            System.out.println("Image not found at path: " + url.toString());
-
-            this.image = null;
-        } catch (IllegalArgumentException e) {
-            //TODO temporary stack trace and system print
-            //e.printStackTrace();
+        } catch (IOException | IllegalArgumentException e) {
+            // if an error has occurred just don't load the initial image
             this.image = null;
         }
     }

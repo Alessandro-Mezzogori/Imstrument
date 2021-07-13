@@ -188,8 +188,7 @@ public class Imagepage extends JPanel {
                 // retrieve the selected image
                 this.soundImagePanel.setImage(ImageIO.read(imageChooser.getSelectedFile()));
             } catch (IOException e) {
-                //TODO notifica utente in caso di errore e sopprimi chiusura
-                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "An error has occurred during the loading of the image, retry");
             }
             //System.out.println(imageChooser.getSelectedFile().getName());
         }
@@ -352,7 +351,7 @@ public class Imagepage extends JPanel {
      * @param actionCommand keyboard action command es. 'w' '3' 'u'...
      * @return the associated soundwave index
      */
-    private int convertBindingToIndex(String actionCommand) { //TODO convert to hashtable lookup
+    private int convertBindingToIndex(String actionCommand) {
         return switch (actionCommand) {
             case "w" -> 1;
             case "3" -> 2;

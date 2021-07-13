@@ -129,35 +129,34 @@ public class CustomAlgorithmCreator extends JFrame {
         }
 
         File newFile = new File(Algorithm.ALGORITHM_FOLDER.toString() + "/" + name + "." + Algorithm.fileExtension) ;
-        // if the file exists then ask if it wants to overwrite it
-        if( newFile.exists() ){
-            int input = JOptionPane.showConfirmDialog(null, name + " already present, overwrite it ?");
-            // if the result is not ok exit
-            if( input != JOptionPane.OK_OPTION ) { return; }
-        }
-
         // create / open the file and write the algorithm to it
         try {
-            boolean isCreated = newFile.createNewFile(); // TODO notify user if it doesn't go well
+            // create file if it exists then ask to overwrite it
+            if(!newFile.createNewFile()){
+                if( JOptionPane.showConfirmDialog(null, name + " already present, overwrite it ?") != JOptionPane.OK_OPTION ) {
+                    return;
+                }
+            }
+
             // create a string builder object to concatenate all the unit string representation
             StringBuilder stringBuilder = new StringBuilder();
             for(AlgorithmUnit unit : groups){
                 stringBuilder.append(unit.toString());
             }
 
-            // create buffere write from the opened filed
+            // create buffer write from the opened filed
             BufferedWriter writer = new BufferedWriter(new FileWriter(newFile, false));
             // write the algorithm string representation
             writer.write(stringBuilder.toString());
             // close and save file
             writer.close();
+
+            // reset the algorithm creation environment only if there wasn't any exception
+            clear();
         } catch (IOException ioException) {
-            // shouldn't go here if it does ignore
-            // ioException.printStackTrace();
+            JOptionPane.showMessageDialog(null, "An error has occurred during the saving of the algorithm, retry");
         }
 
-        // reset the algorithm creation environment
-        clear();
     }
 
     /**

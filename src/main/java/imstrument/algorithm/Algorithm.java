@@ -53,7 +53,7 @@ public class Algorithm {
 
         // create algorithm storing folder if it doesn't exists
         if(!ALGORITHM_FOLDER.exists()){
-            boolean mkdir = ALGORITHM_FOLDER.mkdir(); // TODO notify user if default folder is not created
+            boolean mkdir = ALGORITHM_FOLDER.mkdir();
         }
     }
 

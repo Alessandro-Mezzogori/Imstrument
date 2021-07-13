@@ -91,7 +91,7 @@ public class ControlWindow extends JFrame {
             } catch (NoSuchFileException noSuchFileExceptionException) {
                 /* if there's no file do nothing */
             } catch (IOException ioException){
-                /* TODO catch*/
+                /* if there's an exception set loaded will be set to false so do nothing*/
             }
 
             if(loaded) algorithmDisplay.repaint();

@@ -18,7 +18,7 @@ public class StartApp {
     public static void main(String[] args){
         /* create default folder if it doesn't exists */
         if(!defaultFolder.exists()){
-            boolean mkdir = defaultFolder.mkdir();//TODO notify user if default folder is not created  (mkdir = false)
+            boolean mkdir = defaultFolder.mkdir();
         }
 
         Wavetable wavetable = new Wavetable(0);
