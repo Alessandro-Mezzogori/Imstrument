@@ -77,7 +77,7 @@ public class CustomAlgorithmCreator extends JFrame {
 
         // create the save button
         JButton saveButton = new JButton("Save");
-        saveButton.addActionListener(e -> saveAlgorithm(algorithmNameField.getName()));
+        saveButton.addActionListener(e -> saveAlgorithm(algorithmNameField.getText()));
 
         // go back to a blank slate button
         JButton clearButton = new JButton("Clear");
@@ -146,7 +146,7 @@ public class CustomAlgorithmCreator extends JFrame {
             }
 
             // create buffere write from the opened filed
-            BufferedWriter writer = new BufferedWriter(new FileWriter(newFile));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(newFile, false));
             // write the algorithm string representation
             writer.write(stringBuilder.toString());
             // close and save file
