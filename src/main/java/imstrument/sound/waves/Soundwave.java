@@ -52,7 +52,7 @@ public class Soundwave {
 
     public Soundwave(){
         this(
-                new Wavetable(0),
+                new Wavetable("14-SinFormant"), // todo get default
                 440,
                 new Envelope(),
                 new Envelope(),
@@ -77,7 +77,7 @@ public class Soundwave {
         }
 
         /* assign base values */
-        wavetable = new Wavetable();
+        wavetable = new Wavetable("14-SinFormant"); // TODO default
         wavetable.setWavetableIndex((int) Math.round((wavetable.getWavetableNumber() - 1)*values[0]));
 
         //frequency = WaveManager.MOUSE_FREQUENCY*modulatingFrequencyMultipliers[(int) (modulatingFrequencyMultipliers.length*values[1])];

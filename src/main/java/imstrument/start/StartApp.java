@@ -21,16 +21,13 @@ public class StartApp {
             boolean mkdir = defaultFolder.mkdir();
         }
 
-        Wavetable wavetable = new Wavetable(0);
-        wavetable.readFromFile();
-
         /* initialize algorithm */
         algorithm = new Algorithm();
 
         /* initialize audio thread and WaveManager*/
         waveManager = new WaveManager();
 
-         audioThread = new AudioThread(() -> {
+        audioThread = new AudioThread(() -> {
             if (waveManager.isGeneratingSamples()) {
                 short[] samples = new short[AudioThread.BUFFER_SIZE];
                 for (int i = 0; i < AudioThread.BUFFER_SIZE; i++) {

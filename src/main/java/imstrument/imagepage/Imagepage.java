@@ -117,6 +117,13 @@ public class Imagepage extends JPanel {
         /* sound menu */
         // used to manipulate the keyboard
         JMenu soundMenu = new JMenu("Sound");
+        // wavetable selector
+        JMenuItem wavetableSelector = new JMenuItem("Select wavetable");
+        wavetableSelector.addActionListener(e -> {
+            // something
+        });
+        soundMenu.add(wavetableSelector);
+
         // imports the current mouse soundwave in the top keyboard
         JMenuItem toKeyboard0 = new JMenuItem("Save to top keyboard");
         toKeyboard0.addActionListener(

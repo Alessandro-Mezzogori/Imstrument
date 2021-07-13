@@ -84,7 +84,7 @@ public class ImagePanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (image != null) {
-            /* prepering objects to do the centering math and/or rendering of the image*/
+            /* preparing objects to do the centering math and/or rendering of the image*/
             Dimension parentSize = this.getSize();
             currentImageSize = this.getPreferredSize();
             this.currentStartCorner.x = this.startingPoint.x;

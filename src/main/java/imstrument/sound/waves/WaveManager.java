@@ -53,7 +53,7 @@ public class WaveManager{
         // 0 -> click wave, 1-24 -> keyboard triggered waves
         int waveCount = 25;
         for(int i = 0; i < waveCount; i++)
-            this.soundwaves.add(new Soundwave(new Wavetable(0), 0));
+            this.soundwaves.add(new Soundwave(new Wavetable(0, "14-SinFormant"), 0));
 
         shouldGenerate = new ArrayList<>(Arrays.asList(new Boolean[soundwaves.size()]));
         Collections.fill(shouldGenerate, Boolean.FALSE);
@@ -91,7 +91,7 @@ public class WaveManager{
         }
 
         this.generatingSamples = isGenerating;
-        return (short) (sample*Short.MAX_VALUE/soundwaves.size()); //TODO implement interpolation and normalization
+        return (short) (sample*Short.MAX_VALUE/5); //TODO implement interpolation and normalization
     }
 
     /**

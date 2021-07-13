@@ -1,5 +1,6 @@
 package imstrument.sound.openal;
 
+import imstrument.sound.wavetables.Wavetable;
 import org.lwjgl.openal.AL;
 import org.lwjgl.openal.ALC;
 
@@ -17,10 +18,6 @@ public class AudioThread extends Thread {
      * Number of buffers created
      */
     static final int BUFFER_COUNT = 8;
-    /**
-     * sample rate of the audio
-     */
-    public static final int SAMPLE_RATE = 44100;
 
     private final Supplier<short[]> bufferSupplier;
     /**
@@ -149,7 +146,7 @@ public class AudioThread extends Thread {
         // get the current buffer reference
         int buf = buffers[bufferIndex++];
         // fill the buffer with the samples
-        alBufferData(buf, AL_FORMAT_MONO16, samples, SAMPLE_RATE);
+        alBufferData(buf, AL_FORMAT_MONO16, samples, Wavetable.SAMPLE_RATE);
         // queue the buffers to the source
         alSourceQueueBuffers(source, buf);
         // update the index to loop back if it needs to

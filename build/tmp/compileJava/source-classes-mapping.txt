@@ -19,9 +19,8 @@ imstrument/algorithm/operators/Blackness.java
  imstrument.algorithm.operators.Blackness
 imstrument/sound/wavetables/WaveTableEnum.java
  imstrument.sound.wavetables.WaveTableEnum
-imstrument/virtualkeyboard/VirtualKeyboardVisualizer.java
- imstrument.virtualkeyboard.VirtualKeyboardVisualizer
- imstrument.virtualkeyboard.VirtualKeyboardVisualizer$PianoKeyAdapter
+imstrument/algorithm/AlgorithmCanvas.java
+ imstrument.algorithm.AlgorithmCanvas
 imstrument/sound/openal/AudioThread.java
  imstrument.sound.openal.AudioThread
 imstrument/sound/utils/Note.java
@@ -41,8 +40,11 @@ imstrument/sound/openal/OpenAlException.java
  imstrument.sound.openal.OpenAlException
 imstrument/algorithm/Algorithm.java
  imstrument.algorithm.Algorithm
-imstrument/sound/utils/DatatypeConversion.java
- imstrument.sound.utils.DatatypeConversion
+imstrument/algorithm/UnitWindow.java
+ imstrument.algorithm.UnitWindow
+ imstrument.algorithm.UnitWindow$1
+ imstrument.algorithm.UnitWindow$JTableButtonMouseListener
+ imstrument.algorithm.UnitWindow$JTableButtonRenderer
 imstrument/algorithm/operators/Blue.java
  imstrument.algorithm.operators.Blue
 imstrument/imagepage/Imagepage.java
@@ -71,31 +73,29 @@ imstrument/algorithm/operators/Opacity.java
  imstrument.algorithm.operators.Opacity
 imstrument/algorithm/operators/Operator.java
  imstrument.algorithm.operators.Operator
-imstrument/algorithm/operators/Green.java
- imstrument.algorithm.operators.Green
+imstrument/algorithm/AlgoUnitTableModel.java
+ imstrument.algorithm.AlgoUnitTableModel
 imstrument/globals/GlobalSetting.java
  imstrument.globals.GlobalSetting
-imstrument/algorithm/operators/NotGreen.java
- imstrument.algorithm.operators.NotGreen
+imstrument/virtualkeyboard/SwitchButton.java
+ imstrument.virtualkeyboard.SwitchButton
 imstrument/sound/utils/SoundImagePanel.java
  imstrument.sound.utils.SoundImagePanel
  imstrument.sound.utils.SoundImagePanel$ImageMouseListener
 imstrument/globals/DimensionComparator.java
  imstrument.globals.DimensionComparator
-imstrument/virtualkeyboard/SwitchButton.java
- imstrument.virtualkeyboard.SwitchButton
 imstrument/algorithm/ControlWindow.java
  imstrument.algorithm.ControlWindow
 imstrument/algorithm/CustomAlgorithmCreator.java
  imstrument.algorithm.CustomAlgorithmCreator
  imstrument.algorithm.CustomAlgorithmCreator$1
  imstrument.algorithm.CustomAlgorithmCreator$AlgorithmCreationSynchronizer
-imstrument/algorithm/UnitWindow.java
- imstrument.algorithm.UnitWindow
- imstrument.algorithm.UnitWindow$1
- imstrument.algorithm.UnitWindow$JTableButtonMouseListener
- imstrument.algorithm.UnitWindow$JTableButtonRenderer
-imstrument/algorithm/AlgoUnitTableModel.java
- imstrument.algorithm.AlgoUnitTableModel
-imstrument/algorithm/AlgorithmCanvas.java
- imstrument.algorithm.AlgorithmCanvas
+imstrument/algorithm/operators/Green.java
+ imstrument.algorithm.operators.Green
+imstrument/virtualkeyboard/VirtualKeyboardVisualizer.java
+ imstrument.virtualkeyboard.VirtualKeyboardVisualizer
+ imstrument.virtualkeyboard.VirtualKeyboardVisualizer$PianoKeyAdapter
+imstrument/algorithm/operators/NotGreen.java
+ imstrument.algorithm.operators.NotGreen
+imstrument/sound/utils/DatatypeConversion.java
+ imstrument.sound.utils.DatatypeConversion

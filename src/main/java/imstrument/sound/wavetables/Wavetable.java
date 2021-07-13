@@ -1,6 +1,8 @@
 package imstrument.sound.wavetables;
 
+import imstrument.sound.openal.AudioThread;
 import imstrument.sound.utils.DatatypeConversion;
+import imstrument.start.StartApp;
 
 import java.io.*;
 import java.lang.reflect.Array;
@@ -11,21 +13,56 @@ import java.io.FileInputStream;
 import java.util.Arrays;
 
 public class Wavetable {
+    /**
+     * content of the wavetable
+     */
     private float[][] wavetables;
+    /**
+     * Starting wavetable index
+     */
     private int wavetableIndex;
 
+    /**
+     * size of a single wave in the wavetabel
+     */
     public static int WAVETABLE_SIZE = 2048;
-    public static int SAMPLE_RATE = 48000;
-    public static double FUNDAMENTAL_FREQUENCY = ((double) WAVETABLE_SIZE) / SAMPLE_RATE;
 
-    public Wavetable(int wavetableIndex) {
-        this.wavetableIndex = wavetableIndex;
+    /**
+     * sample rate of the wavetable
+     */
+    public static int SAMPLE_RATE = 44100;
 
-        readFromFile();
+    /**
+     * frequency of the wave if it would be played with an step increment of 1
+     */
+    public static double FUNDAMENTAL_FREQUENCY = ((double) WAVETABLE_SIZE) / Wavetable.SAMPLE_RATE;
+
+    /* wavetable storing */
+    /**
+     * wavetable storing folder
+     */
+    public static final File WAVETABLE_FOLDER = new File(StartApp.defaultFolder.toString() + "/wavetables/"); // folder of the saved algorithms
+    /**
+     * wavetable extension
+     */
+    public static final String fileExtension = "wav";
+
+
+    /* static block for folder creation */
+    static{
+        if(!WAVETABLE_FOLDER.exists()){
+            boolean mkdir = WAVETABLE_FOLDER.mkdir();
+        }
     }
 
-    public Wavetable(){
-        this(0);
+    public Wavetable(int wavetableIndex, String filename) {
+        this.wavetableIndex = wavetableIndex;
+
+        readFromFile(filename); //TODO default get currently selected
+    }
+
+    public Wavetable(String filename){
+        this(0, filename);
     }
 
 
@@ -52,9 +89,9 @@ public class Wavetable {
         return frequency * FUNDAMENTAL_FREQUENCY;
     }
 
-    public void readFromFile() {
+    public void readFromFile(String filename) {
         //todo generalize
-        File fileIn = new File(this.getClass().getResource("/imstrument/wavetables/14-SinFormant.wav").getPath());
+        File fileIn = new File(WAVETABLE_FOLDER.toString() + "/" + filename + "." + fileExtension);
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(fileIn);
             int bytesPerFrame = audioInputStream.getFormat().getFrameSize();
@@ -70,14 +107,14 @@ public class Wavetable {
                     test.add(Arrays.copyOf(audioBytes, audioBytes.length));
                 }
             } catch (Exception ex) {
-                // Handle the error...
+                ex.printStackTrace();
             }
 
             wavetables = new float[test.size()][];
             for(int i = 0; i < wavetables.length; i++)
                 wavetables[i] = DatatypeConversion.ByteArray2FloatArray(test.get(i), audioInputStream.getFormat().getSampleSizeInBits()/8);
         } catch (Exception e) {
-            // Handle the error...
+            e.printStackTrace();
         }
     }
 }
