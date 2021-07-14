@@ -17,16 +17,27 @@ import java.io.IOException;
  * JFrame to manage everything that concerns the ColorMap from the image
  */
 public class ColorMap extends JFrame {
-    ImagePanel imagePanel;
-    BufferedImage colormap;
-    JProgressBar progressBar;
 
+    // panel used to show the computed image
+    private ImagePanel imagePanel;
+    // computed image
+    private BufferedImage colormap;
+    // progress bar for the generation of the colormap
+    private JProgressBar progressBar;
+
+    /* saving the colormap */
+    // color map name input field
     JTextField colorMapName;
+    // save the colormap with the given name
     JButton saveButton;
 
+    /**
+     * Default save folder for the generated colormaps
+     */
     public static File DEFAULT_FOLDER = new File(StartApp.defaultFolder + "/colormaps/");
 
     static{
+        // create the default folder if it doesn't exists
         if(!DEFAULT_FOLDER.exists()){
             boolean mkdir = DEFAULT_FOLDER.mkdir();
         }
@@ -45,23 +56,30 @@ public class ColorMap extends JFrame {
             return;
         }
 
+        // create the container for the generated image
         imagePanel = new ImagePanel();
+        // create the progress bar showing the progress of the computation
         progressBar = new JProgressBar(JProgressBar.HORIZONTAL, 0, 100);
         progressBar.setStringPainted(true);
         progressBar.setValue(0);
 
+        // create the background task handleing the generation of the image
         SwingWorker<Void, Void> task = new ColorMapComputeTask(source);
+        // when the progress of the task is changed update the progress of the progress bar
         task.addPropertyChangeListener(evt -> {
             if ("progress".equals(evt.getPropertyName())) {
                 int progress = (Integer) evt.getNewValue();
                 progressBar.setValue(progress);
             }
         });
+        // start task execution in background
         task.execute();
 
+        // put the progress bar at the center of the border layout
         setLayout(new BorderLayout());
         add(progressBar, BorderLayout.CENTER);
 
+        // create the button panel to handle the saving of the generated image
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         colorMapName = new JTextField(40);
         // algorithm name field label so that it tells what is it for
@@ -71,11 +89,12 @@ public class ColorMap extends JFrame {
         saveButton = new JButton("Save");
         saveButton.setEnabled(false);
         saveButton.addActionListener(e ->{
+            // create a background to save the generated image to file
             SaveColorMapTask saveColorMapTask = new SaveColorMapTask();
             saveColorMapTask.execute();
         });
 
-
+        // add everything to the layout
         buttonPanel.add(colorMapNameLabel);
         buttonPanel.add(colorMapName);
         buttonPanel.add(saveButton);
@@ -130,6 +149,11 @@ public class ColorMap extends JFrame {
             return null;
         }
 
+        /**
+         * returns the average value from an array
+         * @param values array of doubles
+         * @return the average double
+         */
         private double averageValues(double[] values){
             double avg = 0.0;
 
@@ -144,23 +168,38 @@ public class ColorMap extends JFrame {
 
         @Override
         protected void done() {
+            // remove the progress bar
             ColorMap.this.remove(progressBar);
+            // add the imagepanel where the progress bar was
             ColorMap.this.add(imagePanel, BorderLayout.CENTER);
+            // valide the jframe so it updated the gui
             ColorMap.this.validate();
 
+            // set the shown image of the image panel to the generated image
             imagePanel.setImage(colormap);
+            // enable saving
             saveButton.setEnabled(true);
         }
     }
 
     private class SaveColorMapTask extends  SwingWorker<Void, Void>{
+        /**
+         * tells if the process was stopped by the user voluntarily
+         * used to change the done message of the SwingWorker
+         */
         boolean interrupted;
+        /**
+         * path of the saved generated image
+         */
         String colorMapFilename;
 
         @Override
         protected Void doInBackground() {
+            // set default of interrupted
             interrupted = false;
+            // create the pathname for the generated image file
             colorMapFilename = DEFAULT_FOLDER + "/" + colorMapName.getText() + ".png";
+            // create the file given its pathname
             File newFile = new File(colorMapFilename);
 
             // if there's a filename that has the same name ask to overwrite it
@@ -185,6 +224,7 @@ public class ColorMap extends JFrame {
         @Override
         protected void done() {
             super.done();
+            // if the task wasn't interrupted by the user show then the saving process has been completed without erro
             if(!interrupted){
                 JOptionPane.showMessageDialog(null, "The colormap has been save to file: " + colorMapFilename);
             }

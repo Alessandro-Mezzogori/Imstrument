@@ -1,7 +1,7 @@
 package imstrument.algorithm;
 
-import imstrument.algorithm.operators.*;
 import imstrument.algorithm.operators.Transparency;
+import imstrument.algorithm.operators.*;
 import imstrument.sound.waves.Soundwave;
 import imstrument.sound.waves.Soundwaves;
 import imstrument.start.StartApp;
