@@ -53,6 +53,52 @@ public class SoundImagePanel extends ImagePanel{
     }
 
     /**
+     * sets the current mouse point and computes the active state of the units
+     * @param point new mouse point
+     */
+    public void setMousePoint(Point point){
+        mousePoint = point;
+        updateUnitActiveState();
+    }
+
+    /**
+     *  sets the active state of a algorithm unit based on the mouse location
+     *  if a unit has some part of its rectangle outside the boundary of the scaled image
+     *  then it will be set to inactive
+     */
+    private void updateUnitActiveState(){
+        for(AlgorithmUnit unit : StartApp.algorithm.getUnits()){
+            int[] rect = unit.getRect();
+            int x = mousePoint.x + currentStartCorner.x + rect[0];
+            int y = mousePoint.y + currentStartCorner.y + rect[1];
+            unit.setActive(scaledImageContains(x, y) && scaledImageContains(x + rect[2], y + rect[3]));
+        }
+    }
+
+    /**
+     * compute the soundwave trough the currently selected algorithm and play it
+     */
+    private void computeSoundwave(){
+        if (scaledImage != null) {
+            updateUnitActiveState();
+
+            StartApp.algorithm.computeAndAssign(
+                    scaledImage,
+                    mousePoint,
+                    StartApp.waveManager.soundwaves.get(WaveManager.MOUSE_SOUNDWAVE_INDEX)
+            );
+
+            /* stops the audio thread from starting over and over again for performance and quality */
+            if(!StartApp.algorithm.isAllUnitsDeactivated()) {
+                StartApp.waveManager.triggerWaveGeneration(WaveManager.MOUSE_SOUNDWAVE_INDEX);
+                if (StartApp.audioThread.isNotRunning()) {
+                    StartApp.audioThread.triggerPlayback();
+                }
+            }
+        }
+    }
+
+    /**
      * Mouse adapter to link mouse click on the image to the generation of sound
      */
     private class ImageMouseListener extends MouseAdapter {
@@ -96,20 +142,6 @@ public class SoundImagePanel extends ImagePanel{
         }
 
         /**
-         *  sets the active state of a algorithm unit based on the mouse location
-         *  if a unit has some part of its rectangle outside the boundary of the scaled image
-         *  then it will be set to inactive
-         */
-        private void updateUnitActiveState(){
-            for(AlgorithmUnit unit : StartApp.algorithm.getUnits()){
-                int[] rect = unit.getRect();
-                int x = mousePoint.x + currentStartCorner.x + rect[0];
-                int y = mousePoint.y + currentStartCorner.y + rect[1];
-                unit.setActive(imageContains(x, y) && imageContains(x + rect[2], y + rect[3]));
-            }
-        }
-
-        /**
          * exctracts the mouse location from a mouse event
          * @param e mouse event from which to extract the mouse location
          */
@@ -117,29 +149,6 @@ public class SoundImagePanel extends ImagePanel{
             mousePoint = e.getPoint();
             mousePoint.x -= currentStartCorner.x;
             mousePoint.y -= currentStartCorner.y;
-        }
-
-        /**
-         * compute the soundwave trough the currently selected algorithm and play it
-         */
-        private void computeSoundwave(){
-            if (scaledImage != null) {
-                updateUnitActiveState();
-
-                StartApp.algorithm.computeAndAssign(
-                        scaledImage,
-                        mousePoint,
-                        StartApp.waveManager.soundwaves.get(WaveManager.MOUSE_SOUNDWAVE_INDEX)
-                );
-
-                /* stops the audio thread from starting over and over again for performance and quality */
-                if(!StartApp.algorithm.isAllUnitsDeactivated()) {
-                    StartApp.waveManager.triggerWaveGeneration(WaveManager.MOUSE_SOUNDWAVE_INDEX);
-                    if (StartApp.audioThread.isNotRunning()) {
-                        StartApp.audioThread.triggerPlayback();
-                    }
-                }
-            }
         }
     }
 }

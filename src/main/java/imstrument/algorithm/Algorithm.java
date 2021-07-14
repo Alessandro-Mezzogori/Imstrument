@@ -27,6 +27,7 @@ public class Algorithm {
     /* algorithm storing attributes */
     public static final String fileExtension = "imalg"; // file extension of an Imstrument algorithm
     public static final File ALGORITHM_FOLDER = new File(StartApp.defaultFolder.toString() + "/algorithm/"); // folder of the saved algorithms
+    public static final String EMPTY_ALGORITHM_NAME = "";
 
     /* assign to soundwave params */
     private static final double MAX_FREQUENCY = 2000.0; // max possible frequency permitted
@@ -59,7 +60,7 @@ public class Algorithm {
 
     public Algorithm(){
         units = new ArrayList<>();
-        currentName = "";
+        currentName = EMPTY_ALGORITHM_NAME;
     }
 
     /**

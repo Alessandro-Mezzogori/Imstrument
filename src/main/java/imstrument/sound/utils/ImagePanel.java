@@ -116,9 +116,9 @@ public class ImagePanel extends JPanel {
      * checks it the coordinates are inside the rendered imaged
      * @param x x coordinate
      * @param y y coordinate
-     * @return true if the corodinates are inside else false
+     * @return true if the coordinates are inside else false
      */
-    public boolean imageContains(int x, int y){
+    public boolean scaledImageContains(int x, int y){
         return (x >= currentStartCorner.x && x < currentStartCorner.x + currentImageSize.width) &&
                 (y >= currentStartCorner.y && y < currentStartCorner.y + currentImageSize.height);
     }
@@ -174,4 +174,10 @@ public class ImagePanel extends JPanel {
         this.image = image;
         this.repaint();
     }
+
+    /**
+     * returns the current displayed image
+     * @return the current displayed buffered image
+     */
+    public BufferedImage getImage(){ return image; }
 }

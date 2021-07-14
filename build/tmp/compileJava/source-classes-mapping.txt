@@ -1,7 +1,9 @@
-imstrument/sound/waves/ModulatingWaveNumberSpinner.java
- imstrument.sound.waves.ModulatingWaveNumberSpinner
 imstrument/sound/utils/DatatypeConversion.java
  imstrument.sound.utils.DatatypeConversion
+imstrument/sound/waves/ModulatingWaveNumberSpinner.java
+ imstrument.sound.waves.ModulatingWaveNumberSpinner
+imstrument/sound/waves/Soundwave.java
+ imstrument.sound.waves.Soundwave
 imstrument/homepage/Homepage.java
  imstrument.homepage.Homepage
 imstrument/sound/wavetables/Wavetable.java
@@ -47,9 +49,8 @@ imstrument/algorithm/UnitWindow.java
  imstrument.algorithm.UnitWindow$JTableButtonRenderer
 imstrument/algorithm/operators/Blue.java
  imstrument.algorithm.operators.Blue
-imstrument/virtualkeyboard/VirtualKeyboardVisualizer.java
- imstrument.virtualkeyboard.VirtualKeyboardVisualizer
- imstrument.virtualkeyboard.VirtualKeyboardVisualizer$PianoKeyAdapter
+imstrument/algorithm/operators/NotGreen.java
+ imstrument.algorithm.operators.NotGreen
 imstrument/sound/utils/NoteFrequencyMapping.java
  imstrument.sound.utils.NoteFrequencyMapping
 imstrument/algorithm/OperatorColorLegend.java
@@ -83,8 +84,8 @@ imstrument/sound/utils/SoundImagePanel.java
  imstrument.sound.utils.SoundImagePanel$ImageMouseListener
 imstrument/globals/DimensionComparator.java
  imstrument.globals.DimensionComparator
-imstrument/algorithm/operators/NotGreen.java
- imstrument.algorithm.operators.NotGreen
+imstrument/sound/wavetables/WavetableSelector.java
+ imstrument.sound.wavetables.WavetableSelector
 imstrument/algorithm/ControlWindow.java
  imstrument.algorithm.ControlWindow
 imstrument/algorithm/CustomAlgorithmCreator.java
@@ -93,10 +94,13 @@ imstrument/algorithm/CustomAlgorithmCreator.java
  imstrument.algorithm.CustomAlgorithmCreator$AlgorithmCreationSynchronizer
 imstrument/algorithm/operators/Green.java
  imstrument.algorithm.operators.Green
-imstrument/sound/waves/Soundwave.java
- imstrument.sound.waves.Soundwave
-imstrument/sound/wavetables/WavetableSelector.java
- imstrument.sound.wavetables.WavetableSelector
+imstrument/virtualkeyboard/VirtualKeyboardVisualizer.java
+ imstrument.virtualkeyboard.VirtualKeyboardVisualizer
+ imstrument.virtualkeyboard.VirtualKeyboardVisualizer$PianoKeyAdapter
+imstrument/colormap/ColorMap.java
+ imstrument.colormap.ColorMap
+ imstrument.colormap.ColorMap$ColorMapComputeTask
+ imstrument.colormap.ColorMap$SaveColorMapTask
 imstrument/imagepage/Imagepage.java
  imstrument.imagepage.Imagepage
  imstrument.imagepage.Imagepage$1

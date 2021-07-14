@@ -2,6 +2,7 @@ package imstrument.imagepage;
 
 /* imstrument packages */
 import imstrument.algorithm.ControlWindow;
+import imstrument.colormap.ColorMap;
 import imstrument.sound.utils.SoundImagePanel;
 import imstrument.sound.waves.ModulatingWaveNumberSpinner;
 import imstrument.sound.waves.WaveManager;
@@ -109,8 +110,13 @@ public class Imagepage extends JPanel {
                 e -> SwingUtilities.invokeLater(() -> virtualKeyboardVisualizer = new VirtualKeyboardVisualizer())
         );
         visualizeMenu.add(visualizeVirtualKeyboard);
-        menuBar.add(visualizeMenu);
 
+        // menu item that will show the color map manager
+        JMenuItem showColorMap = new JMenuItem("Show ColorMap");
+        showColorMap.addActionListener(e -> SwingUtilities.invokeLater(() -> { ColorMap colorMap = new ColorMap(soundImagePanel.getImage()); }));
+        visualizeMenu.add(showColorMap);
+
+        menuBar.add(visualizeMenu);
         /* mp3 management menu */
         // export menu
         JMenu mp3Menu = new JMenu("MP3");
