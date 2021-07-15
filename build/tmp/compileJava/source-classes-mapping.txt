@@ -59,8 +59,9 @@ imstrument/algorithm/OperatorColorLegend.java
  imstrument.algorithm.OperatorColorLegend
 imstrument/algorithm/operators/Red.java
  imstrument.algorithm.operators.Red
-imstrument/sound/utils/DatatypeConversion.java
- imstrument.sound.utils.DatatypeConversion
+imstrument/sound/utils/SoundImagePanel.java
+ imstrument.sound.utils.SoundImagePanel
+ imstrument.sound.utils.SoundImagePanel$ImageMouseListener
 imstrument/algorithm/AlgorithmDisplay.java
  imstrument.algorithm.AlgorithmDisplay
 imstrument/algorithm/operators/NotRed.java
@@ -78,8 +79,8 @@ imstrument/sound/waves/ModulatingWaveNumberSpinner.java
 imstrument/virtualkeyboard/VirtualKeyboardVisualizer.java
  imstrument.virtualkeyboard.VirtualKeyboardVisualizer
  imstrument.virtualkeyboard.VirtualKeyboardVisualizer$PianoKeyAdapter
-imstrument/sound/wavetables/Wavetable.java
- imstrument.sound.wavetables.Wavetable
+imstrument/sound/wavetables/WavetableSelector.java
+ imstrument.sound.wavetables.WavetableSelector
 imstrument/algorithm/Algorithm.java
  imstrument.algorithm.Algorithm
 imstrument/sound/waves/WaveManager.java
@@ -92,11 +93,10 @@ imstrument/algorithm/ControlWindow.java
  imstrument.algorithm.ControlWindow
 imstrument/virtualkeyboard/SwitchButton.java
  imstrument.virtualkeyboard.SwitchButton
-imstrument/sound/utils/SoundImagePanel.java
- imstrument.sound.utils.SoundImagePanel
- imstrument.sound.utils.SoundImagePanel$ImageMouseListener
-imstrument/sound/wavetables/WavetableSelector.java
- imstrument.sound.wavetables.WavetableSelector
+imstrument/sound/utils/DatatypeConversion.java
+ imstrument.sound.utils.DatatypeConversion
+imstrument/sound/wavetables/Wavetable.java
+ imstrument.sound.wavetables.Wavetable
 imstrument/start/StartApp.java
  imstrument.start.StartApp
 imstrument/sound/openal/Recorder.java

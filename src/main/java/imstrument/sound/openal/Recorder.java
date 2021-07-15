@@ -8,6 +8,7 @@ import org.lwjgl.system.CallbackI;
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.io.*;
+import java.time.LocalDateTime;
 
 public class Recorder {
     /**
@@ -22,6 +23,10 @@ public class Recorder {
      * recording file
      */
     private File recordingFile;
+    /**
+     * temporary storage file
+     */
+    private File tempFile;
     /**
      * audio format of the recording
      */
@@ -45,127 +50,79 @@ public class Recorder {
         if(isRecording) {
             // convert the input samples into the byte array
             byte[] buffer = DatatypeConversion.ShortArray2ByteArray(input);
+
+            // write the content of the buffer to the temporary file
             try {
                 fileWriter.write(buffer);
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
-
-//            // create an input stream with the created buffer as the source
-//            InputStream byteArrayInputStream = new ByteArrayInputStream(buffer);
-//            // create an audio input stream from the audio format and the given buffer
-//            AudioInputStream audioSample = new AudioInputStream(byteArrayInputStream, format, (long) buffer.length * Short.BYTES /format.getFrameSize());
-//            // write everything
-//            try {
-//                AudioSystem.write(audioSample, AudioFileFormat.Type.WAVE, recordingFile);
-//                audioSample.close();
-//                byteArrayInputStream.close();
-//                AudioSystem.
-//            } catch (IOException ioException) {
-//                // if there's an exception stop the recording and notify the user
-//                ioException.printStackTrace();
-//                stop();
-//                JOptionPane.showMessageDialog(null, "An error has occured during the recording, please retry");
-//            }
         }
     }
 
     public void start() {
         // start recording only if it wasn't before
         if(!isRecording) {
-            recordingFile = new File(DEFAULT_FOLDER + "/Recording_1" + "");
-            try {
-                // create a file writer in append mode
-                fileWriter = new FileOutputStream(recordingFile, true);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+            // get the current datetime
+            LocalDateTime date = java.time.LocalDateTime.now();
+            // create a unique filename
+            String filename = String.format(
+                    "%s/recording_%02d%02d%04d_%02d%02d.wav",
+                    DEFAULT_FOLDER.getAbsolutePath(),
+                    date.getDayOfMonth(),
+                    date.getMonthValue(),
+                    date.getYear(),
+                    date.getHour(),
+                    date.getMinute()
+            );
 
+            // creation of the output file
+            recordingFile = new File(filename);
+            // creation of temporary storage file to store the data while recording
+            tempFile = new File(DEFAULT_FOLDER + "/temp");
+
+            try {
+                // create a file writer in append mode for the temporary file
+                fileWriter = new FileOutputStream(tempFile, true);
+            } catch (FileNotFoundException ignored) { }
+
+            // set the recording flag to true so it notifies the watchers
             isRecording = true;
         }
     }
 
     public void stop() {
          //create an input stream with the created buffer as the source
-        try {
-            FileInputStream inputStream = new FileInputStream(recordingFile);
+        if(isRecording) {
+            try {
+                // close the file writer to the temporary storage file
+                fileWriter.close();
 
-            // create an audio input stream from the audio format and the given buffer
-            AudioInputStream audioSample = new AudioInputStream(inputStream, format, recordingFile.length() / format.getFrameSize());
-            // write everything
-            recordingFile = new File(DEFAULT_FOLDER + "/Recording_1" + ".wav");
+                // create an input stream to retrieve everything that was stored in the temporary file
+                FileInputStream inputStream = new FileInputStream(tempFile);
 
-            AudioSystem.write(audioSample, AudioFileFormat.Type.WAVE, recordingFile);
-            audioSample.close();
-            inputStream.close();
-        } catch (IOException ioException) {
-            // if there's an exception stop the recording and notify the user
-            ioException.printStackTrace();
-            JOptionPane.showMessageDialog(null, "An error has occured during the recording, please retry");
+                // create an audio input stream from the audio format and the given buffer
+                AudioInputStream audioSample = new AudioInputStream(inputStream, format, tempFile.length() / format.getFrameSize());
+
+                // output the contents of the temporary file to the output wave file
+                AudioSystem.write(audioSample, AudioFileFormat.Type.WAVE, recordingFile);
+
+                // cleanup the data streams
+                audioSample.close();
+                inputStream.close();
+                // delete the temporary file
+                boolean deletedTempFile = tempFile.delete();
+            } catch (IOException ioException) {
+                // if there's an exception stop the recording and notify the user
+                ioException.printStackTrace();
+                JOptionPane.showMessageDialog(null, "An error has occured during the recording, please retry");
+            }
+            // set the recording flag to false so the watches stop sending data
+            isRecording = false;
         }
-        isRecording = false;
     }
 
     public boolean isRecording() {
         return isRecording;
     }
 }
-//    private class SampleInputStream extends InputStream{
-//
-//        private float[] sample;
-//        private int framesCounter;
-//        private int idx;
-//        private int cursor;
-//        private int[] readSample = new int[2];
-//        private int framesToRead;
-//
-//        public void setDataFrames(short[] sample)
-//        {
-//            float[] floaters = new float[sample.length];
-//            for (int i = 0; i < sample.length; i++) {
-//                floaters[i] = sample[i];
-//            }
-//            this.sample =  floaters;
-//            framesToRead= sample.length;
-//        }
-//        @Override
-//        public int read() throws IOException {
-//            while (available() > 0)
-//            {
-//                idx &=1;
-//                if(idx == 0)
-//                {
-//                    framesCounter++;
-//
-//                    readSample[0]=(char) (sample[cursor++]*Short.MAX_VALUE);
-//                    readSample[1]=(char) ((int)(sample[cursor++]*Short.MAX_VALUE) >> 8);
-//
-//                }
-//                return readSample[idx++];
-//            }
-//            return -1;
-//        }
-//
-//        @Override
-//        public int available()
-//        {
-//            return 2*((framesToRead-1)-framesCounter) + (2-(idx%2));
-//        }
-//
-//        @Override
-//        public void reset()
-//        {
-//            cursor = 0;
-//            framesCounter = 0;
-//            idx = 0;
-//        }
-//        @Override
-//        public void close()
-//        {
-//            System.out.println(
-//                    "Stopped after reading frames:"
-//                            + framesCounter);
-//        }
-//    }
-//
-//}

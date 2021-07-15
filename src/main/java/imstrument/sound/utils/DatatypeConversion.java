@@ -5,33 +5,18 @@ import java.nio.ByteOrder;
 
 public class DatatypeConversion {
     /**
-     * Converts an array of floats to a byte array
-     * @param values float array to be converted
-     * @return the byte array converted from the float array
-     */
-    public static byte[] FloatArray2ByteArray(float[] values){
-        ByteBuffer buffer = ByteBuffer.allocate(Float.BYTES * values.length);
-
-        for (float value : values){
-            buffer.putFloat(value);
-        }
-
-        return buffer.array();
-    }
-
-    /**
      * Converts an array of shorts to a byte array
      * @param values short array to be converted
      * @return the byte array converted from the shorts array
      */
-    public static byte[] ShortArray2ByteArray(short[] values){
-        ByteBuffer buffer = ByteBuffer.allocate(Short.BYTES * values.length);
-
-        for (short value : values){
-            buffer.putShort(value);
+    public static byte[] ShortArray2ByteArray(short[] values) {
+        byte[] buffer = new byte[values.length * Short.BYTES];
+        for (int i = 0; i < values.length; i++) {
+            buffer[i * 2] = (byte) values[i];
+            buffer[i * 2 + 1] = (byte) (values[i] >> 8);
         }
 
-        return buffer.array();
+        return buffer;
     }
 
     /**
