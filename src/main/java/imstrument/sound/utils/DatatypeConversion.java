@@ -10,10 +10,25 @@ public class DatatypeConversion {
      * @return the byte array converted from the float array
      */
     public static byte[] FloatArray2ByteArray(float[] values){
-        ByteBuffer buffer = ByteBuffer.allocate(4 * values.length);
+        ByteBuffer buffer = ByteBuffer.allocate(Float.BYTES * values.length);
 
         for (float value : values){
             buffer.putFloat(value);
+        }
+
+        return buffer.array();
+    }
+
+    /**
+     * Converts an array of shorts to a byte array
+     * @param values short array to be converted
+     * @return the byte array converted from the shorts array
+     */
+    public static byte[] ShortArray2ByteArray(short[] values){
+        ByteBuffer buffer = ByteBuffer.allocate(Short.BYTES * values.length);
+
+        for (short value : values){
+            buffer.putShort(value);
         }
 
         return buffer.array();

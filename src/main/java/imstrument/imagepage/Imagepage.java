@@ -3,6 +3,7 @@ package imstrument.imagepage;
 /* imstrument packages */
 import imstrument.algorithm.ControlWindow;
 import imstrument.colormap.ColorMap;
+import imstrument.sound.openal.Recorder;
 import imstrument.sound.utils.SoundImagePanel;
 import imstrument.sound.waves.ModulatingWaveNumberSpinner;
 import imstrument.sound.waves.WaveManager;
@@ -119,8 +120,21 @@ public class Imagepage extends JPanel {
         menuBar.add(visualizeMenu);
         /* mp3 management menu */
         // export menu
-        JMenu mp3Menu = new JMenu("MP3");
-        menuBar.add(mp3Menu);
+        JMenu wavMenu = new JMenu("WAV");
+
+        // start recording what is being played
+        JMenuItem startRecording = new JMenuItem("Start recording");
+        startRecording.addActionListener(e -> StartApp.recorder.start());
+        startRecording.setAccelerator(KeyStroke.getKeyStroke('r', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+        wavMenu.add(startRecording);
+
+        // stop recoding what is played
+        JMenuItem stopRecording = new JMenuItem("Stop recording");
+        stopRecording.addActionListener(e -> StartApp.recorder.stop());
+        stopRecording.setAccelerator(KeyStroke.getKeyStroke('s', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+        wavMenu.add(stopRecording);
+
+        menuBar.add(wavMenu);
 
         /* sound menu */
         // used to manipulate the keyboard

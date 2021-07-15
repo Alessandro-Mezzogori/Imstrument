@@ -1,6 +1,7 @@
 package imstrument.sound.openal;
 
 import imstrument.sound.wavetables.Wavetable;
+import imstrument.start.StartApp;
 import org.lwjgl.openal.AL;
 import org.lwjgl.openal.ALC;
 
@@ -77,8 +78,8 @@ public class AudioThread extends Thread {
     @Override
     public synchronized void run() {
         while(!closed){
-            while(!running) {
-                // if it's not running wait
+            while(!running && StartApp.recorder.isRecording()) {
+                // if it's not running or recording wait
                 try{
                     wait();
                 } catch(Exception e){
@@ -95,6 +96,11 @@ public class AudioThread extends Thread {
                     running = false;
                     break;
                 }
+
+                if(StartApp.recorder.isRecording()){
+                    StartApp.recorder.record(samples);
+                }
+
                 // delete all the buffers
                 alDeleteBuffers(alSourceUnqueueBuffers(source));
                 // generate a new buffer and save the reference to the buffer index of buffers

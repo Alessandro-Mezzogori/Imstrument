@@ -1,30 +1,32 @@
-imstrument/sound/utils/DatatypeConversion.java
- imstrument.sound.utils.DatatypeConversion
-imstrument/sound/waves/ModulatingWaveNumberSpinner.java
- imstrument.sound.waves.ModulatingWaveNumberSpinner
+imstrument/globals/DimensionComparator.java
+ imstrument.globals.DimensionComparator
+imstrument/algorithm/AlgorithmUnit.java
+ imstrument.algorithm.AlgorithmUnit
 imstrument/sound/waves/Soundwave.java
  imstrument.sound.waves.Soundwave
 imstrument/homepage/Homepage.java
  imstrument.homepage.Homepage
-imstrument/sound/wavetables/Wavetable.java
- imstrument.sound.wavetables.Wavetable
+imstrument/algorithm/CustomAlgorithmCreator.java
+ imstrument.algorithm.CustomAlgorithmCreator
+ imstrument.algorithm.CustomAlgorithmCreator$1
+ imstrument.algorithm.CustomAlgorithmCreator$AlgorithmCreationSynchronizer
 imstrument/sound/waves/Envelope.java
  imstrument.sound.waves.Envelope
  imstrument.sound.waves.Envelope$1
-imstrument/sound/waves/WaveManager.java
- imstrument.sound.waves.WaveManager
- imstrument.sound.waves.WaveManager$KeyboardRows
-imstrument/start/TopContainer.java
- imstrument.start.TopContainer
- imstrument.start.TopContainer$1
+imstrument/algorithm/operators/NotGreen.java
+ imstrument.algorithm.operators.NotGreen
+imstrument/algorithm/AlgoUnitTableModel.java
+ imstrument.algorithm.AlgoUnitTableModel
+imstrument/globals/GlobalSetting.java
+ imstrument.globals.GlobalSetting
 imstrument/algorithm/operators/Blackness.java
  imstrument.algorithm.operators.Blackness
 imstrument/sound/wavetables/WaveTableEnum.java
  imstrument.sound.wavetables.WaveTableEnum
 imstrument/algorithm/AlgorithmCanvas.java
  imstrument.algorithm.AlgorithmCanvas
-imstrument/sound/openal/AudioThread.java
- imstrument.sound.openal.AudioThread
+imstrument/algorithm/operators/Green.java
+ imstrument.algorithm.operators.Green
 imstrument/sound/utils/Note.java
  imstrument.sound.utils.Note
 imstrument/sound/waves/Soundwaves.java
@@ -40,8 +42,8 @@ imstrument/sound/waves/EnvelopeState.java
  imstrument.sound.waves.EnvelopeState
 imstrument/sound/openal/OpenAlException.java
  imstrument.sound.openal.OpenAlException
-imstrument/algorithm/Algorithm.java
- imstrument.algorithm.Algorithm
+imstrument/algorithm/operators/Opacity.java
+ imstrument.algorithm.operators.Opacity
 imstrument/algorithm/UnitWindow.java
  imstrument.algorithm.UnitWindow
  imstrument.algorithm.UnitWindow$1
@@ -49,16 +51,16 @@ imstrument/algorithm/UnitWindow.java
  imstrument.algorithm.UnitWindow$JTableButtonRenderer
 imstrument/algorithm/operators/Blue.java
  imstrument.algorithm.operators.Blue
-imstrument/algorithm/operators/NotGreen.java
- imstrument.algorithm.operators.NotGreen
+imstrument/algorithm/operators/Operator.java
+ imstrument.algorithm.operators.Operator
 imstrument/sound/utils/NoteFrequencyMapping.java
  imstrument.sound.utils.NoteFrequencyMapping
 imstrument/algorithm/OperatorColorLegend.java
  imstrument.algorithm.OperatorColorLegend
 imstrument/algorithm/operators/Red.java
  imstrument.algorithm.operators.Red
-imstrument/start/StartApp.java
- imstrument.start.StartApp
+imstrument/sound/utils/DatatypeConversion.java
+ imstrument.sound.utils.DatatypeConversion
 imstrument/algorithm/AlgorithmDisplay.java
  imstrument.algorithm.AlgorithmDisplay
 imstrument/algorithm/operators/NotRed.java
@@ -67,41 +69,41 @@ imstrument/algorithm/operators/Luminance.java
  imstrument.algorithm.operators.Luminance
 imstrument/sound/utils/ImagePanel.java
  imstrument.sound.utils.ImagePanel
-imstrument/algorithm/AlgorithmUnit.java
- imstrument.algorithm.AlgorithmUnit
-imstrument/algorithm/operators/Opacity.java
- imstrument.algorithm.operators.Opacity
-imstrument/algorithm/operators/Operator.java
- imstrument.algorithm.operators.Operator
-imstrument/algorithm/AlgoUnitTableModel.java
- imstrument.algorithm.AlgoUnitTableModel
-imstrument/globals/GlobalSetting.java
- imstrument.globals.GlobalSetting
+imstrument/colormap/ColorMap.java
+ imstrument.colormap.ColorMap
+ imstrument.colormap.ColorMap$ColorMapComputeTask
+ imstrument.colormap.ColorMap$SaveColorMapTask
+imstrument/sound/waves/ModulatingWaveNumberSpinner.java
+ imstrument.sound.waves.ModulatingWaveNumberSpinner
+imstrument/virtualkeyboard/VirtualKeyboardVisualizer.java
+ imstrument.virtualkeyboard.VirtualKeyboardVisualizer
+ imstrument.virtualkeyboard.VirtualKeyboardVisualizer$PianoKeyAdapter
+imstrument/sound/wavetables/Wavetable.java
+ imstrument.sound.wavetables.Wavetable
+imstrument/algorithm/Algorithm.java
+ imstrument.algorithm.Algorithm
+imstrument/sound/waves/WaveManager.java
+ imstrument.sound.waves.WaveManager
+ imstrument.sound.waves.WaveManager$KeyboardRows
+imstrument/start/TopContainer.java
+ imstrument.start.TopContainer
+ imstrument.start.TopContainer$1
+imstrument/algorithm/ControlWindow.java
+ imstrument.algorithm.ControlWindow
 imstrument/virtualkeyboard/SwitchButton.java
  imstrument.virtualkeyboard.SwitchButton
 imstrument/sound/utils/SoundImagePanel.java
  imstrument.sound.utils.SoundImagePanel
  imstrument.sound.utils.SoundImagePanel$ImageMouseListener
-imstrument/globals/DimensionComparator.java
- imstrument.globals.DimensionComparator
 imstrument/sound/wavetables/WavetableSelector.java
  imstrument.sound.wavetables.WavetableSelector
-imstrument/algorithm/ControlWindow.java
- imstrument.algorithm.ControlWindow
-imstrument/algorithm/CustomAlgorithmCreator.java
- imstrument.algorithm.CustomAlgorithmCreator
- imstrument.algorithm.CustomAlgorithmCreator$1
- imstrument.algorithm.CustomAlgorithmCreator$AlgorithmCreationSynchronizer
-imstrument/algorithm/operators/Green.java
- imstrument.algorithm.operators.Green
-imstrument/virtualkeyboard/VirtualKeyboardVisualizer.java
- imstrument.virtualkeyboard.VirtualKeyboardVisualizer
- imstrument.virtualkeyboard.VirtualKeyboardVisualizer$PianoKeyAdapter
-imstrument/colormap/ColorMap.java
- imstrument.colormap.ColorMap
- imstrument.colormap.ColorMap$ColorMapComputeTask
- imstrument.colormap.ColorMap$SaveColorMapTask
+imstrument/start/StartApp.java
+ imstrument.start.StartApp
+imstrument/sound/openal/Recorder.java
+ imstrument.sound.openal.Recorder
 imstrument/imagepage/Imagepage.java
  imstrument.imagepage.Imagepage
  imstrument.imagepage.Imagepage$1
  imstrument.imagepage.Imagepage$2
+imstrument/sound/openal/AudioThread.java
+ imstrument.sound.openal.AudioThread
