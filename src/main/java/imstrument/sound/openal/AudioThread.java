@@ -5,6 +5,7 @@ import imstrument.start.StartApp;
 import org.lwjgl.openal.AL;
 import org.lwjgl.openal.ALC;
 
+import javax.swing.*;
 import java.util.function.Supplier;
 
 import static org.lwjgl.openal.AL10.*;
@@ -78,7 +79,7 @@ public class AudioThread extends Thread {
     @Override
     public synchronized void run() {
         while(!closed){
-            while(!running && StartApp.recorder.isRecording()) {
+            while(!running) {
                 // if it's not running or recording wait
                 try{
                     wait();
@@ -98,7 +99,14 @@ public class AudioThread extends Thread {
                 }
 
                 if(StartApp.recorder.isRecording()){
-                    StartApp.recorder.record(samples);
+                    SwingWorker<Void, Void> recordingTask = new SwingWorker<>() {
+                        @Override
+                        protected Void doInBackground() {
+                            StartApp.recorder.record(samples);
+                            return null;
+                        }
+                    };
+                    recordingTask.execute();
                 }
 
                 // delete all the buffers
