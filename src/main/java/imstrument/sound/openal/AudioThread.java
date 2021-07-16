@@ -99,6 +99,8 @@ public class AudioThread extends Thread {
                 }
 
                 if(StartApp.recorder.isRecording()){
+                    // if it's recording delegate the temporary file writing task to a
+                    // another thread to lessen the delay betweeen keypress and sound playback
                     SwingWorker<Void, Void> recordingTask = new SwingWorker<>() {
                         @Override
                         protected Void doInBackground() {
