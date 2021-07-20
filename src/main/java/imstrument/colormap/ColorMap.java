@@ -9,6 +9,8 @@ import imstrument.start.StartApp;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -31,6 +33,8 @@ public class ColorMap extends JFrame {
     // save the colormap with the given name
     JButton saveButton;
 
+    // task that computes the color map;
+    private SwingWorker<Void, Void> task;
     /**
      * Default save folder for the generated colormaps
      */
@@ -64,7 +68,7 @@ public class ColorMap extends JFrame {
         progressBar.setValue(0);
 
         // create the background task handleing the generation of the image
-        SwingWorker<Void, Void> task = new ColorMapComputeTask(source);
+        task = new ColorMapComputeTask(source);
         // when the progress of the task is changed update the progress of the progress bar
         task.addPropertyChangeListener(evt -> {
             if ("progress".equals(evt.getPropertyName())) {
@@ -100,9 +104,18 @@ public class ColorMap extends JFrame {
         buttonPanel.add(saveButton);
         add(buttonPanel, BorderLayout.SOUTH);
 
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                if(task.isDone()){
+                    ColorMap.this.dispose();
+                }
+            }
+        });
+
         setMinimumSize(GlobalSetting.MINIMUM_WINDOW_SIZE);
         pack();
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setVisible(true); // shows jframe
         requestFocus();
         setTitle("Color Map Manager");
@@ -131,7 +144,7 @@ public class ColorMap extends JFrame {
                     for (AlgorithmUnit unit : StartApp.algorithm.getUnits()) {
                         int[] rect = unit.getRect();
                         unit.setActive(
-                                (x + rect[0] > 0 ) && (y + rect[1] > 0 ) && (x + rect[0] + rect[2] < width) && (y + rect[1] + rect[3] < height)
+                                ((x + rect[0] >= 0) && (y + rect[1] >= 0)) && ((x + rect[0] + rect[2] < width) && (y + rect[1] + rect[3] < height))
                         );
                     }
                     // average out the values compute by the algorithm
@@ -142,7 +155,7 @@ public class ColorMap extends JFrame {
                     colormap.setRGB(x, y, currentPixel.getRGB());
                 }
                 // update the progress each percentage
-                if( x % (width / 100) == 0) {
+                if (x % (width / 100) == 0) {
                     setProgress(x * 100 / width);
                 }
             }

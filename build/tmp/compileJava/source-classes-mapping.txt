@@ -1,5 +1,6 @@
 imstrument/colormap/ColorMap.java
  imstrument.colormap.ColorMap
+ imstrument.colormap.ColorMap$1
  imstrument.colormap.ColorMap$ColorMapComputeTask
  imstrument.colormap.ColorMap$SaveColorMapTask
 imstrument/sound/waves/ModulatingWaveNumberSpinner.java

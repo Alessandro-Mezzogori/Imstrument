@@ -4,7 +4,6 @@ import imstrument.algorithm.Algorithm;
 import imstrument.sound.openal.AudioThread;
 import imstrument.sound.openal.Recorder;
 import imstrument.sound.waves.*;
-import imstrument.sound.wavetables.Wavetable;
 
 import javax.swing.*;
 import java.io.File;

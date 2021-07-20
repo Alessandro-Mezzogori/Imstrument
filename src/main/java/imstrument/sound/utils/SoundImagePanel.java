@@ -53,15 +53,6 @@ public class SoundImagePanel extends ImagePanel{
     }
 
     /**
-     * sets the current mouse point and computes the active state of the units
-     * @param point new mouse point
-     */
-    public void setMousePoint(Point point){
-        mousePoint = point;
-        updateUnitActiveState();
-    }
-
-    /**
      *  sets the active state of a algorithm unit based on the mouse location
      *  if a unit has some part of its rectangle outside the boundary of the scaled image
      *  then it will be set to inactive
