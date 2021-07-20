@@ -87,7 +87,7 @@ public class ColorMap extends JFrame {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         colorMapName = new JTextField(40);
         // algorithm name field label so that it tells what is it for
-        final JLabel colorMapNameLabel = new JLabel("New Algorithm Name: ");
+        final JLabel colorMapNameLabel = new JLabel("New ColorMap Name: ");
         colorMapNameLabel.setLabelFor(colorMapName);
         // save button
         saveButton = new JButton("Save");
