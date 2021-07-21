@@ -19,9 +19,8 @@ imstrument/sound/openal/Recorder.java
 imstrument/sound/waves/WaveManager.java
  imstrument.sound.waves.WaveManager
  imstrument.sound.waves.WaveManager$KeyboardRows
-imstrument/start/TopContainer.java
- imstrument.start.TopContainer
- imstrument.start.TopContainer$1
+imstrument/sound/utils/DatatypeConversion.java
+ imstrument.sound.utils.DatatypeConversion
 imstrument/algorithm/operators/Blackness.java
  imstrument.algorithm.operators.Blackness
 imstrument/sound/wavetables/WaveTableEnum.java
@@ -55,10 +54,8 @@ imstrument/algorithm/UnitWindow.java
  imstrument.algorithm.UnitWindow$JTableButtonRenderer
 imstrument/algorithm/operators/Blue.java
  imstrument.algorithm.operators.Blue
-imstrument/imagepage/Imagepage.java
- imstrument.imagepage.Imagepage
- imstrument.imagepage.Imagepage$1
- imstrument.imagepage.Imagepage$2
+imstrument/algorithm/operators/NotGreen.java
+ imstrument.algorithm.operators.NotGreen
 imstrument/sound/utils/NoteFrequencyMapping.java
  imstrument.sound.utils.NoteFrequencyMapping
 imstrument/algorithm/OperatorColorLegend.java
@@ -102,10 +99,15 @@ imstrument/algorithm/CustomAlgorithmCreator.java
  imstrument.algorithm.CustomAlgorithmCreator$AlgorithmCreationSynchronizer
 imstrument/algorithm/operators/Green.java
  imstrument.algorithm.operators.Green
+imstrument/start/TopContainer.java
+ imstrument.start.TopContainer
+ imstrument.start.TopContainer$1
 imstrument/virtualkeyboard/VirtualKeyboardVisualizer.java
  imstrument.virtualkeyboard.VirtualKeyboardVisualizer
+ imstrument.virtualkeyboard.VirtualKeyboardVisualizer$1
+ imstrument.virtualkeyboard.VirtualKeyboardVisualizer$2
  imstrument.virtualkeyboard.VirtualKeyboardVisualizer$PianoKeyAdapter
-imstrument/algorithm/operators/NotGreen.java
- imstrument.algorithm.operators.NotGreen
-imstrument/sound/utils/DatatypeConversion.java
- imstrument.sound.utils.DatatypeConversion
+imstrument/imagepage/Imagepage.java
+ imstrument.imagepage.Imagepage
+ imstrument.imagepage.Imagepage$1
+ imstrument.imagepage.Imagepage$2

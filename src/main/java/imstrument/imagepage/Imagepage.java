@@ -3,7 +3,6 @@ package imstrument.imagepage;
 /* imstrument packages */
 import imstrument.algorithm.ControlWindow;
 import imstrument.colormap.ColorMap;
-import imstrument.sound.openal.Recorder;
 import imstrument.sound.utils.SoundImagePanel;
 import imstrument.sound.waves.ModulatingWaveNumberSpinner;
 import imstrument.sound.waves.WaveManager;
@@ -217,7 +216,6 @@ public class Imagepage extends JPanel {
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(null, "An error has occurred during the loading of the image, retry");
             }
-            //System.out.println(imageChooser.getSelectedFile().getName());
         }
     }
 
