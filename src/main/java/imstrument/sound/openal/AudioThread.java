@@ -40,6 +40,9 @@ public class AudioThread extends Thread {
      */
     private final int source;
 
+    /**
+     * current storing buffer
+     */
     private int bufferIndex;
 
     /**
@@ -62,10 +65,7 @@ public class AudioThread extends Thread {
         source = alGenSources();
 
         for(int i = 0; i < BUFFER_COUNT; i++){
-            /*
-             * new short[0] passes a dummy buffers so the buffers
-             * get added up without external noise added
-             */
+            // passes a dummy buffers so the buffer get added up without external noise added
             bufferSamples(new short[0]);
         }
         // sets which source is playing
@@ -87,7 +87,7 @@ public class AudioThread extends Thread {
                     e.printStackTrace();
                 }
             }
-            // get the number of buffers to process
+            // get the number of the processed buffers (ready to be played)
             int processsedBufs = alGetSourcei(source, AL_BUFFERS_PROCESSED);
             for(int i = 0; i < processsedBufs; i++){
                 // retrieve a single array of samples
@@ -98,6 +98,7 @@ public class AudioThread extends Thread {
                     break;
                 }
 
+                /* recording to wave file step */
                 if(StartApp.recorder.isRecording()){
                     // if it's recording delegate the temporary file writing task to a
                     // another thread to lessen the delay betweeen keypress and sound playback
