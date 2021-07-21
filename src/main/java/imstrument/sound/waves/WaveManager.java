@@ -83,15 +83,17 @@ public class WaveManager{
         /* generate sample */
         double sample = 0.0;
         boolean isGenerating = false;
+        int numberOfWaves = 0;
         for(int i = 0; i < soundwaves.size(); i++){
             if(shouldGenerate.get(i)) {
                 isGenerating = true;
                 sample += soundwaves.get(i).getSample();
+                numberOfWaves += 1;
             }
         }
 
         this.generatingSamples = isGenerating;
-        return (short) (sample*Short.MAX_VALUE/5); //TODO implement interpolation and normalization
+        return (short) (sample*Short.MAX_VALUE/numberOfWaves); //TODO implement interpolation and normalization
     }
 
     /**
