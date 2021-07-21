@@ -93,7 +93,7 @@ public class WaveManager{
         }
 
         this.generatingSamples = isGenerating;
-        return (short) (sample*Short.MAX_VALUE/numberOfWaves); //TODO implement interpolation and normalization
+        return (short) (sample*Short.MAX_VALUE/numberOfWaves);
     }
 
     /**
