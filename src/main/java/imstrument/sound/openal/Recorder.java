@@ -37,7 +37,7 @@ public class Recorder {
     static {
         // if the folder doesn't exists create it
         if (!DEFAULT_FOLDER.exists()) {
-            boolean mkdir = DEFAULT_FOLDER.mkdir(); // TODO notify user if default folder is not created
+            boolean mkdir = DEFAULT_FOLDER.mkdir();
         }
     }
 
