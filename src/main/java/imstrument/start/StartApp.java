@@ -2,8 +2,8 @@ package imstrument.start;
 
 import imstrument.algorithm.Algorithm;
 import imstrument.sound.openal.AudioThread;
+import imstrument.sound.openal.Recorder;
 import imstrument.sound.waves.*;
-import imstrument.sound.wavetables.Wavetable;
 
 import javax.swing.*;
 import java.io.File;
@@ -12,6 +12,7 @@ public class StartApp {
     public static WaveManager waveManager;
     public static AudioThread audioThread;
     public static Algorithm algorithm;
+    public static Recorder recorder;
 
     public static final File defaultFolder = new File(new JFileChooser().getFileSystemView().getDefaultDirectory().toString() + "/imstrument/");
 
@@ -24,17 +25,26 @@ public class StartApp {
         /* initialize algorithm */
         algorithm = new Algorithm();
 
-        /* initialize audio thread and WaveManager*/
+        /* initialize WaveManager*/
         waveManager = new WaveManager();
 
-        audioThread = new AudioThread(() -> {
-            if (waveManager.isGeneratingSamples()) {
-                short[] samples = new short[AudioThread.BUFFER_SIZE];
-                for (int i = 0; i < AudioThread.BUFFER_SIZE; i++) {
-                    samples[i] = waveManager.generateSample();
-                }
+        /* initialize the audio recorder */
+        recorder = new Recorder();
 
-                return samples;
+        /* initialize the audio thread */
+        audioThread = new AudioThread(() -> {
+            // sample supplier to the audio thread
+            // if it's recording or generating samples create a sample array
+            if (waveManager.isGeneratingSamples() || recorder.isRecording()) {
+                short[] samples = new short[AudioThread.BUFFER_SIZE];
+
+                // if it's generating then populate the sample array with sound data
+                if(waveManager.isGeneratingSamples()) {
+                    for (int i = 0; i < AudioThread.BUFFER_SIZE; i++) {
+                        samples[i] = waveManager.generateSample();
+                    }
+                    return samples;
+                }
             }
             return null;
         });

@@ -119,8 +119,21 @@ public class Imagepage extends JPanel {
         menuBar.add(visualizeMenu);
         /* mp3 management menu */
         // export menu
-        JMenu mp3Menu = new JMenu("MP3");
-        menuBar.add(mp3Menu);
+        JMenu wavMenu = new JMenu("WAV");
+
+        // start recording what is being played
+        JMenuItem startRecording = new JMenuItem("Start recording");
+        startRecording.addActionListener(e -> StartApp.recorder.start());
+        startRecording.setAccelerator(KeyStroke.getKeyStroke('r', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+        wavMenu.add(startRecording);
+
+        // stop recoding what is played
+        JMenuItem stopRecording = new JMenuItem("Stop recording");
+        stopRecording.addActionListener(e -> StartApp.recorder.stop());
+        stopRecording.setAccelerator(KeyStroke.getKeyStroke('s', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+        wavMenu.add(stopRecording);
+
+        menuBar.add(wavMenu);
 
         /* sound menu */
         // used to manipulate the keyboard
@@ -203,7 +216,6 @@ public class Imagepage extends JPanel {
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(null, "An error has occurred during the loading of the image, retry");
             }
-            //System.out.println(imageChooser.getSelectedFile().getName());
         }
     }
 

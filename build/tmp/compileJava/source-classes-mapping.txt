@@ -1,5 +1,8 @@
-imstrument/sound/utils/DatatypeConversion.java
- imstrument.sound.utils.DatatypeConversion
+imstrument/colormap/ColorMap.java
+ imstrument.colormap.ColorMap
+ imstrument.colormap.ColorMap$1
+ imstrument.colormap.ColorMap$ColorMapComputeTask
+ imstrument.colormap.ColorMap$SaveColorMapTask
 imstrument/sound/waves/ModulatingWaveNumberSpinner.java
  imstrument.sound.waves.ModulatingWaveNumberSpinner
 imstrument/sound/waves/Soundwave.java
@@ -11,12 +14,13 @@ imstrument/sound/wavetables/Wavetable.java
 imstrument/sound/waves/Envelope.java
  imstrument.sound.waves.Envelope
  imstrument.sound.waves.Envelope$1
+imstrument/sound/openal/Recorder.java
+ imstrument.sound.openal.Recorder
 imstrument/sound/waves/WaveManager.java
  imstrument.sound.waves.WaveManager
  imstrument.sound.waves.WaveManager$KeyboardRows
-imstrument/start/TopContainer.java
- imstrument.start.TopContainer
- imstrument.start.TopContainer$1
+imstrument/sound/utils/DatatypeConversion.java
+ imstrument.sound.utils.DatatypeConversion
 imstrument/algorithm/operators/Blackness.java
  imstrument.algorithm.operators.Blackness
 imstrument/sound/wavetables/WaveTableEnum.java
@@ -25,6 +29,7 @@ imstrument/algorithm/AlgorithmCanvas.java
  imstrument.algorithm.AlgorithmCanvas
 imstrument/sound/openal/AudioThread.java
  imstrument.sound.openal.AudioThread
+ imstrument.sound.openal.AudioThread$1
 imstrument/sound/utils/Note.java
  imstrument.sound.utils.Note
 imstrument/sound/waves/Soundwaves.java
@@ -96,11 +101,12 @@ imstrument/algorithm/operators/Green.java
  imstrument.algorithm.operators.Green
 imstrument/virtualkeyboard/VirtualKeyboardVisualizer.java
  imstrument.virtualkeyboard.VirtualKeyboardVisualizer
+ imstrument.virtualkeyboard.VirtualKeyboardVisualizer$1
+ imstrument.virtualkeyboard.VirtualKeyboardVisualizer$2
  imstrument.virtualkeyboard.VirtualKeyboardVisualizer$PianoKeyAdapter
-imstrument/colormap/ColorMap.java
- imstrument.colormap.ColorMap
- imstrument.colormap.ColorMap$ColorMapComputeTask
- imstrument.colormap.ColorMap$SaveColorMapTask
+imstrument/start/TopContainer.java
+ imstrument.start.TopContainer
+ imstrument.start.TopContainer$1
 imstrument/imagepage/Imagepage.java
  imstrument.imagepage.Imagepage
  imstrument.imagepage.Imagepage$1

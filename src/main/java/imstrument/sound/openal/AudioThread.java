@@ -1,9 +1,11 @@
 package imstrument.sound.openal;
 
 import imstrument.sound.wavetables.Wavetable;
+import imstrument.start.StartApp;
 import org.lwjgl.openal.AL;
 import org.lwjgl.openal.ALC;
 
+import javax.swing.*;
 import java.util.function.Supplier;
 
 import static org.lwjgl.openal.AL10.*;
@@ -38,6 +40,9 @@ public class AudioThread extends Thread {
      */
     private final int source;
 
+    /**
+     * current storing buffer
+     */
     private int bufferIndex;
 
     /**
@@ -60,10 +65,7 @@ public class AudioThread extends Thread {
         source = alGenSources();
 
         for(int i = 0; i < BUFFER_COUNT; i++){
-            /*
-             * new short[0] passes a dummy buffers so the buffers
-             * get added up without external noise added
-             */
+            // passes a dummy buffers so the buffer get added up without external noise added
             bufferSamples(new short[0]);
         }
         // sets which source is playing
@@ -78,14 +80,14 @@ public class AudioThread extends Thread {
     public synchronized void run() {
         while(!closed){
             while(!running) {
-                // if it's not running wait
+                // if it's not running or recording wait
                 try{
                     wait();
                 } catch(Exception e){
                     e.printStackTrace();
                 }
             }
-            // get the number of buffers to process
+            // get the number of the processed buffers (ready to be played)
             int processsedBufs = alGetSourcei(source, AL_BUFFERS_PROCESSED);
             for(int i = 0; i < processsedBufs; i++){
                 // retrieve a single array of samples
@@ -95,6 +97,21 @@ public class AudioThread extends Thread {
                     running = false;
                     break;
                 }
+
+                /* recording to wave file step */
+                if(StartApp.recorder.isRecording()){
+                    // if it's recording delegate the temporary file writing task to a
+                    // another thread to lessen the delay betweeen keypress and sound playback
+                    SwingWorker<Void, Void> recordingTask = new SwingWorker<>() {
+                        @Override
+                        protected Void doInBackground() {
+                            StartApp.recorder.record(samples);
+                            return null;
+                        }
+                    };
+                    recordingTask.execute();
+                }
+
                 // delete all the buffers
                 alDeleteBuffers(alSourceUnqueueBuffers(source));
                 // generate a new buffer and save the reference to the buffer index of buffers
